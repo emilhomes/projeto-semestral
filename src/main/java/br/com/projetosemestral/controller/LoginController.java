@@ -29,7 +29,7 @@ public class LoginController {
 
         if(authService.autenticar(email, senha)) {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/view/dashboard-aluno.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/view/tela-aluno/dashboard-aluno.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Dashboard do Aluno");

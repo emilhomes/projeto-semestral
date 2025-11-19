@@ -12,22 +12,22 @@ public class DashboardAlunoController {
 
     @FXML
     public void initialize() {
-        carregarTela("/view/perfil.fxml");
+        carregarTela("/view/tela-aluno/perfil.fxml");
     }
 
     @FXML
     private void abrirPerfil() {
-        carregarTela("/view/perfil.fxml");
+        carregarTela("/view/tela-aluno/perfil.fxml");
     }
 
     @FXML
     private void abrirMeuTCC() {
-        carregarTela("/view/sem-tcc-cadastrado.fxml");
+        carregarTela("/view/tela-aluno/sem-tcc-cadastrado.fxml");
     }
 
     @FXML
     private void abrirCronograma() {
-        carregarTela("/view/cronograma.fxml");
+        carregarTela("/view/tela-aluno/cronograma.fxml");
     }
 
     private void carregarTela(String root) {
