@@ -22,8 +22,7 @@
 
                 <ImageView fitHeight="150.0" fitWidth="200.0" preserveRatio="true">
                     <image>
-                        <!-- Ajuste o caminho para a pasta /images -->
-                        <Image url="@../images/logo-gestao-tccs-e-monografias-branco.png" />
+                        <Image url="@logo-gestao-tccs-e-monografias-branco.png" />
                     </image>
                 </ImageView>
 
@@ -51,29 +50,40 @@
                 <!-- Nome -->
                 <TextField fx:id="campoNome" layoutX="87.0" layoutY="131.0" prefHeight="25.0" prefWidth="227.0" promptText="Nome" />
 
-                <!-- ComboBox Tipo de Usuário (SEM items no FXML) -->
-                <ComboBox fx:id="campoTipoUsuario" layoutX="88.0" layoutY="294.0" prefHeight="25.0" prefWidth="227.0" />
-
                 <!-- Email -->
                 <TextField fx:id="campoEmail" layoutX="88.0" layoutY="163.0" prefHeight="25.0" prefWidth="227.0" promptText="E-mail Institucional" />
 
                 <!-- Senha -->
                 <PasswordField fx:id="campoSenha" layoutX="88.0" layoutY="195.0" prefHeight="25.0" prefWidth="227.0" promptText="Senha" />
 
+                <!-- Matrícula -->
+                <TextField fx:id="campoMatricula" layoutX="88.0" layoutY="225.0" prefHeight="25.0" prefWidth="227.0" promptText="Matricula" />
+
+                <!-- Departamento -->
+                <TextField fx:id="campoDepartamento" layoutX="88.0" layoutY="258.0" prefHeight="25.0" prefWidth="227.0" promptText="Departamento" />
+
+                <!-- Tipo de Usuário -->
+                <ComboBox fx:id="campoTipoUsuario" layoutX="88.0" layoutY="294.0" prefHeight="25.0" prefWidth="227.0" />
+
+                <!-- Área de Pesquisa (SOMENTE PARA ORIENTADOR) -->
+                <Label fx:id="labelAreaPesquisa" layoutX="88.0" layoutY="325.0" prefHeight="25.0" prefWidth="227.0" text="Área de Pesquisa:" visible="false">
+                    <font><Font name="Ebrima" size="12.0" /></font>
+                </Label>
+
+                <TextField fx:id="campoAreaPesquisa" layoutX="88.0" layoutY="345.0" prefHeight="25.0" prefWidth="227.0" promptText="Área de Pesquisa" visible="false" />
+
                 <!-- Botão Criar Conta -->
-                <Button layoutX="88.0" layoutY="350.0" onAction="#criarConta" prefHeight="31.0" prefWidth="227.0" style="-fx-background-color: #0F1D45;" text="Criar Conta" textFill="WHITE" />
+                <Button layoutX="88.0" layoutY="390.0" onAction="#criarConta" prefHeight="31.0" prefWidth="227.0" style="-fx-background-color: #0F1D45;" text="Criar Conta" textFill="WHITE" />
 
                 <!-- Texto: Já possui cadastro? -->
-                <Label layoutX="88.0" layoutY="325.0" text="Já possui cadastro?">
+                <Label layoutX="88.0" layoutY="430.0" text="Já possui cadastro?">
                     <font><Font name="Ebrima" size="12.0" /></font>
                 </Label>
 
                 <!-- Link para Login -->
-                <Label layoutX="195.0" layoutY="325.0" onMouseClicked="#abrirTelaLogin" text="Clique Aqui" textFill="#00000094">
+                <Label layoutX="195.0" layoutY="430.0" onMouseClicked="#abrirTelaLogin" text="Clique Aqui" textFill="#00000094">
                     <font><Font name="Ebrima" size="12.0" /></font>
                 </Label>
-            <TextField fx:id="campoMatricula" layoutX="88.0" layoutY="225.0" prefHeight="25.0" prefWidth="227.0" promptText="Matricula" />
-            <TextField fx:id="campoDepartamento" layoutX="88.0" layoutY="258.0" prefHeight="25.0" prefWidth="227.0" promptText="Departamento" />
 
             </children>
         </Pane>
