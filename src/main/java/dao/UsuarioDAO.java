@@ -12,14 +12,14 @@ import conexao.ConexaoMySQL;
 public class UsuarioDAO {
 
       public void inserir(UsuarioModel usuario) {
-            String sql = "INSERT INTO usuario (nome, email, tipo, senha) VALUES (?, ?, ?, ? )";
+            String sql = "INSERT INTO usuario (nome, emailInstitucional, tipoUsuario, senha) VALUES (?, ?, ?, ? )";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                   stmt.setString(1, usuario.getNome());
-                  stmt.setString(2, usuario.getEmail());
-                  stmt.setString(3, usuario.getTipo());
+                  stmt.setString(2, usuario.getEmailInstitucional());
+                  stmt.setString(3, usuario.getTipoUsuario());
                   stmt.setString(4, Criptografia.md5(usuario.getSenha()));
                   stmt.executeUpdate();
 
@@ -42,8 +42,8 @@ public class UsuarioDAO {
                         UsuarioModel u = new UsuarioModel();
                         u.setIdUsuario(rs.getInt("idUsuario"));
                         u.setNome(rs.getString("nome"));
-                        u.setEmail(rs.getString("email"));
-                        u.setTipo(rs.getString("tipo"));
+                        u.setEmailInstitucional(rs.getString("emailInstitucional"));
+                        u.setTipoUsuario(rs.getString("tipoUsuario"));
                         u.setSenha(rs.getString("senha"));
                         lista.add(u);
                   }
@@ -56,14 +56,14 @@ public class UsuarioDAO {
       }
 
       public void atualizar(UsuarioModel usuario) {
-            String sql = "UPDATE usuario SET nome = ?, email = ?, tipo = ?, senha = ? WHERE idUsuario = ?";
+            String sql = "UPDATE usuario SET nome = ?, emailInstitucional = ?, tipoUsuario = ?, senha = ? WHERE idUsuario = ?";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                   stmt.setString(1, usuario.getNome());
-                  stmt.setString(2, usuario.getEmail());
-                  stmt.setString(3, usuario.getTipo());
+                  stmt.setString(2, usuario.getEmailInstitucional());
+                  stmt.setString(3, usuario.getTipoUsuario());
                   stmt.setString(4, usuario.getSenha());
                   stmt.setInt(5, usuario.getIdUsuario());
                   stmt.executeUpdate();

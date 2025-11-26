@@ -7,9 +7,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import model.UsuarioModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import dao.UsuarioDAO;
 
 public class CadastroController implements Initializable {
 
@@ -36,26 +39,40 @@ public class CadastroController implements Initializable {
 
     @FXML
     void criarConta(ActionEvent event) {
-        String tipoSelecionado = campoTipoUsuario.getValue();
+System.out.println("BOTÃO CLICADO");
 
-        if (tipoSelecionado == null) {
-            System.out.println("Por favor, selecione um tipo de usuário!");
-            return;
-        }
+    String nome = campoNome.getText();
+    String emailInstitucional = campoEmail.getText();
+    String senha = campoSenha.getText();
+    String tipoSelecionado = campoTipoUsuario.getValue();
 
-        System.out.println("Criando conta para: " + tipoSelecionado);
-
-        // aqui colocar a lógica para cadastro de usuário
-        // Exemplo: usuarioDAO.salvar(nome, email, senha, tipoSelecionado);
-        
-        if (tipoSelecionado.equals("Aluno")) {
-            // carregarTela("DashboardAluno.fxml");
-        } else if (tipoSelecionado.equals("Orientador")) {
-            // carregarTela("DashboardOrientador.fxml");
-        } else {
-             // carregarTela("DashboardCoordenador.fxml");
-        }
+    if (nome.isEmpty() || emailInstitucional.isEmpty() || senha.isEmpty() || tipoSelecionado == null) {
+        System.out.println("Preencha todos os campos!");
+        return;
     }
+
+    UsuarioModel usuario = new UsuarioModel();
+    usuario.setNome(nome);
+    usuario.setEmailInstitucional(emailInstitucional);
+    usuario.setSenha(senha);
+    usuario.setTipoUsuario(tipoSelecionado);
+
+    // Salvar no banco
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
+    usuarioDAO.inserir(usuario);
+        
+    
+    
+    }
+
+    
+        // if (tipoSelecionado.equals("Aluno")) {
+        //     // carregarTela("DashboardAluno.fxml");
+        // } else if (tipoSelecionado.equals("Orientador")) {
+        //     // carregarTela("DashboardOrientador.fxml");
+        // } else {
+        //      // carregarTela("DashboardCoordenador.fxml");
+        // }
 
     // --- AÇÃO DO LINK DE LOGIN ---
     @FXML
