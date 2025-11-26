@@ -1,18 +1,18 @@
 package model;
 
-import javax.xml.crypto.Data;
+import java.time.LocalDate;
 
 public class VersaoDocumentoModel {
 
       private int idVersao;
       private String nomeArquivo;
-      private Data dataEnvio;
+      private LocalDate dataEnvio;
       private int idComentario;
 
       public VersaoDocumentoModel() {
       }
 
-      public VersaoDocumentoModel(String nomeArquivo, Data dataEnvio, int idComentario) {
+      public VersaoDocumentoModel(String nomeArquivo, LocalDate dataEnvio, int idComentario) {
             this.nomeArquivo = nomeArquivo;
             this.dataEnvio = dataEnvio;
             this.idComentario = idComentario;
@@ -34,11 +34,11 @@ public class VersaoDocumentoModel {
             this.nomeArquivo = nomeArquivo;
       }
 
-      public Data getDataEnvio() {
+      public LocalDate getDataEnvio() {
             return dataEnvio;
       }
 
-      public void setDataEnvio(Data dataEnvio) {
+      public void setDataEnvio(LocalDate dataEnvio) {
             this.dataEnvio = dataEnvio;
       }
 

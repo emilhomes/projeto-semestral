@@ -1,19 +1,20 @@
 package model;
 
-import javax.xml.crypto.Data;
+// import javax.xml.crypto.Data;
+import java.time.LocalDate;
 
 public class AtividadeModel {
 
       private int idAtividade;
       private String descricao;
-      private Data dataInicio;
-      private Data dataFim;
+      private LocalDate dataInicio;
+      private LocalDate dataFim;
       private String estado;
 
       public AtividadeModel() {
       }
 
-      public AtividadeModel(String descricao, Data dataInicio, Data dataFim, String estado) {
+      public AtividadeModel(String descricao, LocalDate dataInicio, LocalDate dataFim, String estado) {
             this.descricao = descricao;
             this.dataInicio = dataInicio;
             this.dataFim = dataFim;
@@ -36,19 +37,19 @@ public class AtividadeModel {
             this.descricao = descricao;
       }
 
-      public Data getDataInicio() {
+      public LocalDate getDataInicio() {
             return dataInicio;
       }
 
-      public void setDataInicio(Data dataInicio) {
+      public void setDataInicio(LocalDate dataInicio) {
             this.dataInicio = dataInicio;
       }
 
-      public Data getDataFim() {
+      public LocalDate getDataFim() {
             return dataFim;
       }
 
-      public void setDataFim(Data dataFim) {
+      public void setDataFim(LocalDate dataFim) {
             this.dataFim = dataFim;
       }
 

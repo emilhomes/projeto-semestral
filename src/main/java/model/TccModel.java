@@ -1,6 +1,7 @@
 package model;
 
-import javax.xml.crypto.Data;
+import java.time.LocalDate;
+
 
 public class TccModel {
 
@@ -8,7 +9,7 @@ public class TccModel {
       private String titulo;
       private String resumo;
       private String estado;
-      private Data dataCadastro;
+      private LocalDate dataCadastro;
       private int idAluno;
       private int idBanca;
       private int idVersao;
@@ -17,7 +18,7 @@ public class TccModel {
       public TccModel() {
       }
 
-      public TccModel(String titulo, String resumo, String estado, Data dataCadastro, int idAluno, int idBanca,
+      public TccModel(String titulo, String resumo, String estado, LocalDate dataCadastro, int idAluno, int idBanca,
                   int idVersao, int idOrientador) {
             this.titulo = titulo;
             this.resumo = resumo;
@@ -61,11 +62,11 @@ public class TccModel {
             this.estado = estado;
       }
 
-      public Data getDataCadastro() {
+      public LocalDate getDataCadastro() {
             return dataCadastro;
       }
 
-      public void setDataCadastro(Data dataCadastro) {
+      public void setDataCadastro(LocalDate dataCadastro) {
             this.dataCadastro = dataCadastro;
       }
 

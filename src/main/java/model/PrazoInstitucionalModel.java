@@ -1,19 +1,20 @@
 package model;
 
-import javax.xml.crypto.Data;
+import java.time.LocalDate;
+
 
 public class PrazoInstitucionalModel {
 
       private int idPrazo;
-      private Data dataInicio;
-      private Data dataFinal;
+      private LocalDate dataInicio;
+      private LocalDate dataFinal;
       private int idCordenador;
       private String descricao;
 
       public PrazoInstitucionalModel() {
       }
 
-      public PrazoInstitucionalModel(Data dataInicio,Data dataFinal, String descricao, int idCordenador) {
+      public PrazoInstitucionalModel(LocalDate dataInicio,LocalDate dataFinal, String descricao, int idCordenador) {
             this.dataInicio = dataInicio;
             this.dataFinal = dataFinal;
             this.descricao = descricao;
@@ -28,17 +29,17 @@ public class PrazoInstitucionalModel {
       public void setIdPrazo(int idPrazo) {
             this.idPrazo = idPrazo;
       }
-      public Data getDataInicio() {
+      public LocalDate getDataInicio() {
             return dataInicio;
       }
-      public void setDataInicio(Data dataInicio) {
+      public void setDataInicio(LocalDate dataInicio) {
             this.dataInicio = dataInicio;
       }
 
-      public Data getDataFinal() {
+      public LocalDate getDataFinal() {
             return dataFinal;
       }
-      public void setDataFinal(Data dataFinal) {
+      public void setDataFinal(LocalDate dataFinal) {
             this.dataFinal = dataFinal;
       }
       public int getIdCordenador() {

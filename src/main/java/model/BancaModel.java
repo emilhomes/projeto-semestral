@@ -1,18 +1,20 @@
 package model;
 
-import javax.xml.crypto.Data;
+
+import java.time.LocalDate;
+
 
 public class BancaModel {
 
       private int idBanca;
-      private Data dataDefesa;
+      private LocalDate dataDefesa;
       private String menbros;
       private int idOrientador;
 
       public BancaModel() {
       }
 
-      public BancaModel(Data dataDefesa, String menbros, int idOrientador) {
+      public BancaModel(LocalDate dataDefesa, String menbros, int idOrientador) {
             this.dataDefesa = dataDefesa;
             this.menbros = menbros;
             this.idOrientador = idOrientador;
@@ -26,11 +28,11 @@ public class BancaModel {
             this.idBanca = idBanca;
       }
 
-      public Data getDataDefesa() {
+      public LocalDate getDataDefesa() {
             return dataDefesa;
       }
 
-      public void setDataDefesa(Data dataDefesa) {
+      public void setDataDefesa(LocalDate dataDefesa) {
             this.dataDefesa = dataDefesa;
       }
 
