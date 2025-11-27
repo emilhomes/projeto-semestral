@@ -1,9 +1,14 @@
 package service;
 
-public class AuthenticationService {
-    
-    public boolean autenticar(String email, String senha) {
-        return email.equals("aluno@alu.uern.br") && senha.equals("1234");
-    }
+import dao.UsuarioDAO;
+import model.UsuarioModel;
 
+public class AuthenticationService {
+
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+    public UsuarioModel autenticar(String email, String senha) {
+        return usuarioDAO.buscarPorEmailESenha(email, senha);
+    }
 }
+

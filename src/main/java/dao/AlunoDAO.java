@@ -20,7 +20,6 @@ public class AlunoDAO {
                   stmt.setInt(3, aluno.getIdUsuario());
                   stmt.executeUpdate();
 
-                  System.out.println("Aluno inserido com sucesso!");
 
             } catch (Exception e) {
                   e.printStackTrace();
