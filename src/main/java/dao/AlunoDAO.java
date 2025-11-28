@@ -26,6 +26,31 @@ public class AlunoDAO {
             }
       }
 
+
+      public AlunoModel buscarPorUsuarioId(int idUsuario) {
+    String sql = "SELECT * FROM aluno WHERE idUsuario = ?";
+    AlunoModel aluno = null;
+
+    try (Connection conn = ConexaoMySQL.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, idUsuario);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            aluno = new AlunoModel();
+            aluno.setMatricula(rs.getInt("matricula")); 
+            aluno.setCurso(rs.getString("curso"));
+            aluno.setIdUsuario(rs.getInt("idUsuario"));
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return aluno;
+}
+
       public List<AlunoModel> listar() {
             List<AlunoModel> lista = new ArrayList<>();
             String sql = "SELECT * FROM aluno";

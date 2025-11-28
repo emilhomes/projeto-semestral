@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class TccModel {
 
-      private int idTcc;
+      private int idTCC;
       private String titulo;
       private String resumo;
       private String estado;
@@ -30,12 +30,12 @@ public class TccModel {
             this.idOrientador = idOrientador;
       }
 
-      public int getIdTcc() {
-            return idTcc;
+      public int getIdTCC() {
+            return idTCC;
       }
 
-      public void setIdTcc(int idTcc) {
-            this.idTcc = idTcc;
+      public void setIdTcc(int idTCC) {
+            this.idTCC = idTCC;
       }
 
       public String getTitulo() {

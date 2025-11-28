@@ -10,5 +10,16 @@ public class AuthenticationService {
     public UsuarioModel autenticar(String email, String senha) {
         return usuarioDAO.buscarPorEmailESenha(email, senha);
     }
+
+    private static UsuarioModel usuarioLogado;
+
+    public static void setUsuarioLogado(UsuarioModel usuario) {
+        usuarioLogado = usuario;
+    }
+
+    public static UsuarioModel getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
 }
 

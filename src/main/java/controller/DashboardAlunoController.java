@@ -1,39 +1,76 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import model.AlunoModel;
+import model.UsuarioModel;
+import dao.AlunoDAO;
+import service.AuthenticationService;
 
 public class DashboardAlunoController {
+
+    @FXML
+    private Label lblNome;
+
+    @FXML
+    private Label lblEmail;
+
+    @FXML
+    private Label lblMatricula;
 
     @FXML
     private StackPane contentArea;
 
     @FXML
     public void initialize() {
-        carregarTela("/view/tela-aluno/perfil.fxml");
+
+        // Aqui você pega o usuário logado — use seu AuthenticationService ou variável
+        // global
+
+        UsuarioModel usuario = AuthenticationService.getUsuarioLogado();
+        AlunoDAO dao = new AlunoDAO();
+        AlunoModel aluno = dao.buscarPorUsuarioId(usuario.getIdUsuario());
+
+        lblNome.setText("Nome: " + usuario.getNome());
+        lblEmail.setText("Email: " + usuario.getEmailInstitucional());
+        lblMatricula.setText("Matrícula: " + aluno.getMatricula());
+
+        carregarTela("tela-aluno/perfil.fxml");
     }
 
     @FXML
-    private void abrirPerfil() {
-        carregarTela("/view/tela-aluno/perfil.fxml");
+    private void abrirPerfil(ActionEvent event) {
+        carregarTela("tela-aluno/perfil.fxml");
     }
 
     @FXML
-    private void abrirMeuTCC() {
-        carregarTela("/view/tela-aluno/sem-tcc-cadastrado.fxml");
+    private void abrirMeuTCC(ActionEvent event) {
+        System.out.println("BOTÃO CLICADO");
+        carregarTela("tela-aluno/sem-tcc-cadastrado.fxml");
     }
 
     @FXML
-    private void abrirCronograma() {
-        carregarTela("/view/tela-aluno/cronograma.fxml");
+    private void abrirCronograma(ActionEvent event) {
+        carregarTela("tela-aluno/cronograma.fxml");
     }
 
-    private void carregarTela(String root) {
+    @FXML
+    private void carregarTela(String fxml) {
         try {
-            Parent screen  = FXMLLoader.load(getClass().getResource(root));
-            contentArea.getChildren().setAll(screen);
+            Parent root = FXMLLoader.load(getClass().getResource("/view/" + fxml));
+            Stage stage = new Stage(); // cria nova janela
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Fechar a janela atual
+            Stage atual = (Stage) contentArea.getScene().getWindow();
+            atual.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
