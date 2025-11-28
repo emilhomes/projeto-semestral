@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.collections.FXCollections?>
+
+<BorderPane fx:id="root" 
+            prefHeight="600" prefWidth="900" 
+            style="-fx-background-color: #ECF0F1;" 
+            xmlns="http://javafx.com/javafx/25" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="controllers.PrazosInstitucionaisController">
+
+    <left>
+        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="15" style="-fx-background-color: #0F1D45;">
+            <padding><Insets bottom="20" top="20" /></padding>
+
+            <ImageView fitHeight="110" fitWidth="110" preserveRatio="true">
+                <image>
+                    <Image url="@logo-gestao-tccs-e-monografias-branco.png" />
+                </image>
+            </ImageView>
+
+            <VBox spacing="12" VBox.vgrow="ALWAYS">
+                <padding><Insets top="20" /></padding>
+
+                <Button fx:id="btnPerfil" onAction="#abrirPerfil" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="Perfil do Coordenador">
+                    <font><Font name="Ebrima" size="12" /></font>
+                </Button>
+
+                <Button fx:id="btnBancas" onAction="#abrirBancas" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="Bancas">
+                    <font><Font name="Ebrima" size="12" /></font>
+                </Button>
+
+                <Button fx:id="btnPrazos" onAction="#abrirPrazos" prefWidth="180" style="-fx-background-color: #1A2B5E; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-color: white; -fx-border-width: 0 0 0 4;" text="Prazos Institucionais">
+                    <font><Font name="Ebrima" size="12" /></font>
+                </Button>
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <content>
+                <VBox spacing="25" style="-fx-background-color: #ECF0F1;">
+                    <padding>
+                        <Insets top="30" left="40" right="40" bottom="30"/>
+                    </padding>
+
+                    <VBox spacing="5">
+                        <Label text="Prazos Institucionais"
+                               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;">
+                            <font><Font name="Ebrima Bold" size="28"/></font>
+                        </Label>
+
+                        <Label text="Gerencie os prazos oficiais do calendário acadêmico do TCC"
+                               style="-fx-font-size: 14px; -fx-text-fill: #7F8C8D;">
+                            <font><Font name="Ebrima" size="14"/></font>
+                        </Label>
+                    </VBox>
+
+                    <VBox spacing="15"
+                          style="-fx-background-color: white; -fx-background-radius: 10;
+                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1),10,0,0,2);">
+
+                        <padding>
+                            <Insets top="25" left="25" right="25" bottom="25"/>
+                        </padding>
+
+                        <Label text="Cadastrar / Editar Prazo"
+                               style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;">
+                            <font><Font name="Ebrima Bold" size="18"/></font>
+                        </Label>
+
+                        <Separator/>
+
+                        <GridPane hgap="20" vgap="15">
+                            
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="70"/>
+                                <ColumnConstraints percentWidth="30"/>
+                            </columnConstraints>
+
+                            <Label text="Nome do Prazo:"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="0"
+                                   style="-fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+
+                            <TextField fx:id="inputNome"
+                                       promptText="Ex: Entrega da versão final"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+
+                            <Label text="Data Limite:"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                   style="-fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+
+                            <DatePicker fx:id="inputData"
+                                        GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                            <Label text="Descrição:"
+                                   GridPane.rowIndex="2" GridPane.columnIndex="0"
+                                   style="-fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+                            
+                            <TextArea fx:id="inputDescricao"
+                                      prefHeight="90"
+                                      wrapText="true"
+                                      promptText="Descrição do prazo institucional"
+                                      GridPane.rowIndex="3" GridPane.columnIndex="0"
+                                      GridPane.columnSpan="2"/>
+
+                        </GridPane>
+
+                        <HBox spacing="15" alignment="CENTER_RIGHT">
+                            <Button fx:id="btnSalvar"
+                                    text="Salvar"
+                                    onAction="#salvarPrazo"
+                                    style="-fx-background-color: #0F1D45; -fx-text-fill: white;
+                                           -fx-background-radius: 6; -fx-padding: 10 20;"/>
+
+                            <Button fx:id="btnLimpar"
+                                    text="Limpar"
+                                    onAction="#limparCampos"
+                                    style="-fx-background-color: #95A5A6; -fx-text-fill: white;
+                                           -fx-background-radius: 6; -fx-padding: 10 20;"/>
+                        </HBox>
+
+                    </VBox>
+
+                    <VBox spacing="15"
+                          style="-fx-background-color: white; -fx-background-radius: 10;
+                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1),10,0,0,2);">
+
+                        <padding>
+                            <Insets top="25" left="25" right="25" bottom="25"/>
+                        </padding>
+
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="Prazos Registrados"
+                                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;"/>
+
+                            <Pane HBox.hgrow="ALWAYS"/>
+
+                            <Button fx:id="btnNovoPrazo"
+                                    text="Novo Prazo"
+                                    onAction="#novoPrazo"
+                                    style="-fx-background-color: #0F1D45; -fx-text-fill: white;
+                                           -fx-background-radius: 6; -fx-padding: 10 20;"/>
+                        </HBox>
+
+                        <TableView fx:id="tablePrazos" prefHeight="300">
+                            <columns>
+                                <TableColumn fx:id="colNome" text="Nome" prefWidth="200"/>
+                                <TableColumn fx:id="colData" text="Data" prefWidth="150"/>
+                                <TableColumn fx:id="colDescricao" text="Descrição" prefWidth="280"/>
+                                <TableColumn fx:id="colAcoes" text="Ações" prefWidth="120"/>
+                            </columns>
+                        </TableView>
+
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

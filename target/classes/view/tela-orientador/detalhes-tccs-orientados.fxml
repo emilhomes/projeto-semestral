@@ -12,49 +12,32 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.DetalhesTCCOrientadorController"
-            prefWidth="900" prefHeight="600"
-            style="-fx-background-color: #F4F6F8;">
+<BorderPane prefHeight="600" prefWidth="900" style="-fx-background-color: #F4F6F8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetalhesTCCOrientadorController">
 
     <!-- SIDEBAR PADRÃO -->
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="200" spacing="15" style="-fx-background-color: #0F1D45;">
             <padding>
-                <Insets top="20" bottom="20"/>
+                <Insets bottom="20" top="20" />
             </padding>
             <children>
 
                 <!-- LOGO -->
                 <ImageView fitHeight="108" fitWidth="102" preserveRatio="true">
                     <image>
-                        <Image url="@logo-gestao-tccs-e-monografias-branco.png" />
+                        <Image url="@../../../../../../../../Downloads/logo-gestao-tccs-e-monografias-branco.png" />
                     </image>
                 </ImageView>
 
                 <!-- BOTÕES DO MENU -->
-                <Button fx:id="btnPerfil" text="Perfil do Orientador"
-                        onAction="#abrirPerfil"
-                        prefWidth="180"
-                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" />
+                <Button fx:id="btnPerfil" onAction="#abrirPerfil" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" text="Perfil do Orientador" />
 
-                <Button fx:id="btnTCCsOrientados" text="TCCs Orientados"
-                        onAction="#abrirTCCsOrientados"
-                        prefWidth="180"
-                        style="-fx-background-color: #1E3A5F; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" />
+                <Button fx:id="btnTCCsOrientados" onAction="#abrirTCCsOrientados" prefWidth="180" style="-fx-background-color: #1E3A5F; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" text="TCCs Orientados" />
 
-                <Button fx:id="btnReunioes" text="Reuniões"
-                        onAction="#abrirReunioes"
-                        prefWidth="180"
-                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" />
+                <Button fx:id="btnReunioes" onAction="#abrirReunioes" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" text="Reuniões" />
 
-                <Button fx:id="btnBancas" text="Bancas"
-                        onAction="#abrirBancas"
-                        prefWidth="180"
-                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" />
+                <Button fx:id="btnBancas" onAction="#abrirBancas" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" text="Bancas" />
 
             </children>
         </VBox>
@@ -66,65 +49,52 @@
             <content>
                 <VBox spacing="25">
                     <padding>
-                        <Insets top="30" bottom="30" left="30" right="30"/>
+                        <Insets bottom="30" left="30" right="30" top="30" />
                     </padding>
 
                     <!-- Título -->
                     <VBox spacing="5">
-                        <Label text="Detalhes do TCC"
-                               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;" />
-                        <Label fx:id="labelTituloTCC"
-                               style="-fx-font-size: 16px; -fx-text-fill: #546E7A;"
-                               wrapText="true"/>
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;" text="Detalhes do TCC" />
+                        <Label fx:id="labelTituloTCC" style="-fx-font-size: 16px; -fx-text-fill: #546E7A;" wrapText="true" />
                     </VBox>
 
                     <!-- Card da Versão Atual -->
                     <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 10;">
                         <effect>
-                            <DropShadow color="#00000015" radius="8" offsetY="3" offsetX="0"/>
+                            <DropShadow color="#00000015" offsetX="0" offsetY="3" radius="8" />
                         </effect>
 
                         <padding>
-                            <Insets top="25" bottom="25" left="25" right="25"/>
+                            <Insets bottom="25" left="25" right="25" top="25" />
                         </padding>
 
                         <HBox alignment="CENTER_LEFT" spacing="15">
-                            <Label text="Versão Atual" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;" />
+                            <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;" text="Versão Atual" />
                             <Region HBox.hgrow="ALWAYS" />
                             <Label fx:id="labelDataAtual" style="-fx-font-size: 13px; -fx-text-fill: #7F8C8D;" />
                         </HBox>
 
                         <Region prefHeight="1" style="-fx-background-color: #E0E0E0;" />
 
-                        <HBox spacing="15" alignment="CENTER_LEFT">
-                            <Label text="Arquivo:" style="-fx-font-weight: bold; -fx-text-fill: #333;"/>
-                            <Button text="⬇ Baixar Documento"
-                                    fx:id="btnBaixarAtual"
-                                    style="-fx-background-color: #E3F2FD; -fx-text-fill: #1565C0; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand; -fx-border-color: #1565C0; -fx-border-radius: 5;" />
+                        <HBox alignment="CENTER_LEFT" spacing="15">
+                            <Label style="-fx-font-weight: bold; -fx-text-fill: #333;" text="Arquivo:" />
+                            <Button fx:id="btnBaixarAtual" style="-fx-background-color: #E3F2FD; -fx-text-fill: #1565C0; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand; -fx-border-color: #1565C0; -fx-border-radius: 5;" text="⬇ Baixar Documento" />
                         </HBox>
 
                         <VBox spacing="10">
-                            <Label text="Adicionar Comentário:"
-                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;" />
+                            <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Adicionar Comentário:" />
 
-                            <TextArea fx:id="campoComentario"
-                                      prefHeight="100"
-                                      wrapText="true"
-                                      promptText="Escreva seu comentário..."
-                                      style="-fx-background-radius: 5; -fx-border-color: #CFD8DC; -fx-border-radius: 5;" />
+                            <TextArea fx:id="campoComentario" prefHeight="100" promptText="Escreva seu comentário..." style="-fx-background-radius: 5; -fx-border-color: #CFD8DC; -fx-border-radius: 5;" wrapText="true" />
 
                             <HBox alignment="CENTER_RIGHT">
-                                <Button text="Enviar Comentário"
-                                        fx:id="btnEnviarComentario"
-                                        style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+                                <Button fx:id="btnEnviarComentario" style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Enviar Comentário" />
                             </HBox>
                         </VBox>
                     </VBox>
 
                     <!-- Listagem de Versões Anteriores -->
                     <VBox spacing="15">
-                        <Label text="Versões Anteriores"
-                               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;" />
+                        <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;" text="Versões Anteriores" />
 
                         <VBox fx:id="listaVersoesAnteriores" spacing="10" />
                     </VBox>

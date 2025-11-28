@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ProgressBar?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.MeuTCCComController"
+            prefWidth="900" prefHeight="600"
+            style="-fx-background-color: #ECF0F1;">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20"
+              style="-fx-background-color: #0F1D45;">
+            <padding><Insets top="30" bottom="30"/></padding>
+
+            <ImageView fitHeight="110" fitWidth="110" preserveRatio="true">
+                <image><Image url="@logo-gestao-tccs-e-monografias-branco.png"/></image>
+            </ImageView>
+
+            <!-- MENU -->
+            <VBox spacing="12">
+
+                <Button fx:id="btnPerfil" onAction="#abrirPerfil" prefWidth="180"
+                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;"
+                        text="Perfil do Aluno"/>
+
+                <Button fx:id="btnMeuTCC" onAction="#abrirMeuTCC" prefWidth="180"
+                        style="-fx-background-color: #1E3A5F; -fx-text-fill: white; -fx-font-size: 14px;"
+                        text="Meu TCC"/>
+
+                <Button fx:id="btnCronograma" onAction="#abrirCronograma" prefWidth="180"
+                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;"
+                        text="Cronograma"/>
+
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- ÁREA PRINCIPAL -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent;">
+            <content>
+                <VBox spacing="25">
+                    <padding><Insets top="25" left="25" right="25" bottom="25"/></padding>
+
+                    <!-- TÍTULO -->
+                    <VBox spacing="8">
+                        <Label text="Meu TCC"
+                               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;"/>
+
+                        <Label fx:id="labelTitulo"
+                               text="Título: Desenvolvimento de um Sistema de Gestão de TCC"
+                               style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
+
+                        <Label fx:id="labelOrientador"
+                               text="Orientador: Prof. João da Silva"
+                               style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
+
+                        <Label fx:id="labelStatus"
+                               text="Status: Em andamento"
+                               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #E67E22;"/>
+                    </VBox>
+
+                    <!-- BOTÕES CRUD -->
+                    <HBox spacing="15">
+
+                        <Button fx:id="btnEditarTCC"
+                                text="✏ Editar TCC"
+                                style="-fx-font-size: 14px; -fx-padding: 10 20;
+                                       -fx-background-color: #0F1D45;
+                                       -fx-text-fill: white; -fx-background-radius: 6;" />
+
+                        <Button fx:id="btnExcluirTCC"
+                                text="🗑 Excluir TCC"
+                                style="-fx-font-size: 14px; -fx-padding: 10 20;
+                                       -fx-background-color: #8B0000;
+                                       -fx-text-fill: white; -fx-background-radius: 6;" />
+
+                        <Button fx:id="btnAlterarOrientador"
+                                text="👤 Alterar Orientador"
+                                style="-fx-font-size: 14px; -fx-padding: 10 20;
+                                       -fx-background-color: #1E3A5F;
+                                       -fx-text-fill: white; -fx-background-radius: 6;" />
+
+                        <Button fx:id="btnAlterarStatus"
+                                text="📌 Alterar Status"
+                                style="-fx-font-size: 14px; -fx-padding: 10 20;
+                                       -fx-background-color: #34495E;
+                                       -fx-text-fill: white; -fx-background-radius: 6;" />
+
+                    </HBox>
+
+                    <!-- Indicador de progresso -->
+                    <VBox spacing="6">
+                        <Label text="Progresso do TCC"
+                               style="-fx-font-size: 15px; -fx-text-fill: #34495E;"/>
+
+                        <ProgressBar fx:id="barraProgresso" progress="0.65"
+                                     style="-fx-accent: #0F1D45; -fx-background-radius: 10;"
+                                     prefWidth="300"/>
+
+                        <Label fx:id="labelProgresso"
+                               text="65%"
+                               style="-fx-font-size: 14px; -fx-text-fill: #2C3E50;"/>
+                    </VBox>
+
+                    <!-- BOTÕES DE UPLOAD E VERSÕES -->
+                    <HBox spacing="15">
+                        <Button fx:id="btnUpload"
+                                text="Enviar Nova Versão"
+                                style="-fx-font-size: 14px; -fx-padding: 10 25; -fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 6;"/>
+
+                        <Button fx:id="btnVersoes"
+                                text="Ver Todas as Versões"
+                                style="-fx-font-size: 14px; -fx-padding: 10 25; -fx-background-color: #1E3A5F; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                    </HBox>
+
+                    <!-- CARD VERSÃO ATUAL -->
+                    <VBox spacing="25"
+                          style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25;">
+                        <effect>
+                            <DropShadow color="#00000030" radius="12" offsetY="3"/>
+                        </effect>
+
+                        <!-- Header da versão atual -->
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Label text="Versão Atual"
+                                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+
+                            <Region HBox.hgrow="ALWAYS"/>
+
+                            <Label fx:id="labelDataAtual"
+                                   text="Enviado em: 15/11/2024"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #7F8C8D;"/>
+                        </HBox>
+
+                        <!-- Baixar arquivo -->
+                        <Button fx:id="btnBaixarAtual"
+                                text="⬇ Baixar Documento Atual"
+                                style="-fx-background-color: #E3F2FD; -fx-text-fill: #0F1D45; -fx-font-weight: bold; -fx-background-radius: 6; -fx-border-color: #0F1D45; -fx-border-radius: 6; -fx-padding: 10 20;"/>
+
+                        <!-- COMENTÁRIOS -->
+                        <VBox spacing="15">
+                            <Label text="Comentários do Orientador"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+
+                            <VBox fx:id="listaComentarios" spacing="12"
+                                  style="-fx-background-color: #F8F9FA; -fx-padding: 15; -fx-border-radius: 6; -fx-background-radius: 6; -fx-border-color: #D6DBDF;"/>
+                        </VBox>
+
+                        <!-- ENVIAR COMENTÁRIO -->
+                        <VBox spacing="8">
+                            <Label text="Adicionar Comentário"
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+
+                            <TextArea fx:id="campoComentario"
+                                      prefHeight="110"
+                                      wrapText="true"
+                                      promptText="Escreva aqui seu comentário..."
+                                      style="-fx-border-color: #BDC3C7; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+
+                            <HBox alignment="CENTER_RIGHT">
+                                <Button fx:id="btnEnviarComentario"
+                                        text="Enviar Comentário"
+                                        style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 20; -fx-font-weight: bold;"/>
+                            </HBox>
+                        </VBox>
+
+                    </VBox>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
