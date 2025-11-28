@@ -27,10 +27,14 @@ public class LoginController {
     @FXML
     private void fazerLogin(ActionEvent actionEvent) {
 
+        System.out.println("BOTÃO CLICADO");
         String email = campoEmail.getText();
         String senha = campoSenha.getText();
 
         UsuarioModel usuario = authService.autenticar(email, senha);
+
+        AuthenticationService.setUsuarioLogado(usuario);
+
 
         if (usuario != null) {
             String tipo = usuario.getTipoUsuario();
@@ -70,7 +74,6 @@ public class LoginController {
             labelErro.setVisible(true);
         }
     }
-    
 
     @FXML
     private void onAbrirCadastro(javafx.scene.input.MouseEvent event) {

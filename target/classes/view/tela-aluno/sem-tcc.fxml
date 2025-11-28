@@ -11,7 +11,7 @@
             prefWidth="900.0"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.MeuTCCSemController"
+            fx:controller="controller.TccController"
             style="-fx-background-color: #ECF0F1;">
 
     <!-- SIDEBAR PADRÃO -->
@@ -33,7 +33,7 @@
             </ImageView>
 
             <!-- MENU -->
-            <Button fx:id="btnPerfil"
+            <!-- <Button fx:id="btnPerfil"
                     onAction="#abrirPerfil"
                     prefWidth="170"
                     style="-fx-background-color: transparent; 
@@ -55,7 +55,7 @@
                     style="-fx-background-color: transparent; 
                            -fx-text-fill: white;
                            -fx-font-size: 15px;"
-                    text="Cronograma" />
+                    text="Cronograma" /> -->
         </VBox>
     </left>
 

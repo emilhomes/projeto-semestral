@@ -90,7 +90,7 @@
                                             <Font name="Ebrima Bold" size="12.0" />
                                         </font>
                                     </Label>
-                                    <Label style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;" text="Fulano de Tal">
+                                    <Label fx:id="lblNome" style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;" text="Fulano de Tal">
                                         <font>
                                             <Font name="Ebrima" size="16.0" />
                                         </font>
@@ -102,12 +102,12 @@
                                 <HBox spacing="40">
                                     <VBox spacing="20" HBox.hgrow="ALWAYS">
                                         <VBox spacing="8">
-                                            <Label style="-fx-font-size: 12px; -fx-text-fill: #7F8C8D; -fx-font-weight: bold;" text="MATRÍCULA">
+                                            <Label  style="-fx-font-size: 12px; -fx-text-fill: #7F8C8D; -fx-font-weight: bold;" text="MATRÍCULA">
                                                 <font>
                                                     <Font name="Ebrima Bold" size="12.0" />
                                                 </font>
                                             </Label>
-                                            <Label style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;" text="2023123456">
+                                            <Label fx:id= "lblMatricula" style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;" text="2023123456">
                                                 <font>
                                                     <Font name="Ebrima" size="16.0" />
                                                 </font>
@@ -115,12 +115,12 @@
                                         </VBox>
                                         
                                         <VBox spacing="8">
-                                            <Label style="-fx-font-size: 12px; -fx-text-fill: #7F8C8D; -fx-font-weight: bold;" text="E-MAIL">
+                                            <Label fx:id="lblEmail" style="-fx-font-size: 12px; -fx-text-fill: #7F8C8D; -fx-font-weight: bold;" text="E-MAIL">
                                                 <font>
                                                     <Font name="Ebrima Bold" size="12.0" />
                                                 </font>
                                             </Label>
-                                            <Label style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;" text="aluno@aluno.uern.br">
+                                            <Label fx:id="lblEmail" style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;" text="aluno@aluno.uern.br">
                                                 <font>
                                                     <Font name="Ebrima" size="16.0" />
                                                 </font>
@@ -130,12 +130,12 @@
                                     
                                     <VBox spacing="20" HBox.hgrow="ALWAYS">
                                         <VBox spacing="8">
-                                            <Label style="-fx-font-size: 12px; -fx-text-fill: #7F8C8D; -fx-font-weight: bold;" text="CURSO">
+                                            <Label   style="-fx-font-size: 12px; -fx-text-fill: #7F8C8D; -fx-font-weight: bold;" text="CURSO">
                                                 <font>
                                                     <Font name="Ebrima Bold" size="12.0" />
                                                 </font>
                                             </Label>
-                                            <Label style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;" text="Ciência da Computação">
+                                            <Label fx:id="lblCurso" style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;" text="Ciência da Computação">
                                                 <font>
                                                     <Font name="Ebrima" size="16.0" />
                                                 </font>

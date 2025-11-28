@@ -15,7 +15,11 @@
 <BorderPane fx:id="root" prefHeight="600.0" prefWidth="900.0" 
             xmlns="http://javafx.com/javafx/25" 
             xmlns:fx="http://javafx.com/fxml/1" 
+<<<<<<< HEAD
             fx:controller="controller.DashboardAlunoController">
+=======
+            fx:controller="controllers.DashboardAlunoController">
+>>>>>>> 77abcafd8f1c2a1b8532a61fdf48d9c6a1ef1cfd
     
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="200" spacing="15" style="-fx-background-color: #0F1D45;">
