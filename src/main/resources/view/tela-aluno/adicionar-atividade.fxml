@@ -14,7 +14,7 @@
 <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: #ECF0F1;" 
             xmlns="http://javafx.com/javafx/25" 
             xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="controllers.FormularioAtividadeController">
+            fx:controller="controller.AtividadeController">
 
     <content>
         <VBox alignment="TOP_LEFT" spacing="20">

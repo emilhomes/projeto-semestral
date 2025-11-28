@@ -37,9 +37,11 @@
         <columns>
             <TableColumn fx:id="colDescricao" prefWidth="300.0" text="Atividade" />
             
-            <TableColumn fx:id="colDataFim" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Data Entrega" />
+            <TableColumn fx:id="colDataFim" prefWidth="130.0" style="-fx-alignment: CENTER;" text="Data Entrega" />
             
-            <TableColumn fx:id="colEstado" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Status" />
+            <TableColumn fx:id="colEstado" prefWidth="130.0" style="-fx-alignment: CENTER;" text="Status" />
+
+            <TableColumn fx:id="colAcoes" prefWidth="180.0" style="-fx-alignment: CENTER;" text="Ações" sortable="false"/>
         </columns>
         
         <columnResizePolicy>
