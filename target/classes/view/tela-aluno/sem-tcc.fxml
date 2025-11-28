@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
+
+<BorderPane fx:id="root"
+            prefHeight="600.0"
+            prefWidth="900.0"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.MeuTCCSemController"
+            style="-fx-background-color: #ECF0F1;">
+
+    <!-- SIDEBAR PADRÃO -->
+    <left>
+        <VBox alignment="TOP_CENTER"
+              prefWidth="200"
+              spacing="25"
+              style="-fx-background-color: #2C3E50;">
+            
+            <padding>
+                <Insets top="35" bottom="35"/>
+            </padding>
+
+            <!-- LOGO -->
+            <ImageView fitHeight="110" fitWidth="110" preserveRatio="true">
+                <image>
+                    <Image url="@logo-gestao-tccs-e-monografias-branco.png"/>
+                </image>
+            </ImageView>
+
+            <!-- MENU -->
+            <Button fx:id="btnPerfil"
+                    onAction="#abrirPerfil"
+                    prefWidth="170"
+                    style="-fx-background-color: transparent; 
+                           -fx-text-fill: white;
+                           -fx-font-size: 15px;"
+                    text="Perfil do Aluno" />
+
+            <Button fx:id="btnMeuTCC"
+                    onAction="#abrirMeuTCC"
+                    prefWidth="170"
+                    style="-fx-background-color: #1A252F; 
+                           -fx-text-fill: white; 
+                           -fx-font-size: 15px;"
+                    text="Meu TCC" />
+
+            <Button fx:id="btnCronograma"
+                    onAction="#abrirCronograma"
+                    prefWidth="170"
+                    style="-fx-background-color: transparent; 
+                           -fx-text-fill: white;
+                           -fx-font-size: 15px;"
+                    text="Cronograma" />
+        </VBox>
+    </left>
+
+    <!-- ÁREA PRINCIPAL -->
+    <center>
+        <StackPane style="-fx-background-color: #ECF0F1;">
+            <children>
+
+                <VBox alignment="CENTER" spacing="30">
+
+                    <VBox alignment="CENTER" spacing="20"
+                          style="-fx-background-color: white; 
+                                 -fx-background-radius: 15;
+                                 -fx-padding: 35;
+                                 -fx-border-radius: 15;"
+                          prefWidth="450">
+                        
+                        <effect>
+                            <DropShadow color="#00000025" radius="15" offsetY="4"/>
+                        </effect>
+
+                        <Label text="Nenhum TCC cadastrado"
+                               style="-fx-font-size: 24px; 
+                                      -fx-font-weight: bold; 
+                                      -fx-text-fill: #2C3E50;" />
+
+                        <Label text="Para iniciar seu Trabalho de Conclusão de Curso, registre seu TCC no sistema."
+                               wrapText="true"
+                               style="-fx-font-size: 14px; 
+                                      -fx-text-fill: #60727B;"
+                               prefWidth="350"/>
+
+                        <Button fx:id="btnCadastrarTCC"
+                                text="Cadastrar TCC"
+                                style="-fx-font-size: 16px;
+                                       -fx-padding: 12 28;
+                                       -fx-background-color: #2C3E50;
+                                       -fx-text-fill: white;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 8;
+                                       -fx-cursor: hand;" />
+
+                    </VBox>
+
+                </VBox>
+
+            </children>
+        </StackPane>
+    </center>
+
+</BorderPane>

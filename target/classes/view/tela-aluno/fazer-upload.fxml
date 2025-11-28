@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.UploadTCCController"
+            prefWidth="750" prefHeight="450"
+            style="-fx-background-color: #ECF0F1;">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20"
+              style="-fx-background-color: #0F1D45;">
+            <padding><Insets top="30" bottom="30"/></padding>
+
+            <ImageView fitHeight="110" fitWidth="110" preserveRatio="true">
+                <image><Image url="@logo-gestao-tccs-e-monografias-branco.png"/></image>
+            </ImageView>
+
+            <VBox spacing="12">
+                <Button text="Perfil do Aluno" prefWidth="180"
+                        onAction="#abrirPerfil"
+                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />
+
+                <Button text="Meu TCC" prefWidth="180"
+                        onAction="#abrirMeuTCC"
+                        style="-fx-background-color: #1E3A5F; -fx-text-fill: white; -fx-font-size: 14px;" />
+
+                <Button text="Cronograma" prefWidth="180"
+                        onAction="#abrirCronograma"
+                        style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- ÁREA PRINCIPAL -->
+    <center>
+        <VBox spacing="25" alignment="CENTER">
+            <padding><Insets top="40" bottom="40" left="40" right="40"/></padding>
+
+            <Label text="Enviar Nova Versão"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;" />
+
+            <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25; -fx-min-width: 400;">
+                <effect>
+                    <DropShadow radius="12" color="#00000030" offsetY="3"/>
+                </effect>
+
+                <Label text="Selecione um arquivo PDF"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+                <Button fx:id="btnEscolherArquivo"
+                        text="Escolher Arquivo"
+                        style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 20;" />
+
+                <Label fx:id="labelArquivoSelecionado"
+                       text="Nenhum arquivo selecionado"
+                       style="-fx-text-fill: #7F8C8D; -fx-font-size: 13px;" />
+
+                <Button fx:id="btnEnviar"
+                        text="Enviar"
+                        style="-fx-background-color: #1E3A5F; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 10 25; -fx-font-weight: bold;" />
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>
