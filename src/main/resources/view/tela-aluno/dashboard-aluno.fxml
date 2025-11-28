@@ -12,10 +12,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
 <BorderPane fx:id="root" prefHeight="600.0" prefWidth="900.0" 
             xmlns="http://javafx.com/javafx/25" 
             xmlns:fx="http://javafx.com/fxml/1" 
             fx:controller="controllers.DashboardAlunoController">
+=======
+<BorderPane fx:id="root" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardAlunoController">
+>>>>>>> 42d6fd5fa078fe37714bc744423642b722cdeea4
     
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="200" spacing="15" style="-fx-background-color: #0F1D45;">

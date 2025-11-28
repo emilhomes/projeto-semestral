@@ -3,17 +3,17 @@ package model;
 public class UsuarioModel {
       private int idUsuario;
       private String nome;
-      private String email;
-      private String tipo;
+      private String emailInstitucional;
+      private String tipoUsuario;
       private String senha;
 
       public UsuarioModel() {
       }
 
-      public UsuarioModel(String nome, String email, String tipo, String senha) {
+      public UsuarioModel(String nome, String emailInstitucional, String tipoUsuario, String senha) {
             this.nome = nome;
-            this.email = email;
-            this.tipo = tipo;
+            this.emailInstitucional = emailInstitucional;
+            this.tipoUsuario = tipoUsuario;
             this.senha = senha;
       }
 
@@ -33,20 +33,20 @@ public class UsuarioModel {
             this.nome = nome;
       }
 
-      public String getEmail() {
-            return email;
+      public String getEmailInstitucional() {
+            return emailInstitucional;
       }
 
-      public void setEmail(String email) {
-            this.email = email;
+      public void setEmailInstitucional(String emailInstitucional) {
+            this.emailInstitucional = emailInstitucional;
       }
 
-      public String getTipo() {
-            return tipo;
+      public String getTipoUsuario() {
+            return tipoUsuario;
       }
 
-      public void setTipo(String tipo) {
-            this.tipo = tipo;
+      public void setTipoUsuario(String tipoUsuario) {
+            this.tipoUsuario = tipoUsuario;
       }
 
       public String getSenha() {
