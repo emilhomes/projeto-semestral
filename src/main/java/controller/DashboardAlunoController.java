@@ -25,24 +25,24 @@ public class DashboardAlunoController {
     private Label lblMatricula;
 
     @FXML
+    private Label lblCurso;
+
+    @FXML
     private StackPane contentArea;
 
     @FXML
     public void initialize() {
 
-        // Aqui você pega o usuário logado — use seu AuthenticationService ou variável
-        // global
-
         UsuarioModel usuario = AuthenticationService.getUsuarioLogado();
         AlunoDAO dao = new AlunoDAO();
         AlunoModel aluno = dao.buscarPorUsuarioId(usuario.getIdUsuario());
 
-        lblNome.setText("Nome: " + usuario.getNome());
-        lblEmail.setText("Email: " + usuario.getEmailInstitucional());
-        lblMatricula.setText("Matrícula: " + aluno.getMatricula());
-
-        carregarTela("tela-aluno/perfil.fxml");
+        lblNome.setText(usuario.getNome());
+        lblEmail.setText(usuario.getEmailInstitucional());
+        lblMatricula.setText(String.valueOf(aluno.getMatricula()));
+        lblCurso.setText(aluno.getCurso());
     }
+
 
     @FXML
     private void abrirPerfil(ActionEvent event) {
@@ -52,7 +52,7 @@ public class DashboardAlunoController {
     @FXML
     private void abrirMeuTCC(ActionEvent event) {
         System.out.println("BOTÃO CLICADO");
-        carregarTela("tela-aluno/sem-tcc-cadastrado.fxml");
+        carregarTela("tela-aluno/sem-tcc.fxml");
     }
 
     @FXML
