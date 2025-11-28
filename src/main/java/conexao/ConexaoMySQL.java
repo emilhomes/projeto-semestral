@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class ConexaoMySQL {
     private static final String URL = "jdbc:mysql://localhost:3306/projeto_semestral";
     private static final String USER = "root";
-    private static final String PASS = "";
+    private static final String PASS = "sql123";
 
     public static Connection getConnection() {
         try {
@@ -16,5 +16,3 @@ public class ConexaoMySQL {
         }
     }
 }
-
-

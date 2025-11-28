@@ -10,6 +10,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.AlunoModel;
 import model.UsuarioModel;
+
+import java.io.IOException;
+
 import dao.AlunoDAO;
 import service.AuthenticationService;
 
@@ -57,7 +60,21 @@ public class DashboardAlunoController {
 
     @FXML
     private void abrirCronograma(ActionEvent event) {
-        carregarTela("tela-aluno/cronograma.fxml");
+        try {
+        // 1. Carrega o arquivo da LISTA (que tem a tabela)
+        // Verifique se o caminho "/view/tela-aluno/cronograma-lista.fxml" está correto
+        Parent fxml = FXMLLoader.load(getClass().getResource("/view/tela-aluno/cronograma-lista.fxml"));
+        
+        // 2. Limpa o centro atual do Dashboard
+        contentArea.getChildren().clear();
+        
+        // 3. Adiciona a tela de lista no lugar
+        contentArea.getChildren().add(fxml);
+        
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao carregar o cronograma.");
+        }
     }
 
     @FXML

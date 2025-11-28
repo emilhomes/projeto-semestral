@@ -15,7 +15,8 @@ public class AtividadeDAO {
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                  stmt.setString(1, atividade.getDescricao());
+                  stmt.setString(1, atividade.getDescricaoBanco());
+
                   stmt.setDate(2, java.sql.Date.valueOf(atividade.getDataInicio()));
                   stmt.setDate(3, java.sql.Date.valueOf(atividade.getDataFim()));
                   stmt.setString(4, atividade.getEstado());
@@ -36,7 +37,8 @@ public class AtividadeDAO {
 
                   while (rs.next()) {
                         AtividadeModel u = new AtividadeModel();
-                        u.setDescricao(rs.getString("descricao"));
+                        u.setIdAtividade(rs.getInt("idAtividade"));
+                        u.setDescricaoBanco(rs.getString("descricao"));
                         Date dataInicio = rs.getDate("dataInicio");
                         if (dataInicio != null)
                               u.setDataInicio(dataInicio.toLocalDate());
@@ -62,7 +64,7 @@ public class AtividadeDAO {
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                  stmt.setString(1, atividade.getDescricao());
+                  stmt.setString(1, atividade.getDescricaoBanco());
                   stmt.setDate(2, java.sql.Date.valueOf(atividade.getDataInicio()));
                   stmt.setDate(3, java.sql.Date.valueOf(atividade.getDataFim()));
                   stmt.setString(4, atividade.getEstado());
