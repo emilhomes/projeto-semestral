@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class VersaoDocumentoModel {
 
       private int idVersao;
+      private int idTCC;
       private String nomeArquivo;
       private LocalDate dataEnvio;
       private int idComentario;
@@ -49,5 +50,12 @@ public class VersaoDocumentoModel {
       public void setIdComentario(int idComentario) {
             this.idComentario = idComentario;
       }
+      public int getIdTCC() {
+        return idTCC;
+    }
+
+    public void setIdTCC(int idTCC) {
+        this.idTCC = idTCC;
+    }
 
 }

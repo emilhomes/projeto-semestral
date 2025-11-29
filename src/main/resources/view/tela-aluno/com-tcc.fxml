@@ -51,7 +51,7 @@
 
                     <!-- TÍTULO -->
                     <VBox spacing="8">
-                        <Label text="Meu TCC"
+                        <Label text="Meu TCC" fx:id= "lblTitulo"
                                style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;"/>
 
                         <Label fx:id="labelTitulo"

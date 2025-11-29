@@ -32,6 +32,66 @@ public class TccDAO {
             }
       }
 
+      public TccModel buscarTccComOrientador(int idUsuario) {
+            String sql = "SELECT t.*, u.nome AS nomeOrientador " +
+                        "FROM tcc t INNER JOIN orientador o ON t.idOrientador = o.idUsuario " +
+                        "INNER JOIN usuario u ON o.idUsuario = u.idUsuario " +
+                        "WHERE t.idAluno = ?";
+            TccModel tcc = null;
+
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                  stmt.setInt(1, idUsuario);
+                  var rs = stmt.executeQuery();
+                  if (rs.next()) {
+                        tcc = new TccModel();
+                        tcc.setIdTcc(rs.getInt("idTcc"));
+                        tcc.setTitulo(rs.getString("titulo"));
+                        tcc.setEstado(rs.getString("estado"));
+                        tcc.setIdOrientador(rs.getInt("idOrientador"));
+                        tcc.setNomeOrientador(rs.getString("nomeOrientador"));
+                        tcc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());
+                  }
+            } catch (Exception e) {
+                  e.printStackTrace();
+            }
+
+            return tcc;
+      }
+
+      public TccModel buscarTccPorUsuarioId(int idUsuario) {
+
+            String sql = "SELECT * FROM tcc WHERE idAluno = ?";
+
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                  stmt.setInt(1, idUsuario);
+                  ResultSet rs = stmt.executeQuery();
+
+                  if (rs.next()) {
+                        TccModel tcc = new TccModel();
+                        tcc.setIdTcc(rs.getInt("idTcc"));
+                        tcc.setTitulo(rs.getString("titulo"));
+                        tcc.setResumo(rs.getString("resumo"));
+                        tcc.setEstado(rs.getString("estado"));
+                        tcc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());
+                        tcc.setIdAluno(rs.getInt("idAluno"));
+                        tcc.setIdOrientador(rs.getInt("idOrientador"));
+                        tcc.setIdBanca(rs.getInt("idBanca"));
+                        tcc.setIdVersao(rs.getInt("idVersao"));
+
+                        return tcc;
+                  }
+
+            } catch (Exception e) {
+                  e.printStackTrace();
+            }
+
+            return null;
+      }
+
       public List<TccModel> listar() {
             List<TccModel> lista = new ArrayList<>();
             String sql = "SELECT * FROM tcc";

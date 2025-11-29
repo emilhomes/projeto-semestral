@@ -14,6 +14,7 @@ public class TccModel {
       private int idBanca;
       private int idVersao;
       private int idOrientador;
+      private String nomeOrientador;
 
       public TccModel() {
       }
@@ -100,6 +101,12 @@ public class TccModel {
 
       public void setIdOrientador(int idOrientador) {
             this.idOrientador = idOrientador;
+      }
+      public String getNomeOrientador() {
+            return nomeOrientador;
+      }
+      public void setNomeOrientador(String nomeOrientador) {
+            this.nomeOrientador = nomeOrientador;
       }
 
 }

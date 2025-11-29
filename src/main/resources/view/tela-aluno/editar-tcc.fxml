@@ -8,7 +8,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.EditarTCCController"
+            fx:controller="controller.EditarTccController"
             prefWidth="900" prefHeight="600"
             style="-fx-background-color: #ECF0F1;">
 
