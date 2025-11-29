@@ -5,6 +5,7 @@ public class OrientadorModel {
       private String areaPesquisa;
       private String estado;
       private int idUsuario;
+      private String nome;
 
       public OrientadorModel() {
       }
@@ -37,6 +38,12 @@ public class OrientadorModel {
 
       public void setEstado(String estado) {
             this.estado = estado;
+      }
+      public String getNome() {
+            return nome;
+      }
+      public void setNome(String nome) {
+            this.nome = nome;
       }
 
 }

@@ -1,14 +1,16 @@
 package dao;
+
 import model.OrientadorModel;
+// import model.UsuarioModel;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import conexao.ConexaoMySQL;
+
 public class OrientadorDAO {
-     
-      
+
       public void inserir(OrientadorModel orientador) {
             String sql = "INSERT INTO orientador(areaPesquisa, estado, idUsuario) VALUES (?, ?, ? )";
 
@@ -27,28 +29,77 @@ public class OrientadorDAO {
             }
       }
 
-      public List<OrientadorModel> listar() {
-            List<OrientadorModel> lista = new ArrayList<>();
-            String sql = "SELECT * FROM orientador";
+      public OrientadorModel buscarPorNome(String nome) {
+    String sql = " SELECT  o.idUsuario, u.nome FROM orientador o   INNER JOIN usuario u ON u.idUsuario = o.idUsuario   WHERE u.nome = ?";
+
+    try (Connection conn = ConexaoMySQL.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, nome);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            OrientadorModel o = new OrientadorModel();
+            o.setIdUsuario(rs.getInt("idUsuario"));
+            o.setNome(rs.getString("nome"));
+            return o;
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return null;
+}
+      public OrientadorModel buscarPorUsuarioId(int idUsuario) {
+            String sql = "SELECT * FROM orientador WHERE idUsuario = ?";
+            OrientadorModel orientador = null;
 
             try (Connection conn = ConexaoMySQL.getConnection();
-                        PreparedStatement stmt = conn.prepareStatement(sql);
-                        ResultSet rs = stmt.executeQuery()) {
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                  while (rs.next()) {
-                        OrientadorModel u = new OrientadorModel();
-                        u.setAreaPesquisa(rs.getString("areaPesquisa"));
-                        u.setEstado(rs.getString("estado"));
-                        u.setIdUsuario(rs.getInt("idUsuario"));
-                        lista.add(u);
+                  stmt.setInt(1, idUsuario);
+                  ResultSet rs = stmt.executeQuery();
+
+                  if (rs.next()) {
+                        orientador = new OrientadorModel();
+                        orientador.setAreaPesquisa(rs.getString("areaPesquisa"));
+                        orientador.setEstado(rs.getString("estado"));
+                        orientador.setIdUsuario(rs.getInt("idUsuario"));
                   }
 
             } catch (Exception e) {
                   e.printStackTrace();
             }
 
-            return lista;
+            return orientador;
       }
+
+      public List<OrientadorModel> listarOrientadores() {
+    List<OrientadorModel> lista = new ArrayList<>();
+
+    String sql = "SELECT o.idUsuario, u.nome " +
+                 "FROM orientador o " +
+                 "INNER JOIN usuario u ON u.idUsuario = o.idUsuario";
+
+    try (Connection conn = ConexaoMySQL.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            OrientadorModel o = new OrientadorModel();
+            o.setIdUsuario(rs.getInt("idUsuario"));
+            o.setNome(rs.getString("nome")); // <-- ESSENCIAL
+
+            lista.add(o);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return lista;
+}
 
       public void atualizar(OrientadorModel orientador) {
             String sql = "UPDATE orientador SET areaPesquisa = ?, estado = ? WHERE idUsuario = ?";

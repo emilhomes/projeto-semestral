@@ -18,6 +18,7 @@ C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\dao\VersaoDocumen
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\conexao\ConexaoMySQL.java
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\controller\DashboardAlunoController.java
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\controller\TccController.java
+C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\controller\CronogramaListaController.java
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\dao\TccDAO.java
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\model\AtividadeModel.java
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\main\Main.java
@@ -27,5 +28,6 @@ C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\model\PrazoInstit
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\model\TccModel.java
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\dao\CronogramaDAO.java
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\controller\LoginController.java
+C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\controller\AtividadeController.java
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\model\BancaModel.java
 C:\Users\User\OneDrive\Desktop\projeto-semestral\src\main\java\model\CronogramaModel.java

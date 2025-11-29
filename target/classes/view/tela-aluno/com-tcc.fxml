@@ -9,7 +9,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.MeuTCCComController"
+            fx:controller="controller.MeuTccController"
             prefWidth="900" prefHeight="600"
             style="-fx-background-color: #ECF0F1;">
 
@@ -24,7 +24,7 @@
             </ImageView>
 
             <!-- MENU -->
-            <VBox spacing="12">
+            <!-- <VBox spacing="12">
 
                 <Button fx:id="btnPerfil" onAction="#abrirPerfil" prefWidth="180"
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;"
@@ -38,7 +38,7 @@
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;"
                         text="Cronograma"/>
 
-            </VBox>
+            </VBox> -->
         </VBox>
     </left>
 

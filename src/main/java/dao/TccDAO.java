@@ -9,7 +9,7 @@ import conexao.ConexaoMySQL;
 
 public class TccDAO {
 
-      public void inserir(TccModel tcc) {
+      public boolean inserir(TccModel tcc) {
             String sql = "INSERT INTO tcc(titulo, resumo, estado, dataCadastro, idAluno, idBanca, idVersao, idOrientador) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             try (Connection conn = ConexaoMySQL.getConnection();
@@ -23,11 +23,12 @@ public class TccDAO {
                   stmt.setInt(6, tcc.getIdBanca());
                   stmt.setInt(7, tcc.getIdVersao());
                   stmt.setInt(8, tcc.getIdOrientador());
-                  
-                  stmt.executeUpdate();
 
+                  stmt.executeUpdate();
+                  return true;
             } catch (Exception e) {
                   e.printStackTrace();
+                  return false;
             }
       }
 
@@ -47,10 +48,10 @@ public class TccDAO {
                         Date dataCadastro = rs.getDate("dataCadastro");
                         if (dataCadastro != null)
                               u.setDataCadastro(dataCadastro.toLocalDate());
-                       u.setIdAluno(rs.getInt("idAluno"));
-                       u.setIdBanca(rs.getInt("idBanca"));
-                       u.setIdOrientador(rs.getInt("idOrientador"));
-                       u.setIdVersao(rs.getInt("idVersao"));
+                        u.setIdAluno(rs.getInt("idAluno"));
+                        u.setIdBanca(rs.getInt("idBanca"));
+                        u.setIdOrientador(rs.getInt("idOrientador"));
+                        u.setIdVersao(rs.getInt("idVersao"));
                         lista.add(u);
                   }
 
@@ -100,4 +101,3 @@ public class TccDAO {
             }
       }
 }
-
