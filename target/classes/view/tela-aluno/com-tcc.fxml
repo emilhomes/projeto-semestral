@@ -24,7 +24,7 @@
             </ImageView>
 
             <!-- MENU -->
-            <!-- <VBox spacing="12">
+            <VBox spacing="12">
 
                 <Button fx:id="btnPerfil" onAction="#abrirPerfil" prefWidth="180"
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;"
@@ -38,7 +38,7 @@
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;"
                         text="Cronograma"/>
 
-            </VBox> -->
+            </VBox>
         </VBox>
     </left>
 

@@ -13,35 +13,7 @@
             style="-fx-background-color: #ECF0F1;" 
             xmlns="http://javafx.com/javafx/25" 
             xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="controllers.PrazosInstitucionaisController">
-
-    <left>
-        <VBox alignment="TOP_CENTER" prefWidth="200" spacing="15" style="-fx-background-color: #0F1D45;">
-            <padding><Insets bottom="20" top="20" /></padding>
-
-            <ImageView fitHeight="110" fitWidth="110" preserveRatio="true">
-                <image>
-                    <Image url="@logo-gestao-tccs-e-monografias-branco.png" />
-                </image>
-            </ImageView>
-
-            <VBox spacing="12" VBox.vgrow="ALWAYS">
-                <padding><Insets top="20" /></padding>
-
-                <Button fx:id="btnPerfil" onAction="#abrirPerfil" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="Perfil do Coordenador">
-                    <font><Font name="Ebrima" size="12" /></font>
-                </Button>
-
-                <Button fx:id="btnBancas" onAction="#abrirBancas" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="Bancas">
-                    <font><Font name="Ebrima" size="12" /></font>
-                </Button>
-
-                <Button fx:id="btnPrazos" onAction="#abrirPrazos" prefWidth="180" style="-fx-background-color: #1A2B5E; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-color: white; -fx-border-width: 0 0 0 4;" text="Prazos Institucionais">
-                    <font><Font name="Ebrima" size="12" /></font>
-                </Button>
-            </VBox>
-        </VBox>
-    </left>
+            fx:controller="controller.PrazosInstitucionaisController">
 
     <center>
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">

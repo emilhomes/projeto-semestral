@@ -1,88 +1,116 @@
 package dao;
 
 import model.BancaModel;
-
+import conexao.ConexaoMySQL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import conexao.ConexaoMySQL;
-
 public class BancaDAO {
 
-      public void inserir(BancaModel banca) {
-            String sql = "INSERT INTO banca(dataDefesa, menbros, idOrientador) VALUES (?, ?, ? )";
+    public void inserir(BancaModel banca) {
+        // Removi idOrientador pois você não está usando na tela
+        String sql = "INSERT INTO banca(dataDefesa, menbros) VALUES (?, ?)";
 
-            try (Connection conn = ConexaoMySQL.getConnection();
-                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexaoMySQL.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                  stmt.setDate(1, java.sql.Date.valueOf(banca.getDataDefesa()));
-                  stmt.setString(2, banca.getMenbros());
-                  stmt.setInt(3, banca.getIdOrientador());
-                  stmt.executeUpdate();
-
-            } catch (Exception e) {
-                  e.printStackTrace();
+            // Tratamento para data nula
+            if (banca.getDataDefesa() != null) {
+                stmt.setDate(1, java.sql.Date.valueOf(banca.getDataDefesa()));
+            } else {
+                stmt.setNull(1, java.sql.Types.DATE);
             }
-      }
+            
+            stmt.setString(2, banca.getMenbros());
+            
+            // Se o idOrientador for obrigatório no banco e não tiver valor padrão,
+            // descomente a linha abaixo e envie 0 ou null:
+            // stmt.setInt(3, 0); 
 
-      public List<BancaModel> listar() {
-            List<BancaModel> lista = new ArrayList<>();
-            String sql = "SELECT * FROM banca";
+            stmt.executeUpdate();
 
-            try (Connection conn = ConexaoMySQL.getConnection();
-                        PreparedStatement stmt = conn.prepareStatement(sql);
-                        ResultSet rs = stmt.executeQuery()) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-                  while (rs.next()) {
-                        BancaModel u = new BancaModel();
-                  
-                        u.setMenbros(rs.getString("menbros"));
-                        u.setIdOrientador(rs.getInt("idOrientador"));
-                         Date dataDefesa = rs.getDate("dataDefesa");
-                         if (dataDefesa != null)
-                               u.setDataDefesa(dataDefesa.toLocalDate());
-                        lista.add(u);
-                  }
+    public List<BancaModel> listar() {
+        List<BancaModel> lista = new ArrayList<>();
+        String sql = "SELECT * FROM banca";
 
-            } catch (Exception e) {
-                  e.printStackTrace();
+        try (Connection conn = ConexaoMySQL.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                BancaModel u = new BancaModel();
+                
+                // --- CORREÇÃO IMPORTANTE ---
+                // É OBRIGATÓRIO pegar o ID para que o botão Editar/Excluir funcione
+                u.setIdBanca(rs.getInt("idBanca")); 
+                
+                u.setMenbros(rs.getString("menbros"));
+                
+                // Data pode ser nula no banco, então precisamos verificar
+                Date dataDefesa = rs.getDate("dataDefesa");
+                if (dataDefesa != null) {
+                    u.setDataDefesa(dataDefesa.toLocalDate());
+                }
+                
+                // Se removeu do controller, não precisa setar aqui, 
+                // mas se quiser manter no model, pode deixar:
+                // u.setIdOrientador(rs.getInt("idOrientador"));
+
+                lista.add(u);
             }
 
-            return lista;
-      }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-      public void atualizar(BancaModel banca) {
-            String sql = "UPDATE banca SET dataDefesa = ?, menbros = ?, idOrientador = ? WHERE idBanca = ?";
+        return lista;
+    }
 
-            try (Connection conn = ConexaoMySQL.getConnection();
-                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+    public void atualizar(BancaModel banca) {
+        // Corrigido a ordem dos parâmetros e removido idOrientador
+        String sql = "UPDATE banca SET dataDefesa = ?, menbros = ? WHERE idBanca = ?";
 
-                  stmt.setString(1, banca.getMenbros());
-                  stmt.setInt(2, banca.getIdOrientador());
-                  stmt.setInt(3, banca.getIdBanca());
-                  stmt.setDate(4, java.sql.Date.valueOf(banca.getDataDefesa()));
-                  stmt.executeUpdate();
+        try (Connection conn = ConexaoMySQL.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                  System.out.println("Banca atualizado!");
-
-            } catch (Exception e) {
-                  e.printStackTrace();
+            if (banca.getDataDefesa() != null) {
+                stmt.setDate(1, java.sql.Date.valueOf(banca.getDataDefesa()));
+            } else {
+                stmt.setNull(1, java.sql.Types.DATE);
             }
-      }
 
-      public void deletar(int idBanca) {
-            String sql = "DELETE FROM banca idBanca = ?";
+            stmt.setString(2, banca.getMenbros());
+            
+            // O ID é o terceiro parâmetro (WHERE idBanca = ?)
+            stmt.setInt(3, banca.getIdBanca());
 
-            try (Connection conn = ConexaoMySQL.getConnection();
-                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.executeUpdate();
+            System.out.println("Banca atualizada!");
 
-                  stmt.setInt(1, idBanca);
-                  stmt.executeUpdate();
-                  System.out.println("Banca removido!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-            } catch (Exception e) {
-                  e.printStackTrace();
-            }
-      }
+    public void deletar(int idBanca) {
+        // Corrigido: Faltava o "WHERE" no seu código original
+        String sql = "DELETE FROM banca WHERE idBanca = ?";
+
+        try (Connection conn = ConexaoMySQL.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idBanca);
+            stmt.executeUpdate();
+            System.out.println("Banca removida!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

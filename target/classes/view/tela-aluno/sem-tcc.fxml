@@ -11,7 +11,7 @@
             prefWidth="900.0"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.SemTccController"
+            fx:controller="controllers.MeuTCCSemController"
             style="-fx-background-color: #ECF0F1;">
 
     <!-- SIDEBAR PADRÃO -->
@@ -33,7 +33,7 @@
             </ImageView>
 
             <!-- MENU -->
-            <!-- <Button fx:id="btnPerfil"
+            <Button fx:id="btnPerfil"
                     onAction="#abrirPerfil"
                     prefWidth="170"
                     style="-fx-background-color: transparent; 
@@ -55,8 +55,8 @@
                     style="-fx-background-color: transparent; 
                            -fx-text-fill: white;
                            -fx-font-size: 15px;"
-                    text="Cronograma" /> -->
-        </VBox> 
+                    text="Cronograma" />
+        </VBox>
     </left>
 
     <!-- ÁREA PRINCIPAL -->
@@ -89,7 +89,6 @@
                                prefWidth="350"/>
 
                         <Button fx:id="btnCadastrarTCC"
-                                onAction="#CadastrarTCC"
                                 text="Cadastrar TCC"
                                 style="-fx-font-size: 16px;
                                        -fx-padding: 12 28;

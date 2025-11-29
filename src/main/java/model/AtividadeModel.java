@@ -1,6 +1,5 @@
 package model;
 
-// import javax.xml.crypto.Data;
 import java.time.LocalDate;
 
 public class AtividadeModel {
@@ -12,6 +11,7 @@ public class AtividadeModel {
       private LocalDate dataInicio;
       private LocalDate dataFim;
       private String estado;
+      private String tipo; // Vai receber "PESSOAL", "BANCA" ou "INSTITUCIONAL"
 
       public AtividadeModel() {
       }
@@ -24,6 +24,16 @@ public class AtividadeModel {
             this.dataFim = dataFim;
             this.estado = estado;
       }
+
+      // --- GETTER E SETTER DO NOVO CAMPO ---
+      public String getTipo() {
+            return tipo;
+      }
+
+      public void setTipo(String tipo) {
+            this.tipo = tipo;
+      }
+      // -------------------------------------
 
       public void setTitulo(String titulo) {
             this.titulo = titulo;
