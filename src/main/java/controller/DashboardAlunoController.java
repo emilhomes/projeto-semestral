@@ -9,11 +9,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.AlunoModel;
+import model.TccModel;
 import model.UsuarioModel;
 
 import java.io.IOException;
 
 import dao.AlunoDAO;
+import dao.TccDAO;
 import service.AuthenticationService;
 
 public class DashboardAlunoController {
@@ -40,12 +42,11 @@ public class DashboardAlunoController {
         AlunoDAO dao = new AlunoDAO();
         AlunoModel aluno = dao.buscarPorUsuarioId(usuario.getIdUsuario());
 
-         lblNome.setText(usuario.getNome());
-         lblEmail.setText(usuario.getEmailInstitucional());
-         lblMatricula.setText(String.valueOf(aluno.getMatricula()));
-         lblCurso.setText(aluno.getCurso());
+        lblNome.setText(usuario.getNome());
+        lblEmail.setText(usuario.getEmailInstitucional());
+        lblMatricula.setText(String.valueOf(aluno.getMatricula()));
+        lblCurso.setText(aluno.getCurso());
     }
-
 
     @FXML
     private void abrirPerfil(ActionEvent event) {
@@ -54,20 +55,29 @@ public class DashboardAlunoController {
 
     @FXML
     private void abrirMeuTCC(ActionEvent event) {
-        System.out.println("BOTÃO CLICADO");
-        carregarTela("tela-aluno/sem-tcc.fxml");
+        UsuarioModel usuario = AuthenticationService.getUsuarioLogado();
+        int idUsuario = usuario.getIdUsuario();
+        TccDAO TccDAO = new TccDAO();
+        TccModel tcc = TccDAO.buscarTccPorUsuarioId(idUsuario);
+
+        if (tcc != null) {
+            carregarTela("tela-aluno/com-tcc.fxml");
+        } else {
+            carregarTela("tela-aluno/sem-tcc.fxml");
+        }
+
     }
 
     @FXML
     private void abrirCronograma(ActionEvent event) {
         try {
 
-        Parent fxml = FXMLLoader.load(getClass().getResource("/view/tela-aluno/cronograma-lista.fxml"));
-        
-        contentArea.getChildren().clear();
-        
-        contentArea.getChildren().add(fxml);
-        
+            Parent fxml = FXMLLoader.load(getClass().getResource("/view/tela-aluno/cronograma-lista.fxml"));
+
+            contentArea.getChildren().clear();
+
+            contentArea.getChildren().add(fxml);
+
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Erro ao carregar o cronograma.");
@@ -78,7 +88,7 @@ public class DashboardAlunoController {
     private void carregarTela(String fxml) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/" + fxml));
-            Stage stage = new Stage(); 
+            Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
 

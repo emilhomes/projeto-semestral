@@ -111,11 +111,11 @@ public class TccController {
         
     }
 
-    @FXML
+     @FXML
     private void carregarTela(String fxml) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/" + fxml));
-            Stage stage = new Stage();
+            Stage stage = new Stage(); 
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -125,6 +125,20 @@ public class TccController {
             e.printStackTrace();
         }
     }
+    // @FXML
+    // private void carregarTela(String fxml) {
+    //     try {
+    //         Parent root = FXMLLoader.load(getClass().getResource("/view/" + fxml));
+    //         Stage stage = new Stage();
+    //         stage.setScene(new Scene(root));
+    //         stage.show();
+
+    //         Stage atual = (Stage) contentArea.getScene().getWindow();
+    //         atual.close();
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
     private void limparCampos() {
         campoTitulo.clear();
