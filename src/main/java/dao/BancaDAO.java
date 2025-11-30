@@ -113,4 +113,35 @@ public class BancaDAO {
             e.printStackTrace();
         }
     }
+
+    public List<BancaModel> listarPorOrientador(int idOrientador) {
+        List<BancaModel> lista = new ArrayList<>();
+        
+        // SQL: Selecione as bancas ONDE o idBanca está na tabela TCC E o orientador do TCC é X
+        String sql = "SELECT b.* FROM banca b " +
+                     "INNER JOIN tcc t ON t.idBanca = b.idBanca " +
+                     "WHERE t.idOrientador = ?";
+
+        try (Connection conn = ConexaoMySQL.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idOrientador);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                BancaModel u = new BancaModel();
+                u.setIdBanca(rs.getInt("idBanca"));
+                u.setMenbros(rs.getString("menbros"));
+                
+                Date dataDefesa = rs.getDate("dataDefesa");
+                if (dataDefesa != null) u.setDataDefesa(dataDefesa.toLocalDate());
+                
+                lista.add(u);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
 }

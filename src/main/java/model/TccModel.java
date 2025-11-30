@@ -15,6 +15,7 @@ public class TccModel {
       private int idVersao;
       private int idOrientador;
       private String nomeOrientador;
+      private String nomeAluno;
 
       public TccModel() {
       }
@@ -107,6 +108,14 @@ public class TccModel {
       }
       public void setNomeOrientador(String nomeOrientador) {
             this.nomeOrientador = nomeOrientador;
+      }
+
+      public void setNomeAluno(String nomeAluno) {
+            this.nomeAluno = nomeAluno;
+      }
+
+      public String getNomeAluno() {
+            return nomeAluno;
       }
 
 }

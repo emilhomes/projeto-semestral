@@ -123,6 +123,40 @@ public class TccDAO {
             return lista;
       }
 
+      public List<TccModel> listarPorOrientador(int idOrientador) {
+            List<TccModel> lista = new ArrayList<>();
+            // JOIN entre TCC -> ALUNO -> USUARIO para descobrir o nome do aluno
+            String sql = "SELECT t.*, u.nome AS nomeAluno " +
+                        "FROM tcc t " +
+                        "INNER JOIN aluno a ON t.idAluno = a.idAluno " +
+                        "INNER JOIN usuario u ON a.idUsuario = u.idUsuario " +
+                        "WHERE t.idOrientador = ?";
+
+            try (Connection conn = ConexaoMySQL.getConnection();
+                  PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                  stmt.setInt(1, idOrientador);
+                  ResultSet rs = stmt.executeQuery();
+
+                  while (rs.next()) {
+                        TccModel tcc = new TccModel();
+                        tcc.setIdTcc(rs.getInt("idTcc"));
+                        tcc.setTitulo(rs.getString("titulo"));
+                        tcc.setResumo(rs.getString("resumo"));
+                        tcc.setEstado(rs.getString("estado"));
+                        
+                        // Preenche o campo 'transient' que criamos no Model
+                        tcc.setNomeAluno(rs.getString("nomeAluno")); 
+
+                        lista.add(tcc);
+                  }
+
+            } catch (Exception e) {
+                  e.printStackTrace();
+            }
+            return lista;
+      }
+
       public void atualizarEstado(TccModel tcc) {
             String sql = "UPDATE tcc SET estado = ? WHERE idTCC = ?";
 

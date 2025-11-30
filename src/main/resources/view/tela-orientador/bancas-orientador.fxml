@@ -11,7 +11,7 @@
 <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" 
             xmlns="http://javafx.com/javafx/25" 
             xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="controller.TccsOrientadosController">
+            fx:controller="controller.BancasOrientadorController">
 
     <content>
         <VBox spacing="25" style="-fx-background-color: #ECF0F1;">
@@ -20,10 +20,10 @@
             </padding>
 
             <VBox spacing="5">
-                <Label text="Meus Orientandos" textFill="#0f1d45">
+                <Label text="Minhas Bancas" textFill="#0f1d45">
                     <font><Font name="Ebrima Bold" size="28" /></font>
                 </Label>
-                <Label text="Acompanhe o status dos TCCs sob sua orientação." textFill="#7f8c8d">
+                <Label text="Visualize as datas de defesa e membros das bancas dos seus orientandos." textFill="#7f8c8d">
                     <font><Font name="Ebrima" size="14" /></font>
                 </Label>
             </VBox>
@@ -33,12 +33,14 @@
                     <Insets bottom="25" left="25" right="25" top="25" />
                 </padding>
 
-                <TableView fx:id="tabelaTccs" prefHeight="400" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tabelaBancas" prefHeight="400" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colAluno" prefWidth="250" text="Aluno" />
-                        <TableColumn fx:id="colTitulo" prefWidth="350" text="Título do TCC" />
-                        <TableColumn fx:id="colStatus" prefWidth="150" style="-fx-alignment: CENTER;" text="Status" />
-                        <TableColumn fx:id="colAcoes" prefWidth="150" style="-fx-alignment: CENTER;" text="Ações" />
+                        <TableColumn fx:id="colIdBanca" prefWidth="50" style="-fx-alignment: CENTER;" text="ID" />
+                        
+                        <TableColumn fx:id="colData" prefWidth="120" style="-fx-alignment: CENTER;" text="Data Defesa" />
+                        
+                        <TableColumn fx:id="colMembros" prefWidth="500" text="Membros da Banca" />
+                        
                         </columns>
                     
                     <columnResizePolicy>

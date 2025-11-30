@@ -147,8 +147,8 @@ public class OrientadorDAO {
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                   stmt.setString(1, orientador.getAreaPesquisa());
-                  stmt.setInt(2, orientador.getIdUsuario());
-                  stmt.setString(3, orientador.getEstado());
+                  stmt.setString(2, orientador.getEstado()); // Estado é o segundo ?
+                  stmt.setInt(3, orientador.getIdUsuario()); // ID (WHERE) é o terceiro ?
                   stmt.executeUpdate();
 
                   System.out.println("orientador atualizado!");

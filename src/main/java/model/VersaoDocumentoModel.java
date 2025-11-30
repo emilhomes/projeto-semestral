@@ -9,6 +9,7 @@ public class VersaoDocumentoModel {
       private String nomeArquivo;
       private LocalDate dataEnvio;
       private int idComentario;
+      private String textoComentario;
 
       public VersaoDocumentoModel() {
       }
@@ -57,6 +58,14 @@ public class VersaoDocumentoModel {
 
     public void setIdTCC(int idTCC) {
         this.idTCC = idTCC;
+    }
+
+    public void setTextoComentario(String textoComentario) {
+      this.textoComentario = textoComentario;
+    }
+
+    public String getTextoComentario() {
+      return textoComentario;
     }
 
 }

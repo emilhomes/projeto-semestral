@@ -131,10 +131,12 @@
                             <Label fx:id="labelDataAtual"
                                    text="Enviado em: 15/11/2024"
                                    style="-fx-font-size: 13px; -fx-text-fill: #7F8C8D;"/>
-                        </HBox>
-                             <Label fx:id="lblResumo"
+
+                            <Label fx:id="lblResumo"
                                text="Resumo"
                                style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
+                        </HBox>
+
                         <!-- Baixar arquivo -->
                         <Button fx:id="btnBaixarAtual"
                                 text="⬇ Baixar Documento Atual"
@@ -162,7 +164,6 @@
 
                             <HBox alignment="CENTER_RIGHT">
                                 <Button fx:id="btnEnviarComentario"
-                                onAction="#enviarComentario"
                                         text="Enviar Comentário"
                                         style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 20; -fx-font-weight: bold;"/>
                             </HBox>
