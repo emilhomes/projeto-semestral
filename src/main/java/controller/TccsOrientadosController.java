@@ -103,10 +103,33 @@ public class TccsOrientadosController implements Initializable {
     }
 
     private void carregarDados() {
-        UsuarioModel orientador = AuthenticationService.getUsuarioLogado();
-        if (orientador != null) {
-            List<TccModel> lista = tccDAO.listarPorOrientador(orientador.getIdUsuario());
-            tabelaTccs.setItems(FXCollections.observableArrayList(lista));
+        UsuarioModel orientadorLogado = AuthenticationService.getUsuarioLogado();
+        
+        System.out.println("=== DEBUG TCCs ORIENTADOS ===");
+
+        if (orientadorLogado != null) {
+            System.out.println("Orientador Logado: " + orientadorLogado.getNome() + " (ID: " + orientadorLogado.getIdUsuario() + ")");
+            
+            try {
+                // Chama o DAO
+                List<TccModel> lista = tccDAO.listarPorOrientador(orientadorLogado.getIdUsuario());
+                
+                System.out.println("Quantidade de TCCs encontrados: " + lista.size());
+                
+                for(TccModel tcc : lista) {
+                    System.out.println(" - TCC ID: " + tcc.getIdTCC());
+                    System.out.println("   Título: " + tcc.getTitulo());
+                    System.out.println("   Nome Aluno: " + tcc.getNomeAluno()); // Se aqui der null, o problema está no Model
+                }
+
+                tabelaTccs.setItems(FXCollections.observableArrayList(lista));
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("ERRO: Nenhum usuário logado.");
         }
+        System.out.println("=============================");
     }
 }

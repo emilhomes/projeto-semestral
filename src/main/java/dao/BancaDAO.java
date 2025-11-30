@@ -103,13 +103,14 @@ public class BancaDAO {
 
     public List<BancaModel> listarPorOrientador(int idOrientador) {
         List<BancaModel> lista = new ArrayList<>();
-
+        
+        // O SQL que funcionou no seu Workbench:
         String sql = "SELECT b.* FROM banca b " +
-                "INNER JOIN tcc t ON t.idBanca = b.idBanca " +
-                "WHERE t.idOrientador = ?";
+                     "INNER JOIN tcc t ON t.idBanca = b.idBanca " +
+                     "WHERE t.idOrientador = ?";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idOrientador);
             ResultSet rs = stmt.executeQuery();
@@ -118,11 +119,12 @@ public class BancaDAO {
                 BancaModel u = new BancaModel();
                 u.setIdBanca(rs.getInt("idBanca"));
                 u.setMenbros(rs.getString("menbros"));
-
+                
                 Date dataDefesa = rs.getDate("dataDefesa");
-                if (dataDefesa != null)
+                if (dataDefesa != null) {
                     u.setDataDefesa(dataDefesa.toLocalDate());
-
+                }
+                
                 lista.add(u);
             }
 

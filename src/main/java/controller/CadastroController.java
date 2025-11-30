@@ -167,6 +167,7 @@ public class CadastroController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/view/" + fxml));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
+        stage.setMaximized(true);
         stage.show();
     } catch (Exception e) {
         e.printStackTrace();

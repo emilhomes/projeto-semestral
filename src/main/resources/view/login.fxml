@@ -30,7 +30,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" preserveRatio="true">
                <image>
-                  <Image url="@logo-gestao-tccs-e-monografias-branco.png" />
+                  <Image url="@../images/logo-gestao-tccs-e-monografias-branco.png" />
                </image>
                <VBox.margin>
                   <Insets bottom="20.0" />
