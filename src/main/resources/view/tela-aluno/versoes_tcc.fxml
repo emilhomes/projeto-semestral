@@ -5,11 +5,10 @@
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- DASHBOARD COMPLETO + TELA "VERSÕES DO TCC" -->
 <BorderPane fx:id="root" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VersoesTccController">
 
     <!-- SIDEBAR -->
-    <left>
+    <!-- <left>
         <VBox alignment="TOP_CENTER" prefWidth="200" spacing="15" style="-fx-background-color: #2C3E50;">
             <children>
                 <ImageView fitHeight="108.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
@@ -23,7 +22,7 @@
                 <Button fx:id="btnCronograma" onAction="#abrirCronograma" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="Cronograma" />
             </children>
         </VBox>
-    </left>
+    </left> -->
 
     <!-- ÁREA PRINCIPAL -->
     <center>

@@ -104,7 +104,7 @@ public class TccController {
         tcc.setDataCadastro(LocalDate.now());
         tcc.setIdAluno(aluno.getIdUsuario());
         tcc.setIdOrientador(orientador.getIdUsuario());
-        
+         
         TccDAO dao = new TccDAO();
         boolean sucesso = dao.inserir(tcc); 
 

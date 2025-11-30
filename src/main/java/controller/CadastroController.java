@@ -111,7 +111,6 @@ public class CadastroController implements Initializable {
             aluno.setTcc(null);
             aluno.setCurso(departamento);
             aluno.setIdUsuario(idUsuario);
-
            
             AlunoDAO alunoDAO = new AlunoDAO();
             alunoDAO.inserir(aluno);

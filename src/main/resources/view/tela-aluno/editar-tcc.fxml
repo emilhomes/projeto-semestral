@@ -13,7 +13,7 @@
             style="-fx-background-color: #ECF0F1;">
 
     <!-- SIDEBAR -->
-    <left>
+    <!-- <left>
         <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20"
               style="-fx-background-color: #0F1D45;">
             <padding>
@@ -40,7 +40,7 @@
                         style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />
             </VBox>
         </VBox>
-    </left>
+    </left> -->
 
     <!-- CENTRO -->
     <center>

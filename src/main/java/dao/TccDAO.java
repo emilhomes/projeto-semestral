@@ -118,42 +118,42 @@ public class TccDAO {
       }
 
       public List<TccModel> listarPorOrientador(int idOrientador) {
-        List<TccModel> lista = new ArrayList<>();
-        
-        // --- AQUI ESTÁ A CORREÇÃO ---
-        // Antes estava: ... ON t.idAluno = a.matricula (ERRADO)
-        // Agora fica:   ... ON t.idAluno = a.idUsuario (CERTO)
-        
-        String sql = "SELECT t.*, u.nome AS nomeAluno " +
-                     "FROM tcc t " +
-                     "INNER JOIN aluno a ON t.idAluno = a.idUsuario " + 
-                     "INNER JOIN usuario u ON a.idUsuario = u.idUsuario " +
-                     "WHERE t.idOrientador = ?";
+            List<TccModel> lista = new ArrayList<>();
 
-        try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            // --- AQUI ESTÁ A CORREÇÃO ---
+            // Antes estava: ... ON t.idAluno = a.matricula (ERRADO)
+            // Agora fica: ... ON t.idAluno = a.idUsuario (CERTO)
 
-            stmt.setInt(1, idOrientador);
-            ResultSet rs = stmt.executeQuery();
+            String sql = "SELECT t.*, u.nome AS nomeAluno " +
+                        "FROM tcc t " +
+                        "INNER JOIN aluno a ON t.idAluno = a.idUsuario " +
+                        "INNER JOIN usuario u ON a.idUsuario = u.idUsuario " +
+                        "WHERE t.idOrientador = ?";
 
-            while (rs.next()) {
-                TccModel tcc = new TccModel();
-                tcc.setIdTcc(rs.getInt("idTcc"));
-                tcc.setTitulo(rs.getString("titulo"));
-                tcc.setResumo(rs.getString("resumo"));
-                tcc.setEstado(rs.getString("estado"));
-                
-                // Recupera o nome do aluno para mostrar na tabela
-                tcc.setNomeAluno(rs.getString("nomeAluno")); 
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                lista.add(tcc);
+                  stmt.setInt(1, idOrientador);
+                  ResultSet rs = stmt.executeQuery();
+
+                  while (rs.next()) {
+                        TccModel tcc = new TccModel();
+                        tcc.setIdTcc(rs.getInt("idTcc"));
+                        tcc.setTitulo(rs.getString("titulo"));
+                        tcc.setResumo(rs.getString("resumo"));
+                        tcc.setEstado(rs.getString("estado"));
+
+                        // Recupera o nome do aluno para mostrar na tabela
+                        tcc.setNomeAluno(rs.getString("nomeAluno"));
+
+                        lista.add(tcc);
+                  }
+
+            } catch (Exception e) {
+                  e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lista;
-    }
+            return lista;
+      }
 
       public void atualizarEstado(TccModel tcc) {
             String sql = "UPDATE tcc SET estado = ? WHERE idTCC = ?";
@@ -185,6 +185,78 @@ public class TccDAO {
             }
       }
 
+      public int contarOrientacoesAtivas() {
+            String sql = "SELECT COUNT(*) FROM tcc WHERE estado = 'Ativa'";
+            try (Connection conn = ConexaoMySQL.getConnection();
+                  PreparedStatement stmt = conn.prepareStatement(sql);
+                        ResultSet rs = stmt.executeQuery()) {
+
+                  if (rs.next()) {
+                        return rs.getInt(1);
+                  }
+            } catch (SQLException e) {
+                  e.printStackTrace();
+            }
+            return 0;
+      }
+
+      // Conta pendentes de revisão
+      public int contarPendentesRevisao() {
+            String sql = "SELECT COUNT(*) FROM tcc WHERE estado = 'Em andamento'";
+            try (Connection conn = ConexaoMySQL.getConnection();
+                  PreparedStatement stmt = conn.prepareStatement(sql);
+                        ResultSet rs = stmt.executeQuery()) {
+
+                  if (rs.next()) {
+                        return rs.getInt(1);
+                  }
+            } catch (SQLException e) {
+                  e.printStackTrace();
+            }
+            return 0;
+      }
+
+      // Conta TCCs concluídos
+      public int contarTCCsConcluidos() {
+            String sql = "SELECT COUNT(*) FROM tcc WHERE estado = 'Concluido'";
+            try (Connection conn = ConexaoMySQL.getConnection();
+                  PreparedStatement stmt = conn.prepareStatement(sql);
+                        ResultSet rs = stmt.executeQuery()) {
+
+                  if (rs.next()) {
+                        return rs.getInt(1);
+                  }
+            } catch (SQLException e) {
+                  e.printStackTrace();
+            }
+            return 0;
+      }
+
+      public List<TccModel> listarTccComMaisDeUmAluno() {
+            List<TccModel> lista = new ArrayList<>();
+            String sql = "SELECT t.titulo, COUNT(a.idUsuario) AS qtdAlunos " +
+                        "FROM TCC t " +
+                        "JOIN Aluno a ON t.idAluno = a.idUsuario " +
+                        "GROUP BY t.titulo " +
+                        "HAVING COUNT(a.idUsuario) > 1";
+
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql);
+                        ResultSet rs = stmt.executeQuery()) {
+
+                  while (rs.next()) {
+                        TccModel ta = new TccModel();
+                        ta.setTitulo(rs.getString("titulo"));
+                        ta.setIdAluno(rs.getInt("idAluno"));
+                        lista.add(ta);
+                  }
+
+            } catch (SQLException e) {
+                  e.printStackTrace();
+            }
+            return lista;
+      }
+
       public boolean atualizar(TccModel tcc) {
             String sql = "UPDATE tcc SET titulo=?, resumo=? WHERE idTCC=?";
 
@@ -206,13 +278,13 @@ public class TccDAO {
       public void deletar(int idTCC) {
 
             try (Connection conn = ConexaoMySQL.getConnection();
-                  PreparedStatement stmt1 = conn.prepareStatement(
-                "DELETE FROM versaodocumento WHERE idTCC = ?")) {
-            stmt1.setInt(1, idTCC);
-            stmt1.executeUpdate();
+                        PreparedStatement stmt1 = conn.prepareStatement(
+                                    "DELETE FROM versaodocumento WHERE idTCC = ?")) {
+                  stmt1.setInt(1, idTCC);
+                  stmt1.executeUpdate();
             } catch (Exception e) {
                   e.printStackTrace();
-            }    
+            }
 
             String sql = "DELETE FROM tcc WHERE idTCC = ?";
             try (Connection conn = ConexaoMySQL.getConnection();
