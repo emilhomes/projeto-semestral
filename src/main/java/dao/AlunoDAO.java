@@ -75,14 +75,14 @@ public class AlunoDAO {
       }
 
       public void atualizar(AlunoModel aluno) {
-            String sql = "UPDATE aluno SET curso = ?, idUsuario = ? WHERE matricula = ?";
+            String sql = "UPDATE aluno SET curso = ?, matricula = ? WHERE idUsuario = ?";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                   stmt.setString(1, aluno.getCurso());
-                  stmt.setInt(2, aluno.getIdUsuario());
-                  stmt.setInt(3, aluno.getMatricula());
+                  stmt.setInt(2, aluno.getMatricula());
+                  stmt.setInt(3, aluno.getIdUsuario());
                   stmt.executeUpdate();
 
                   System.out.println("Aluno atualizado!");

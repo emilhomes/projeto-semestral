@@ -42,7 +42,7 @@
                             <columns>
                                 <TableColumn fx:id="colDataEnvio" text="Data de Envio" prefWidth="200" />
                                 <TableColumn fx:id="colArquivo" text="Arquivo" prefWidth="300" />
-                            <TableColumn fx:id="colAcao" text="Ações" prefWidth="120" />
+                                <TableColumn fx:id="colAcao" text="Ações" prefWidth="150" />
                             </columns>
                         </TableView>
 

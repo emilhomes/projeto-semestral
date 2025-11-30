@@ -132,11 +132,11 @@
                                    text="Enviado em: 15/11/2024"
                                    style="-fx-font-size: 13px; -fx-text-fill: #7F8C8D;"/>
 
-                            <Label fx:id="lblResumo"
+                           
+                        </HBox>
+ <Label fx:id="lblResumo"
                                text="Resumo"
                                style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
-                        </HBox>
-
                         <!-- Baixar arquivo -->
                         <Button fx:id="btnBaixarAtual"
                                 text="⬇ Baixar Documento Atual"
@@ -144,11 +144,11 @@
 
                         <!-- COMENTÁRIOS -->
                         <VBox spacing="15">
-                            <Label text="Comentários do Orientador"
+                            <Label text="Comentários"
                                    style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
 
                             <VBox fx:id="listaComentarios" spacing="12"
-                                  style="-fx-background-color: #F8F9FA; -fx-padding: 15; -fx-border-radius: 6; -fx-background-radius: 6; -fx-border-color: #D6DBDF;"/>
+                                  style="-fx-background-color: #E0E0E0;; -fx-padding: 15; -fx-border-radius: 6; -fx-background-radius: 6; -fx-border-color: #2C3E50;"/>
                         </VBox>
 
                         <!-- ENVIAR COMENTÁRIO -->
@@ -164,6 +164,7 @@
 
                             <HBox alignment="CENTER_RIGHT">
                                 <Button fx:id="btnEnviarComentario"
+                                onAction="#enviarComentario"
                                         text="Enviar Comentário"
                                         style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 20; -fx-font-weight: bold;"/>
                             </HBox>

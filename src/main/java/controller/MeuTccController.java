@@ -172,7 +172,6 @@ public class MeuTccController {
                   versao.setIdTCC(tccAtual.getIdTCC());
                   versao.setDataEnvio(LocalDate.now());
 
-                  // <-- apenas salvando o caminho
                   versao.setNomeArquivo(arquivo.getAbsolutePath());
 
                   new VersaoDocumentoDAO().inserir(versao);
@@ -251,7 +250,7 @@ public class MeuTccController {
 
        for (ComentarioModel c : comentarios) {
        Label lbl = new Label(c.getUsuario() + ": " + c.getConteudo());
-       lbl.setStyle("-fx-background-color: #E3F2FD; -fx-padding: 6;-fx-border-radius: 6; -fx-background-radius: 6;");
+       lbl.setStyle("-fx-background-color: #2C3E50;; -fx-padding: 6;-fx-border-radius: 6; -fx-background-radius: 6;");
        listaComentarios.getChildren().add(lbl);
        }
        }

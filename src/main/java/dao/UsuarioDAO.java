@@ -11,61 +11,84 @@ import conexao.ConexaoMySQL;
 
 public class UsuarioDAO {
 
-     public int inserirRetornandoID(UsuarioModel usuario) {
-    String sql = "INSERT INTO usuario (nome, emailInstitucional, tipoUsuario, senha) VALUES (?, ?, ?, ?)";
+      public int inserirRetornandoID(UsuarioModel usuario) {
+            String sql = "INSERT INTO usuario (nome, emailInstitucional, tipoUsuario, senha) VALUES (?, ?, ?, ?)";
 
-    try (Connection conn = ConexaoMySQL.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-        stmt.setString(1, usuario.getNome());
-        stmt.setString(2, usuario.getEmailInstitucional());
-        stmt.setString(3, usuario.getTipoUsuario());
-        stmt.setString(4, Criptografia.md5(usuario.getSenha()));
+                  stmt.setString(1, usuario.getNome());
+                  stmt.setString(2, usuario.getEmailInstitucional());
+                  stmt.setString(3, usuario.getTipoUsuario());
+                  stmt.setString(4, Criptografia.md5(usuario.getSenha()));
 
-        stmt.executeUpdate();
+                  stmt.executeUpdate();
 
-        // pega o ID criado automaticamente
-        ResultSet rs = stmt.getGeneratedKeys();
-        if (rs.next()) {
-            return rs.getInt(1);
-        }
+                  ResultSet rs = stmt.getGeneratedKeys();
+                  if (rs.next()) {
+                        return rs.getInt(1);
+                  }
 
-        System.out.println("Usuário inserido, mas ID não retornado.");
-        return -1;
+                  System.out.println("Usuário inserido, mas ID não retornado.");
+                  return -1;
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        return -1;
-    }
-}
+            } catch (Exception e) {
+                  e.printStackTrace();
+                  return -1;
+            }
+      }
 
-public UsuarioModel buscarPorEmailESenha(String email, String senha) {
-    String sql = "SELECT * FROM usuario WHERE emailInstitucional = ? AND senha = ?";
+      public UsuarioModel buscarPorUsuarioId(int idUsuario) {
+            String sql = "SELECT * FROM usuario WHERE idUsuario = ?";
+            UsuarioModel usuario = null;
 
-    try (Connection conn = ConexaoMySQL.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setString(1, email);
-        stmt.setString(2, Criptografia.md5(senha));
+                  stmt.setInt(1, idUsuario);
+                  ResultSet rs = stmt.executeQuery();
 
-        ResultSet rs = stmt.executeQuery();
+                  if (rs.next()) {
+                        usuario = new UsuarioModel();
+                        usuario.setNome(rs.getString("nome"));
+                        usuario.setEmailInstitucional(rs.getString("emailInstitucional"));
+                        usuario.setSenha(rs.getString("senha"));
+                        usuario.setTipoUsuario(rs.getString("tipoUsuario"));
+                  }
 
-        if (rs.next()) {
-            UsuarioModel usuario = new UsuarioModel();
-            usuario.setIdUsuario(rs.getInt("idUsuario"));
-            usuario.setNome(rs.getString("nome"));
-            usuario.setEmailInstitucional(rs.getString("emailInstitucional"));
-            usuario.setTipoUsuario(rs.getString("tipoUsuario"));
+            } catch (Exception e) {
+                  e.printStackTrace();
+            }
+
             return usuario;
-        }
+      }
 
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+      public UsuarioModel buscarPorEmailESenha(String email, String senha) {
+            String sql = "SELECT * FROM usuario WHERE emailInstitucional = ? AND senha = ?";
 
-    return null;
-}
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+                  stmt.setString(1, email);
+                  stmt.setString(2, Criptografia.md5(senha));
+
+                  ResultSet rs = stmt.executeQuery();
+
+                  if (rs.next()) {
+                        UsuarioModel usuario = new UsuarioModel();
+                        usuario.setIdUsuario(rs.getInt("idUsuario"));
+                        usuario.setNome(rs.getString("nome"));
+                        usuario.setEmailInstitucional(rs.getString("emailInstitucional"));
+                        usuario.setTipoUsuario(rs.getString("tipoUsuario"));
+                        return usuario;
+                  }
+
+            } catch (Exception e) {
+                  e.printStackTrace();
+            }
+
+            return null;
+      }
 
       public List<UsuarioModel> listar() {
             List<UsuarioModel> lista = new ArrayList<>();
@@ -93,16 +116,14 @@ public UsuarioModel buscarPorEmailESenha(String email, String senha) {
       }
 
       public void atualizar(UsuarioModel usuario) {
-            String sql = "UPDATE usuario SET nome = ?, emailInstitucional = ?, tipoUsuario = ?, senha = ? WHERE idUsuario = ?";
+            String sql = "UPDATE usuario SET nome = ?, emailInstitucional = ? WHERE idUsuario = ?";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                   stmt.setString(1, usuario.getNome());
                   stmt.setString(2, usuario.getEmailInstitucional());
-                  stmt.setString(3, usuario.getTipoUsuario());
-                  stmt.setString(4, usuario.getSenha());
-                  stmt.setInt(5, usuario.getIdUsuario());
+                  stmt.setInt(3, usuario.getIdUsuario());
                   stmt.executeUpdate();
 
                   System.out.println("Usuário atualizado!");

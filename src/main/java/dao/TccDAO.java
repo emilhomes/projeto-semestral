@@ -133,7 +133,7 @@ public class TccDAO {
                         "WHERE t.idOrientador = ?";
 
             try (Connection conn = ConexaoMySQL.getConnection();
-                  PreparedStatement stmt = conn.prepareStatement(sql)) {
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                   stmt.setInt(1, idOrientador);
                   ResultSet rs = stmt.executeQuery();
@@ -144,9 +144,9 @@ public class TccDAO {
                         tcc.setTitulo(rs.getString("titulo"));
                         tcc.setResumo(rs.getString("resumo"));
                         tcc.setEstado(rs.getString("estado"));
-                        
+
                         // Preenche o campo 'transient' que criamos no Model
-                        tcc.setNomeAluno(rs.getString("nomeAluno")); 
+                        tcc.setNomeAluno(rs.getString("nomeAluno"));
 
                         lista.add(tcc);
                   }
@@ -171,6 +171,7 @@ public class TccDAO {
                   e.printStackTrace();
             }
       }
+
       public void atualizarOrientador(TccModel tcc) {
             String sql = "UPDATE tcc SET idOrientador = ? WHERE idTCC = ?";
 
@@ -203,11 +204,32 @@ public class TccDAO {
             }
             return false;
       }
-      
+
+      // public void deletar(int idTCC) throws SQLException {
+      // Connection conn = ConexaoMySQL.getConnection();
+      // PreparedStatement stmt1 = conn.prepareStatement(
+      // "DELETE FROM versaodocumento WHERE idTCC = ?");
+      // stmt1.setInt(1, idTCC);
+      // stmt1.executeUpdate();
+
+      // PreparedStatement stmt2 = conn.prepareStatement(
+      // "DELETE FROM tcc WHERE idTCC = ?");
+      // stmt2.setInt(1, idTCC);
+      // stmt2.executeUpdate();
+      // }
 
       public void deletar(int idTCC) {
-            String sql = "DELETE FROM tcc WHERE idTCC = ?";
 
+            try (Connection conn = ConexaoMySQL.getConnection();
+                  PreparedStatement stmt1 = conn.prepareStatement(
+                "DELETE FROM versaodocumento WHERE idTCC = ?")) {
+            stmt1.setInt(1, idTCC);
+            stmt1.executeUpdate();
+            } catch (Exception e) {
+                  e.printStackTrace();
+            }    
+
+            String sql = "DELETE FROM tcc WHERE idTCC = ?";
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 

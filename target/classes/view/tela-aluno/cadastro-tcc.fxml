@@ -9,7 +9,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.CadastrarTCCController"
+            fx:controller="controller.TccController"
             prefWidth="900" prefHeight="600"
             style="-fx-background-color: #ECF0F1;">
 
@@ -118,6 +118,7 @@
                         <!-- BOTÃO CADASTRAR -->
                         <HBox alignment="CENTER_RIGHT">
                             <Button fx:id="btnCadastrarTCC"
+                            onAction="#CriarTCC"
                                     text="Cadastrar TCC"
                                     style="-fx-background-color: #0F1D45;
                                            -fx-text-fill: white;
