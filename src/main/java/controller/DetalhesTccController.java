@@ -20,24 +20,29 @@ import java.util.ResourceBundle;
 
 public class DetalhesTccController implements Initializable {
 
-    @FXML private Label lblTituloTcc;
-    @FXML private Label lblNomeAluno;
-    
-    @FXML private TableView<VersaoDocumentoModel> tabelaVersoes;
-    @FXML private TableColumn<VersaoDocumentoModel, String> colVersao;
-    @FXML private TableColumn<VersaoDocumentoModel, LocalDate> colData;
-    
-    @FXML private TextArea txtComentario;
+    @FXML
+    private Label lblTituloTcc;
+    @FXML
+    private Label lblNomeAluno;
+
+    @FXML
+    private TableView<VersaoDocumentoModel> tabelaVersoes;
+    @FXML
+    private TableColumn<VersaoDocumentoModel, String> colVersao;
+    @FXML
+    private TableColumn<VersaoDocumentoModel, LocalDate> colData;
+
+    @FXML
+    private TextArea txtComentario;
 
     private TccModel tccSelecionado;
     private VersaoDocumentoDAO versaoDAO = new VersaoDocumentoDAO();
-    private VersaoDocumentoModel versaoSelecionada; // Guarda qual linha foi clicada
+    private VersaoDocumentoModel versaoSelecionada;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarTabela();
-        
-        // Começa com o campo de texto bloqueado (só libera ao clicar numa versão)
+
         txtComentario.setDisable(true);
     }
 
@@ -45,7 +50,6 @@ public class DetalhesTccController implements Initializable {
         colVersao.setCellValueFactory(new PropertyValueFactory<>("nomeArquivo"));
         colData.setCellValueFactory(new PropertyValueFactory<>("dataEnvio"));
 
-        // Isso faz o texto do comentário aparecer quando clica na linha
         tabelaVersoes.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 versaoSelecionada = newVal;
@@ -54,48 +58,43 @@ public class DetalhesTccController implements Initializable {
         });
     }
 
-    // Método chamado pela tela anterior (Lista) para passar o TCC
     public void setTcc(TccModel tcc) {
         this.tccSelecionado = tcc;
-        
-        // Atualiza o cabeçalho
+
         lblTituloTcc.setText(tcc.getTitulo());
-        // Se tiver nomeAluno no TccModel, use. Senão use o ID.
+
         if (tcc.getNomeAluno() != null) {
             lblNomeAluno.setText("Aluno: " + tcc.getNomeAluno());
         } else {
             lblNomeAluno.setText("Aluno ID: " + tcc.getIdAluno());
         }
-        
+
         atualizarListaVersoes();
     }
 
     private void atualizarListaVersoes() {
         if (tccSelecionado != null) {
             tabelaVersoes.setItems(FXCollections.observableArrayList(
-                versaoDAO.listarPorTcc(tccSelecionado.getIdTCC())
-            ));
+                    versaoDAO.listarPorTcc(tccSelecionado.getIdTCC())));
         }
     }
 
     private void carregarComentarioNaTela(VersaoDocumentoModel versao) {
-        txtComentario.setDisable(false); // Libera a digitação
-        
-        // Pega o texto temporário que o DAO preencheu
+        txtComentario.setDisable(false);
+
         if (versao.getTextoComentario() != null) {
             txtComentario.setText(versao.getTextoComentario());
         } else {
-            txtComentario.clear(); // Se não tem comentário, limpa o campo
+            txtComentario.clear();
         }
     }
 
     @FXML
     void salvarComentario(ActionEvent event) {
         if (versaoSelecionada != null) {
-            // 1. Atualiza o objeto na memória com o que foi digitado
+
             versaoSelecionada.setTextoComentario(txtComentario.getText());
-            
-            // 2. Manda o DAO salvar no banco (ele decide se cria ou atualiza)
+
             try {
                 versaoDAO.salvarComentario(versaoSelecionada);
                 mostrarAlerta("Sucesso", "Feedback salvo com sucesso!");
@@ -109,22 +108,21 @@ public class DetalhesTccController implements Initializable {
     @FXML
     void voltar(ActionEvent event) {
         try {
-            // Carrega de volta a lista de TCCs
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tela-orientador/tccs-orientados.fxml"));
             Parent root = loader.load();
-            
-            // Navegação segura via StackPane
+
             StackPane dashboardStack = (StackPane) lblTituloTcc.getScene().getRoot().lookup("#contentArea");
             if (dashboardStack != null) {
                 dashboardStack.getChildren().clear();
                 dashboardStack.getChildren().add(root);
             }
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     private void mostrarAlerta(String titulo, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);

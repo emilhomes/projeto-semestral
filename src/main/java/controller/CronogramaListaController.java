@@ -37,7 +37,7 @@ public class CronogramaListaController implements Initializable {
     @FXML private TableColumn<AtividadeModel, String> colEstado;
     @FXML private TableColumn<AtividadeModel, Void> colAcoes;
 
-    // Instancia os DAOs
+    
     private AtividadeDAO atividadeDAO = new AtividadeDAO();
     private BancaDAO bancaDAO = new BancaDAO();
     private PrazoInstitucionalDAO prazoDAO = new PrazoInstitucionalDAO();
@@ -46,7 +46,7 @@ public class CronogramaListaController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarColunas();
         try {
-            carregarDadosUnificados(); // Busca tudo (pessoal + institucional)
+            carregarDadosUnificados(); 
         } catch (Exception e) {
             System.err.println("Erro ao carregar dados do cronograma:");
             e.printStackTrace();
@@ -64,23 +64,22 @@ public class CronogramaListaController implements Initializable {
     public void carregarDadosUnificados() {
         List<AtividadeModel> listaFinal = new ArrayList<>();
 
-        // 1. ATIVIDADES PESSOAIS
+        
         List<AtividadeModel> atividades = atividadeDAO.listar();
         for (AtividadeModel atv : atividades) {
             atv.setTipo("PESSOAL");
             if (atv.getTitulo() == null || atv.getTitulo().equals("Sem Título")) {
-                 // Fallback para não ficar vazio se o banco antigo tinha só descrição
+                 
                  atv.setTitulo(atv.getDescricao());
             }
             listaFinal.add(atv);
         }
 
-        // 2. PRAZOS INSTITUCIONAIS
         try {
             List<PrazoInstitucionalModel> prazos = prazoDAO.listar();
             for (PrazoInstitucionalModel p : prazos) {
                 AtividadeModel conv = new AtividadeModel();
-                conv.setTitulo("PRAZO: " + p.getNome()); // Prefixo para identificar
+                conv.setTitulo("PRAZO: " + p.getNome()); 
                 conv.setDataFim(p.getDataFinal());
                 conv.setEstado("Obrigatório");
                 conv.setTipo("INSTITUCIONAL");
@@ -88,13 +87,13 @@ public class CronogramaListaController implements Initializable {
             }
         } catch (Exception e) { System.out.println("Erro ao listar prazos (tabela existe?)"); }
 
-        // 3. BANCAS
+        
         try {
             List<BancaModel> bancas = bancaDAO.listar();
             for (BancaModel b : bancas) {
                 AtividadeModel conv = new AtividadeModel();
                 conv.setTitulo("BANCA (Defesa)");
-                conv.setDescricao(b.getMenbros()); // Pode usar isso se quiser ver detalhes no tooltip
+                conv.setDescricao(b.getMenbros()); 
                 conv.setDataFim(b.getDataDefesa());
                 conv.setEstado("Agendada");
                 conv.setTipo("BANCA");
@@ -102,7 +101,7 @@ public class CronogramaListaController implements Initializable {
             }
         } catch (Exception e) { System.out.println("Erro ao listar bancas (tabela existe?)"); }
 
-        // Ordena por data
+       
         listaFinal.sort(Comparator.comparing(AtividadeModel::getDataFim, Comparator.nullsLast(Comparator.naturalOrder())));
 
         tabelaAtividades.setItems(FXCollections.observableArrayList(listaFinal));
@@ -139,12 +138,12 @@ public class CronogramaListaController implements Initializable {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            // SÓ MOSTRA OS BOTÕES SE FOR ATIVIDADE PESSOAL
+                            
                             AtividadeModel atual = getTableView().getItems().get(getIndex());
                             if ("PESSOAL".equals(atual.getTipo())) {
                                 setGraphic(pane);
                             } else {
-                                setGraphic(null); // Esconde botões para Prazos e Bancas
+                                setGraphic(null); 
                             }
                         }
                     }
@@ -154,7 +153,7 @@ public class CronogramaListaController implements Initializable {
         colAcoes.setCellFactory(cellFactory);
     }
 
-    // --- MÉTODOS DE AÇÃO (CRUD) ---
+  
 
     private void excluirAtividade(AtividadeModel atividade) {
         if ("PESSOAL".equals(atividade.getTipo())) {

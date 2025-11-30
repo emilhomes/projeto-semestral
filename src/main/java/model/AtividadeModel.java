@@ -11,7 +11,7 @@ public class AtividadeModel {
       private LocalDate dataInicio;
       private LocalDate dataFim;
       private String estado;
-      private String tipo; // Vai receber "PESSOAL", "BANCA" ou "INSTITUCIONAL"
+      private String tipo; 
 
       public AtividadeModel() {
       }
@@ -25,7 +25,7 @@ public class AtividadeModel {
             this.estado = estado;
       }
 
-      // --- GETTER E SETTER DO NOVO CAMPO ---
+      
       public String getTipo() {
             return tipo;
       }
@@ -33,7 +33,7 @@ public class AtividadeModel {
       public void setTipo(String tipo) {
             this.tipo = tipo;
       }
-      // -------------------------------------
+  
 
       public void setTitulo(String titulo) {
             this.titulo = titulo;
@@ -67,13 +67,12 @@ public class AtividadeModel {
       }
 
       public void setDescricaoBanco(String textoDoBanco) {
-            // Recebe "Titulo - Descricao" do banco e separa
+            
             if (textoDoBanco != null && textoDoBanco.contains(" - ")) {
-                  String[] partes = textoDoBanco.split(" - ", 2); // Divide em 2 partes no primeiro " - "
-                  this.titulo = partes[0];
+                  String[] partes = textoDoBanco.split(" - ", 2); 
                   this.descricao = partes[1];
             } else {
-                  // Se não tiver o separador, assume que é tudo descrição
+                  
                   this.titulo = "Sem Título"; 
                   this.descricao = textoDoBanco;
             }

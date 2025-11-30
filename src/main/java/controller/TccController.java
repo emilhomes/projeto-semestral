@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
-// import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -81,7 +80,7 @@ public class TccController {
             return;
         }
 
-        // Buscar aluno logado
+        
         AlunoDAO alunoDAO = new AlunoDAO();
         AlunoModel aluno = alunoDAO.buscarPorUsuarioId(usuario.getIdUsuario());
 
@@ -90,7 +89,6 @@ public class TccController {
             return;
         }
 
-        // Buscar orientador pelo NOME
         OrientadorDAO orientadorDAO = new OrientadorDAO();
         OrientadorModel orientador = orientadorDAO.buscarPorNome(nomeOrientador);
 
@@ -98,8 +96,7 @@ public class TccController {
             mostrarAlerta("Erro", "Orientador não encontrado!", Alert.AlertType.ERROR);
             return;
         }
-
-        // Criar o TCC
+        
         TccModel tcc = new TccModel();
         tcc.setTitulo(titulo);
         tcc.setResumo(resumo);
@@ -107,10 +104,7 @@ public class TccController {
         tcc.setDataCadastro(LocalDate.now());
         tcc.setIdAluno(aluno.getIdUsuario());
         tcc.setIdOrientador(orientador.getIdUsuario());
-        tcc.setIdBanca(1); // se ainda não tiver
-        tcc.setIdVersao(1); // se ainda não tiver
-
-        // Salvar no banco
+        
         TccDAO dao = new TccDAO();
         boolean sucesso = dao.inserir(tcc); 
 

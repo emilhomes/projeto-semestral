@@ -10,7 +10,7 @@ import conexao.ConexaoMySQL;
 public class TccDAO {
 
       public boolean inserir(TccModel tcc) {
-            String sql = "INSERT INTO tcc(titulo, resumo, estado, dataCadastro, idAluno, idBanca, idVersao, idOrientador) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO tcc(titulo, resumo, estado, dataCadastro, idAluno, idOrientador) VALUES ( ?, ?, ?, ?, ?, ?)";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -20,9 +20,7 @@ public class TccDAO {
                   stmt.setString(3, tcc.getEstado());
                   stmt.setDate(4, java.sql.Date.valueOf(tcc.getDataCadastro()));
                   stmt.setInt(5, tcc.getIdAluno());
-                  stmt.setInt(6, tcc.getIdBanca());
-                  stmt.setInt(7, tcc.getIdVersao());
-                  stmt.setInt(8, tcc.getIdOrientador());
+                  stmt.setInt(6, tcc.getIdOrientador());
 
                   stmt.executeUpdate();
                   return true;
@@ -80,8 +78,6 @@ public class TccDAO {
                         tcc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());
                         tcc.setIdAluno(rs.getInt("idAluno"));
                         tcc.setIdOrientador(rs.getInt("idOrientador"));
-                        tcc.setIdBanca(rs.getInt("idBanca"));
-                        tcc.setIdVersao(rs.getInt("idVersao"));
 
                         return tcc;
                   }
@@ -110,9 +106,7 @@ public class TccDAO {
                         if (dataCadastro != null)
                               u.setDataCadastro(dataCadastro.toLocalDate());
                         u.setIdAluno(rs.getInt("idAluno"));
-                        u.setIdBanca(rs.getInt("idBanca"));
                         u.setIdOrientador(rs.getInt("idOrientador"));
-                        u.setIdVersao(rs.getInt("idVersao"));
                         lista.add(u);
                   }
 
@@ -125,7 +119,6 @@ public class TccDAO {
 
       public List<TccModel> listarPorOrientador(int idOrientador) {
             List<TccModel> lista = new ArrayList<>();
-            // JOIN entre TCC -> ALUNO -> USUARIO para descobrir o nome do aluno
             String sql = "SELECT t.*, u.nome AS nomeAluno " +
                         "FROM tcc t " +
                         "INNER JOIN aluno a ON t.idAluno = a.idAluno " +
@@ -145,7 +138,6 @@ public class TccDAO {
                         tcc.setResumo(rs.getString("resumo"));
                         tcc.setEstado(rs.getString("estado"));
 
-                        // Preenche o campo 'transient' que criamos no Model
                         tcc.setNomeAluno(rs.getString("nomeAluno"));
 
                         lista.add(tcc);
@@ -204,19 +196,6 @@ public class TccDAO {
             }
             return false;
       }
-
-      // public void deletar(int idTCC) throws SQLException {
-      // Connection conn = ConexaoMySQL.getConnection();
-      // PreparedStatement stmt1 = conn.prepareStatement(
-      // "DELETE FROM versaodocumento WHERE idTCC = ?");
-      // stmt1.setInt(1, idTCC);
-      // stmt1.executeUpdate();
-
-      // PreparedStatement stmt2 = conn.prepareStatement(
-      // "DELETE FROM tcc WHERE idTCC = ?");
-      // stmt2.setInt(1, idTCC);
-      // stmt2.executeUpdate();
-      // }
 
       public void deletar(int idTCC) {
 

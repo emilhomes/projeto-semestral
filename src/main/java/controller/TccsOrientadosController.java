@@ -29,7 +29,6 @@ public class TccsOrientadosController implements Initializable {
     @FXML private TableColumn<TccModel, String> colTitulo;
     @FXML private TableColumn<TccModel, String> colStatus;
     
-    // Coluna nova para o botão
     @FXML private TableColumn<TccModel, Void> colAcoes;
 
     private TccDAO tccDAO = new TccDAO();
@@ -49,7 +48,6 @@ public class TccsOrientadosController implements Initializable {
         colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
-        // Configura o botão "Ver Detalhes"
         adicionarBotaoDetalhes();
     }
 
@@ -58,10 +56,10 @@ public class TccsOrientadosController implements Initializable {
             private final Button btnDetalhes = new Button("Ver Detalhes");
 
             {
-                // Estilo do botão
+                
                 btnDetalhes.setStyle("-fx-background-color: #1E3A5F; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;");
                 
-                // Ação do clique
+                
                 btnDetalhes.setOnAction(event -> {
                     TccModel tccSelecionado = getTableView().getItems().get(getIndex());
                     abrirTelaDetalhes(tccSelecionado);
@@ -83,15 +81,14 @@ public class TccsOrientadosController implements Initializable {
 
     private void abrirTelaDetalhes(TccModel tcc) {
         try {
-            // 1. Carrega o FXML de Detalhes
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tela-orientador/detalhes-tcc.fxml"));
             Parent root = loader.load();
 
-            // 2. Pega o Controller da nova tela e PASSAR O DADO
+          
             DetalhesTccController controller = loader.getController();
-            controller.setTcc(tcc); // <--- Aqui passamos o TCC clicado!
+            controller.setTcc(tcc); 
 
-            // 3. Troca a tela no Dashboard (StackPane)
+            
             StackPane dashboardStack = (StackPane) tabelaTccs.getScene().getRoot().lookup("#contentArea");
             
             if (dashboardStack != null) {

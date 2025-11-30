@@ -63,8 +63,7 @@ public class VersoesTccController implements Initializable {
       private TableColumn<VersaoDocumentoModel, String> colDataEnvio;
       @FXML
       private TableColumn<VersaoDocumentoModel, Void> colAcao;
-
-      // Recebido da outra tela
+      
       private static TccModel tccAtual;
 
       public static void setTccAtual(TccModel tcc) {

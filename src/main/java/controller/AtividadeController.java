@@ -14,7 +14,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane; // Importante para navegação
+import javafx.scene.layout.StackPane; 
 import model.AtividadeModel;
 
 public class AtividadeController {
@@ -27,13 +27,10 @@ public class AtividadeController {
 
     private AtividadeDAO dao = new AtividadeDAO();
     
-    // Variável para controlar se é edição (se não for null, é edição)
+    
     private AtividadeModel atividadeAtual;
 
-    /**
-     * Este método é chamado pelo CronogramaListaController quando clicamos em "Editar".
-     * Ele preenche os campos com os dados existentes.
-     */
+    
     public void setAtividade(AtividadeModel atividade) {
         this.atividadeAtual = atividade;
 
@@ -42,39 +39,37 @@ public class AtividadeController {
             campoDescricaoAtividade.setText(atividade.getDescricao());
             campoDataLimite.setValue(atividade.getDataFim());
             
-            // Muda o texto do botão para indicar edição
+            
             btnSalvarAtividade.setText("Salvar Alterações");
         }
     }
 
     @FXML
     void salvar(ActionEvent event) {
-        // Validação
+       
         if(campoTituloAtividade.getText().isEmpty() || campoDataLimite.getValue() == null) {
             mostrarAlerta("Campos Obrigatórios", "Por favor, preencha o Título e a Data Limite.");
             return;
         }
 
         try {
-            // Verifica se estamos criando um NOVO ou editando um EXISTENTE
+            
             boolean isEdicao = (this.atividadeAtual != null);
             
-            // Se for edição, usa o objeto existente (que tem o ID). Se novo, cria um zero.
+            
             AtividadeModel model = isEdicao ? this.atividadeAtual : new AtividadeModel();
 
-            // Atualiza os dados do objeto com o que está nos campos
+            
             model.setTitulo(campoTituloAtividade.getText());
             model.setDescricao(campoDescricaoAtividade.getText());
             model.setDataFim(campoDataLimite.getValue());
             
-            // Se for novo cadastro, define data de início hoje e status pendente
+           
             if (!isEdicao) {
                 model.setDataInicio(LocalDate.now());
                 model.setEstado("Pendente");
             }
-            // (Na edição, mantemos a data de início e o status originais)
-
-            // Salva no Banco
+           
             if (isEdicao) {
                 dao.atualizar(model);
                 mostrarAlerta("Sucesso", "Atividade atualizada com sucesso!");
@@ -101,15 +96,14 @@ public class AtividadeController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tela-aluno/cronograma-lista.fxml"));
             Parent listaView = loader.load();
 
-            // Navegação Segura: Procura o StackPane do Dashboard
-            // (Mesma lógica que usamos no CronogramaListaController)
+            
             StackPane dashboardStack = (StackPane) campoTituloAtividade.getScene().getRoot().lookup("#contentArea");
             
             if (dashboardStack != null) {
                 dashboardStack.getChildren().clear();
                 dashboardStack.getChildren().add(listaView);
             } else {
-                // Fallback caso não ache o StackPane (código antigo)
+                
                 Parent root = campoTituloAtividade.getScene().getRoot();
                 if (root instanceof BorderPane) {
                     ((BorderPane) root).setCenter(listaView);

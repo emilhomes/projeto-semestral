@@ -17,34 +17,39 @@ import java.util.ResourceBundle;
 
 public class BancasController implements Initializable {
 
-    // --- CAMPOS DO FORMULÁRIO ---
-    @FXML private DatePicker inputData;
-    @FXML private TextArea inputMembros;
-    
-    @FXML private Button btnSalvar;
-    @FXML private Button btnLimpar;
-    @FXML private Button btnNovaBanca;
+    @FXML
+    private DatePicker inputData;
+    @FXML
+    private TextArea inputMembros;
 
-    // --- TABELA ---
-    @FXML private TableView<BancaModel> tableBancas;
-    
-    @FXML private TableColumn<BancaModel, Integer> colIdBanca;
-    @FXML private TableColumn<BancaModel, LocalDate> colData;
-    
-    // ESTA É A COLUNA QUE FALTAVA MOSTRAR
-    @FXML private TableColumn<BancaModel, String> colMembros;
-    
-    @FXML private TableColumn<BancaModel, Void> colAcoes;
+    @FXML
+    private Button btnSalvar;
+    @FXML
+    private Button btnLimpar;
+    @FXML
+    private Button btnNovaBanca;
 
-    // Dependências
+    @FXML
+    private TableView<BancaModel> tableBancas;
+
+    @FXML
+    private TableColumn<BancaModel, Integer> colIdBanca;
+    @FXML
+    private TableColumn<BancaModel, LocalDate> colData;
+
+    @FXML
+    private TableColumn<BancaModel, String> colMembros;
+
+    @FXML
+    private TableColumn<BancaModel, Void> colAcoes;
+
     private BancaDAO dao = new BancaDAO();
     private BancaModel bancaEmEdicao = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarColunas();
-        
-        // Try-Catch para garantir que erro de banco não trave a tela
+
         try {
             carregarDados();
         } catch (Exception e) {
@@ -54,14 +59,12 @@ public class BancasController implements Initializable {
     }
 
     private void configurarColunas() {
-        // Vincula as colunas com os atributos do BancaModel
-        colIdBanca.setCellValueFactory(new PropertyValueFactory<>("idBanca"));
-        colData.setCellValueFactory(new PropertyValueFactory<>("dataDefesa")); 
-        
-        // IMPORTANTE: O nome aqui ("menbros") deve ser IGUAL ao do BancaModel
-        colMembros.setCellValueFactory(new PropertyValueFactory<>("menbros")); 
 
-        // Configura os botões
+        colIdBanca.setCellValueFactory(new PropertyValueFactory<>("idBanca"));
+        colData.setCellValueFactory(new PropertyValueFactory<>("dataDefesa"));
+
+        colMembros.setCellValueFactory(new PropertyValueFactory<>("menbros"));
+
         adicionarBotoesAcao();
     }
 
@@ -69,7 +72,6 @@ public class BancasController implements Initializable {
         tableBancas.setItems(FXCollections.observableArrayList(dao.listar()));
     }
 
-    // --- LÓGICA DOS BOTÕES (EDITAR / EXCLUIR) ---
     private void adicionarBotoesAcao() {
         Callback<TableColumn<BancaModel, Void>, TableCell<BancaModel, Void>> cellFactory = param -> new TableCell<>() {
             private final Button btnEditar = new Button("Editar");
@@ -77,18 +79,16 @@ public class BancasController implements Initializable {
             private final HBox pane = new HBox(10, btnEditar, btnExcluir);
 
             {
-                // Estilo
+
                 btnEditar.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white; -fx-cursor: hand;");
                 btnExcluir.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-cursor: hand;");
                 pane.setStyle("-fx-alignment: CENTER;");
 
-                // Ação Editar
                 btnEditar.setOnAction(event -> {
                     BancaModel banca = getTableView().getItems().get(getIndex());
                     preencherFormulario(banca);
                 });
 
-                // Ação Excluir
                 btnExcluir.setOnAction(event -> {
                     BancaModel banca = getTableView().getItems().get(getIndex());
                     dao.deletar(banca.getIdBanca());
@@ -108,8 +108,6 @@ public class BancasController implements Initializable {
         };
         colAcoes.setCellFactory(cellFactory);
     }
-
-    // --- RESTANTE DAS AÇÕES (Igual ao seu código) ---
 
     private void preencherFormulario(BancaModel banca) {
         this.bancaEmEdicao = banca;

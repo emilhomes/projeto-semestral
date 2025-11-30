@@ -11,8 +11,6 @@ public class TccModel {
       private String estado;
       private LocalDate dataCadastro;
       private int idAluno;
-      private int idBanca;
-      private int idVersao;
       private int idOrientador;
       private String nomeOrientador;
       private String nomeAluno;
@@ -20,15 +18,12 @@ public class TccModel {
       public TccModel() {
       }
 
-      public TccModel(String titulo, String resumo, String estado, LocalDate dataCadastro, int idAluno, int idBanca,
-                  int idVersao, int idOrientador) {
+      public TccModel(String titulo, String resumo, String estado, LocalDate dataCadastro, int idAluno, int idOrientador) {
             this.titulo = titulo;
             this.resumo = resumo;
             this.estado = estado;
             this.dataCadastro = dataCadastro;
             this.idAluno = idAluno;
-            this.idBanca = idBanca;
-            this.idVersao = idVersao;
             this.idOrientador = idOrientador;
       }
 
@@ -78,22 +73,6 @@ public class TccModel {
 
       public void setIdAluno(int idAluno) {
             this.idAluno = idAluno;
-      }
-
-      public int getIdBanca() {
-            return idBanca;
-      }
-
-      public void setIdBanca(int idBanca) {
-            this.idBanca = idBanca;
-      }
-
-      public int getIdVersao() {
-            return idVersao;
-      }
-
-      public void setIdVersao(int idVersao) {
-            this.idVersao = idVersao;
       }
 
       public int getIdOrientador() {

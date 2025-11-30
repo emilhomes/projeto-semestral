@@ -19,7 +19,7 @@ public class PerfilOrientadorController implements Initializable {
     @FXML private Label lblArea;
     @FXML private Label lblDepartamento;
 
-    // Precisamos do DAO para buscar os dados específicos
+    
     private OrientadorDAO orientadorDAO = new OrientadorDAO();
 
     @Override
@@ -27,20 +27,17 @@ public class PerfilOrientadorController implements Initializable {
         UsuarioModel usuario = AuthenticationService.getUsuarioLogado();
 
         if (usuario != null) {
-            // 1. Preenche dados do Usuário (Genérico)
+            
             lblNome.setText(usuario.getNome());
             lblEmail.setText(usuario.getEmailInstitucional());
 
-            // 2. Busca dados do Orientador (Específico)
             try {
                 OrientadorModel orientador = orientadorDAO.buscarPorUsuarioId(usuario.getIdUsuario());
                 
                 if (orientador != null) {
-                    // AQUI ESTAVA FALTANDO: Atualiza a label da tela
+                    
                     lblArea.setText(orientador.getAreaPesquisa());
                     
-                    // Se quiser usar o estado ou outro campo para departamento:
-                    // lblDepartamento.setText(orientador.getEstado());
                 } else {
                     lblArea.setText("Área não cadastrada");
                 }
@@ -52,7 +49,6 @@ public class PerfilOrientadorController implements Initializable {
 
     @FXML
     void editarPerfil(ActionEvent event) {
-        // Lógica de editar...
         System.out.println("Botão editar clicado");
     }
 }

@@ -5,25 +5,22 @@ import java.time.LocalDate;
 public class PrazoInstitucionalModel {
 
     private int idPrazo;
-    private String nome;      
-    private String descricao; 
+    private String nome;
+    private String descricao;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
-    private int idCordenador; 
+    private int idCordenador;
 
     public PrazoInstitucionalModel() {
     }
 
-    // --- MÉTODOS MÁGICOS PARA O BANCO ---
-    
-    // O DAO chama este para SALVAR (Junta Nome + Descrição)
+
     public String getDescricaoBanco() {
         String n = (this.nome != null) ? this.nome : "";
         String d = (this.descricao != null) ? this.descricao : "";
         return n + " - " + d;
     }
 
-    // O DAO chama este ao LER (Separa Nome e Descrição)
     public void setDescricaoBanco(String textoDoBanco) {
         if (textoDoBanco != null && textoDoBanco.contains(" - ")) {
             String[] partes = textoDoBanco.split(" - ", 2);
@@ -35,22 +32,51 @@ public class PrazoInstitucionalModel {
         }
     }
 
-    // --- GETTERS E SETTERS NORMAIS ---
-    public int getIdPrazo() { return idPrazo; }
-    public void setIdPrazo(int idPrazo) { this.idPrazo = idPrazo; }
+    public int getIdPrazo() {
+        return idPrazo;
+    }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public void setIdPrazo(int idPrazo) {
+        this.idPrazo = idPrazo;
+    }
 
-    public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public String getNome() {
+        return nome;
+    }
 
-    public LocalDate getDataInicio() { return dataInicio; }
-    public void setDataInicio(LocalDate dataInicio) { this.dataInicio = dataInicio; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-    public LocalDate getDataFinal() { return dataFinal; }
-    public void setDataFinal(LocalDate dataFinal) { this.dataFinal = dataFinal; }
+    public String getDescricao() {
+        return descricao;
+    }
 
-    public int getIdCordenador() { return idCordenador; }
-    public void setIdCordenador(int idCordenador) { this.idCordenador = idCordenador; }
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public LocalDate getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(LocalDate dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
+    public int getIdCordenador() {
+        return idCordenador;
+    }
+
+    public void setIdCordenador(int idCordenador) {
+        this.idCordenador = idCordenador;
+    }
 }
