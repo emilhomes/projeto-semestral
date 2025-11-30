@@ -13,7 +13,7 @@
             style="-fx-background-color: #ECF0F1;" 
             xmlns="http://javafx.com/javafx/25" 
             xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="controller.PrazoInstitucionalController">
+            fx:controller="controller.PrazosInstitucionaisController">
 
     <center>
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
