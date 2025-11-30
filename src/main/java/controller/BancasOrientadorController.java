@@ -41,7 +41,7 @@ public class BancasOrientadorController implements Initializable {
         
         if (usuario != null) {
             try {
-                // Chama aquele método especial que busca as bancas DOS ALUNOS desse orientador
+                
                 tabelaBancas.setItems(FXCollections.observableArrayList(
                     bancaDAO.listarPorOrientador(usuario.getIdUsuario())
                 ));

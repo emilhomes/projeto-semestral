@@ -13,7 +13,7 @@ public class DashboardOrientadorController {
 
     @FXML
     public void initialize() {
-        abrirPerfil(null); // Carrega a home ao iniciar
+        abrirPerfil(null); 
     }
 
     @FXML

@@ -13,12 +13,10 @@ public class AtividadeDAO {
         String sql = "INSERT INTO atividade(descricao, dataIncio, dataFim, estado) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // 1. Usa o método especial que junta Título + Descrição
             stmt.setString(1, atividade.getDescricaoBanco());
 
-            // 2. Tratamento para evitar erro se a data for nula
             if (atividade.getDataInicio() != null) {
                 stmt.setDate(2, java.sql.Date.valueOf(atividade.getDataInicio()));
             } else {
@@ -45,19 +43,16 @@ public class AtividadeDAO {
         String sql = "SELECT * FROM atividade";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 AtividadeModel u = new AtividadeModel();
-                
-                // Pega o ID (Importante para Edição/Exclusão)
+
                 u.setIdAtividade(rs.getInt("idAtividade"));
 
-                // 1. Usa o método especial que SEPARA Título e Descrição
                 u.setDescricaoBanco(rs.getString("descricao"));
 
-                // 2. Pega a data usando o nome da coluna do seu banco ('dataIncio')
                 Date dataInicio = rs.getDate("dataIncio");
                 if (dataInicio != null) {
                     u.setDataInicio(dataInicio.toLocalDate());
@@ -80,11 +75,11 @@ public class AtividadeDAO {
     }
 
     public void atualizar(AtividadeModel atividade) {
-        // SQL ajustado para atualizar usando o ID
+
         String sql = "UPDATE atividade SET descricao = ?, dataIncio = ?, dataFim = ?, estado = ? WHERE idAtividade = ?";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, atividade.getDescricaoBanco());
 
@@ -101,8 +96,7 @@ public class AtividadeDAO {
             }
 
             stmt.setString(4, atividade.getEstado());
-            
-            // Define o ID para saber qual linha atualizar
+
             stmt.setInt(5, atividade.getIdAtividade());
 
             stmt.executeUpdate();
@@ -117,7 +111,7 @@ public class AtividadeDAO {
         String sql = "DELETE FROM atividade WHERE idAtividade = ?";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idAtividade);
             stmt.executeUpdate();

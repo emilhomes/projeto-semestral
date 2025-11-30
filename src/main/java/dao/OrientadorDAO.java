@@ -1,7 +1,6 @@
 package dao;
 
 import model.OrientadorModel;
-// import model.UsuarioModel;
 import model.TccModel;
 
 import java.sql.*;
@@ -74,10 +73,6 @@ public class OrientadorDAO {
                         tcc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());
                         tcc.setIdAluno(rs.getInt("idAluno"));
                         tcc.setIdOrientador(rs.getInt("idOrientador"));
-                        tcc.setIdBanca(rs.getInt("idBanca"));
-                        tcc.setIdVersao(rs.getInt("idVersao"));
-
-                        // armazenar o nome do orientador no próprio TccModel
                         tcc.setNomeOrientador(rs.getString("nomeOrientador"));
 
                         return tcc;
@@ -128,7 +123,7 @@ public class OrientadorDAO {
                   while (rs.next()) {
                         OrientadorModel o = new OrientadorModel();
                         o.setIdUsuario(rs.getInt("idUsuario"));
-                        o.setNome(rs.getString("nome")); // <-- ESSENCIAL
+                        o.setNome(rs.getString("nome")); 
 
                         lista.add(o);
                   }
@@ -147,8 +142,8 @@ public class OrientadorDAO {
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                   stmt.setString(1, orientador.getAreaPesquisa());
-                  stmt.setString(2, orientador.getEstado()); // Estado é o segundo ?
-                  stmt.setInt(3, orientador.getIdUsuario()); // ID (WHERE) é o terceiro ?
+                  stmt.setString(2, orientador.getEstado()); 
+                  stmt.setInt(3, orientador.getIdUsuario()); 
                   stmt.executeUpdate();
 
                   System.out.println("orientador atualizado!");

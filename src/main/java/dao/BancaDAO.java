@@ -9,24 +9,19 @@ import java.util.List;
 public class BancaDAO {
 
     public void inserir(BancaModel banca) {
-        // Removi idOrientador pois você não está usando na tela
+
         String sql = "INSERT INTO banca(dataDefesa, menbros) VALUES (?, ?)";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // Tratamento para data nula
             if (banca.getDataDefesa() != null) {
                 stmt.setDate(1, java.sql.Date.valueOf(banca.getDataDefesa()));
             } else {
                 stmt.setNull(1, java.sql.Types.DATE);
             }
-            
+
             stmt.setString(2, banca.getMenbros());
-            
-            // Se o idOrientador for obrigatório no banco e não tiver valor padrão,
-            // descomente a linha abaixo e envie 0 ou null:
-            // stmt.setInt(3, 0); 
 
             stmt.executeUpdate();
 
@@ -40,27 +35,20 @@ public class BancaDAO {
         String sql = "SELECT * FROM banca";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 BancaModel u = new BancaModel();
-                
-                // --- CORREÇÃO IMPORTANTE ---
-                // É OBRIGATÓRIO pegar o ID para que o botão Editar/Excluir funcione
-                u.setIdBanca(rs.getInt("idBanca")); 
-                
+
+                u.setIdBanca(rs.getInt("idBanca"));
+
                 u.setMenbros(rs.getString("menbros"));
-                
-                // Data pode ser nula no banco, então precisamos verificar
+
                 Date dataDefesa = rs.getDate("dataDefesa");
                 if (dataDefesa != null) {
                     u.setDataDefesa(dataDefesa.toLocalDate());
                 }
-                
-                // Se removeu do controller, não precisa setar aqui, 
-                // mas se quiser manter no model, pode deixar:
-                // u.setIdOrientador(rs.getInt("idOrientador"));
 
                 lista.add(u);
             }
@@ -73,11 +61,11 @@ public class BancaDAO {
     }
 
     public void atualizar(BancaModel banca) {
-        // Corrigido a ordem dos parâmetros e removido idOrientador
+
         String sql = "UPDATE banca SET dataDefesa = ?, menbros = ? WHERE idBanca = ?";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             if (banca.getDataDefesa() != null) {
                 stmt.setDate(1, java.sql.Date.valueOf(banca.getDataDefesa()));
@@ -86,8 +74,7 @@ public class BancaDAO {
             }
 
             stmt.setString(2, banca.getMenbros());
-            
-            // O ID é o terceiro parâmetro (WHERE idBanca = ?)
+
             stmt.setInt(3, banca.getIdBanca());
 
             stmt.executeUpdate();
@@ -99,11 +86,11 @@ public class BancaDAO {
     }
 
     public void deletar(int idBanca) {
-        // Corrigido: Faltava o "WHERE" no seu código original
+
         String sql = "DELETE FROM banca WHERE idBanca = ?";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idBanca);
             stmt.executeUpdate();
@@ -116,14 +103,13 @@ public class BancaDAO {
 
     public List<BancaModel> listarPorOrientador(int idOrientador) {
         List<BancaModel> lista = new ArrayList<>();
-        
-        // SQL: Selecione as bancas ONDE o idBanca está na tabela TCC E o orientador do TCC é X
+
         String sql = "SELECT b.* FROM banca b " +
-                     "INNER JOIN tcc t ON t.idBanca = b.idBanca " +
-                     "WHERE t.idOrientador = ?";
+                "INNER JOIN tcc t ON t.idBanca = b.idBanca " +
+                "WHERE t.idOrientador = ?";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idOrientador);
             ResultSet rs = stmt.executeQuery();
@@ -132,10 +118,11 @@ public class BancaDAO {
                 BancaModel u = new BancaModel();
                 u.setIdBanca(rs.getInt("idBanca"));
                 u.setMenbros(rs.getString("menbros"));
-                
+
                 Date dataDefesa = rs.getDate("dataDefesa");
-                if (dataDefesa != null) u.setDataDefesa(dataDefesa.toLocalDate());
-                
+                if (dataDefesa != null)
+                    u.setDataDefesa(dataDefesa.toLocalDate());
+
                 lista.add(u);
             }
 

@@ -13,7 +13,6 @@ import conexao.ConexaoMySQL;
 
 public class VersaoDocumentoDAO {
 
-    // 1. INSERIR (O que você já tinha, mas ajustado para a tabela correta)
     public void inserir(VersaoDocumentoModel versao) {
         String sql = "INSERT INTO versaodocumento (idTCC, dataEnvio, nomeArquivo) VALUES (?, ?, ?)";
 
@@ -22,7 +21,7 @@ public class VersaoDocumentoDAO {
 
             stmt.setInt(1, versao.getIdTCC());
             stmt.setDate(2, Date.valueOf(versao.getDataEnvio()));
-            stmt.setString(3, versao.getNomeArquivo()); // <-- caminho completo
+            stmt.setString(3, versao.getNomeArquivo()); 
 
             stmt.executeUpdate();
 

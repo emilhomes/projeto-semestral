@@ -55,15 +55,15 @@ public class CadastroController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // adicionando itens do combobox
+        
         campoTipoUsuario.getItems().addAll("Aluno", "Orientador", "Coordenador");
         campoTipoUsuario.setPromptText("Selecione o perfil");
 
-        // começa oculto
+        
         labelAreaPesquisa.setVisible(false);
         campoAreaPesquisa.setVisible(false);
 
-        // listener para mostrar/esconder campo
+        
         campoTipoUsuario.valueProperty().addListener((obs, oldV, newV) -> {
             boolean isOrientador = "Orientador".equals(newV);
 
@@ -99,9 +99,9 @@ public class CadastroController implements Initializable {
         usuario.setSenha(senha);
         usuario.setTipoUsuario(tipoSelecionado);
 
-        // Salvar no banco
+       
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        // usuarioDAO.inserir(usuario);
+        
         int idUsuario = usuarioDAO.inserirRetornandoID(usuario);
         System.out.println("Usuário cadastrado com sucesso!");
 
@@ -112,7 +112,7 @@ public class CadastroController implements Initializable {
             aluno.setCurso(departamento);
             aluno.setIdUsuario(idUsuario);
 
-            // Salvar no banco
+           
             AlunoDAO alunoDAO = new AlunoDAO();
             alunoDAO.inserir(aluno);
             System.out.println("Aluno cadastrado com sucesso!");
@@ -124,7 +124,7 @@ public class CadastroController implements Initializable {
             orientador.setEstado("Disponivel");
             orientador.setIdUsuario(idUsuario);
 
-            // Salvar no banco
+            
             OrientadorDAO orientadorDAO = new OrientadorDAO();
             orientadorDAO.inserir(orientador);
             System.out.println("Orientador cadastrado com sucesso!");
@@ -136,7 +136,7 @@ public class CadastroController implements Initializable {
          coordenador.setCurso(departamento);
          coordenador.setIdUsuario(idUsuario);
 
-         // Salvar no banco
+         
          CoordenadorDAO coordenadorDAO = new CoordenadorDAO();
          coordenadorDAO.inserir(coordenador);
          System.out.println("Cordenador cadastrado com sucesso!");
@@ -173,11 +173,11 @@ public class CadastroController implements Initializable {
     }
 }
     
-    // --- AÇÃO DO LINK DE LOGIN ---
+   
     @FXML
     void abrirTelaLogin(MouseEvent event) {
         System.out.println("Ir para tela de login...");
-        // private void onAbrirCadastro(javafx.scene.input.MouseEvent event) {
+  
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
