@@ -6,6 +6,7 @@ public class ComentarioModel {
       private int idComentario;
       private String usuario;
       private String conteudo;
+      private int idTCC;
 
       public ComentarioModel() {
       }
@@ -38,6 +39,12 @@ public class ComentarioModel {
 
       public void setConteudo(String conteudo) {
             this.conteudo = conteudo;
+      }
+      public int getIdTCC() {
+            return idTCC;
+      }
+      public void setIdTCC(int idTCC) {
+            this.idTCC = idTCC;
       }
 
 }

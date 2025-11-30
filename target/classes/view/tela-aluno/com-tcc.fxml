@@ -54,7 +54,7 @@
                         <Label text="Meu TCC" fx:id= "lblTitulo"
                                style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;"/>
 
-                        <Label  fx:id= "lblTitulo"
+                        <Label fx:id="lblTitulo"
                                text="Título: Desenvolvimento de um Sistema de Gestão de TCC"
                                style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
 
@@ -78,7 +78,7 @@
                                        -fx-text-fill: white; -fx-background-radius: 6;" />
 
                         <Button fx:id="btnExcluirTCC"
-                        onAction="#excluirTCC"
+                        onAction="#excluirTCC" 
                                 text="🗑 Excluir TCC"
                                 style="-fx-font-size: 14px; -fx-padding: 10 20;
                                        -fx-background-color: #8B0000;
@@ -100,19 +100,6 @@
 
                     </HBox>
 
-                    <!-- Indicador de progresso -->
-                    <!-- <VBox spacing="6">
-                        <Label text="Progresso do TCC"
-                               style="-fx-font-size: 15px; -fx-text-fill: #34495E;"/>
-
-                        <ProgressBar fx:id="barraProgresso" progress="0.65"
-                                     style="-fx-accent: #0F1D45; -fx-background-radius: 10;"
-                                     prefWidth="300"/>
-
-                        <Label fx:id="labelProgresso"
-                               text="65%"
-                               style="-fx-font-size: 14px; -fx-text-fill: #2C3E50;"/>
-                    </VBox> -->
 
                     <!-- BOTÕES DE UPLOAD E VERSÕES -->
                     <HBox spacing="15">
@@ -145,10 +132,11 @@
                                    text="Enviado em: 15/11/2024"
                                    style="-fx-font-size: 13px; -fx-text-fill: #7F8C8D;"/>
                         </HBox>
-
+                             <Label fx:id="lblResumo"
+                               text="Resumo"
+                               style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
                         <!-- Baixar arquivo -->
                         <Button fx:id="btnBaixarAtual"
-                         onAction="#baixarVersaoAtual"
                                 text="⬇ Baixar Documento Atual"
                                 style="-fx-background-color: #E3F2FD; -fx-text-fill: #0F1D45; -fx-font-weight: bold; -fx-background-radius: 6; -fx-border-color: #0F1D45; -fx-border-radius: 6; -fx-padding: 10 20;"/>
 
@@ -174,7 +162,7 @@
 
                             <HBox alignment="CENTER_RIGHT">
                                 <Button fx:id="btnEnviarComentario"
-                                       
+                                onAction="#enviarComentario"
                                         text="Enviar Comentário"
                                         style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 20; -fx-font-weight: bold;"/>
                             </HBox>

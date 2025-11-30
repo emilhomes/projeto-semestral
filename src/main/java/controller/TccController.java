@@ -48,6 +48,18 @@ public class TccController {
          campoOrientador.setPromptText("Selecione o orientador");
          }
     }
+    @FXML
+       private void abrirPerfil(ActionEvent event) {
+            carregarTela("tela-aluno/dashboard-aluno.fxml");
+       }
+     @FXML
+       private void abrirMeuTCC(ActionEvent event) {
+            carregarTela("tela-aluno/com-tcc.fxml");
+       }
+     @FXML
+       private void abrirCronograma(ActionEvent event) {
+            carregarTela("tela-aluno/cronograma-lista.fxml");
+       }
 
     @FXML
     private void CriarTCC(ActionEvent event) {
@@ -100,7 +112,7 @@ public class TccController {
 
         // Salvar no banco
         TccDAO dao = new TccDAO();
-        boolean sucesso = dao.inserir(tcc); // inserir deve retornar boolean
+        boolean sucesso = dao.inserir(tcc); 
 
         if (sucesso) {
             mostrarAlerta("Sucesso", "TCC cadastrado com sucesso!", Alert.AlertType.INFORMATION);
@@ -125,20 +137,6 @@ public class TccController {
             e.printStackTrace();
         }
     }
-    // @FXML
-    // private void carregarTela(String fxml) {
-    //     try {
-    //         Parent root = FXMLLoader.load(getClass().getResource("/view/" + fxml));
-    //         Stage stage = new Stage();
-    //         stage.setScene(new Scene(root));
-    //         stage.show();
-
-    //         Stage atual = (Stage) contentArea.getScene().getWindow();
-    //         atual.close();
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    // }
 
     private void limparCampos() {
         campoTitulo.clear();

@@ -13,10 +13,11 @@ public class VersaoDocumentoModel {
       public VersaoDocumentoModel() {
       }
 
-      public VersaoDocumentoModel(String nomeArquivo, LocalDate dataEnvio, int idComentario) {
+      public VersaoDocumentoModel(String nomeArquivo, LocalDate dataEnvio, int idComentario, int idTCC) {
             this.nomeArquivo = nomeArquivo;
             this.dataEnvio = dataEnvio;
             this.idComentario = idComentario;
+            this.idTCC = idTCC;
       }
 
       public int getIdVersao() {

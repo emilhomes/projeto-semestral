@@ -1,9 +1,9 @@
 package controller;
 
 import dao.TccDAO;
+import dao.ComentarioDAO;
 import dao.OrientadorDAO;
 import dao.VersaoDocumentoDAO;
-import dao.ComentarioDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,15 +14,18 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.ComentarioModel;
 import model.TccModel;
 import model.UsuarioModel;
 import model.VersaoDocumentoModel;
-import model.ComentarioModel;
 import service.AuthenticationService;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
+
 
 public class MeuTccController {
 
@@ -32,6 +35,8 @@ public class MeuTccController {
       private Label lblOrientador;
       @FXML
       private Label lblStatus;
+      @FXML
+      private Label lblResumo;
       @FXML
       private ProgressBar barraProgresso;
       @FXML
@@ -60,6 +65,8 @@ public class MeuTccController {
       @FXML
       private Button btnEnviarComentario;
 
+      private VersaoDocumentoModel versaoAtual;
+
       private TccModel tccAtual;
       private UsuarioModel usuario;
       @FXML
@@ -69,27 +76,37 @@ public class MeuTccController {
       public void initialize() {
             usuario = AuthenticationService.getUsuarioLogado();
             carregarTcc();
-            // carregarComentarios();
+            carregarComentarios();
       }
 
-      // ===========================
-      // CARREGAR DADOS DO TCC
-      // ===========================
       private void carregarTcc() {
             TccDAO tccDAO = new TccDAO();
-            tccAtual = tccDAO.buscarTccComOrientador(usuario.getIdUsuario()); // JOIN para pegar nome do orientador
-
+            tccAtual = tccDAO.buscarTccComOrientador(usuario.getIdUsuario());
             if (tccAtual != null) {
                   lblTitulo.setText(tccAtual.getTitulo());
                   lblStatus.setText(tccAtual.getEstado());
+                  lblResumo.setText(tccAtual.getResumo());
                   lblOrientador.setText(tccAtual.getNomeOrientador());
                   labelDataAtual.setText("Enviado em: " + tccAtual.getDataCadastro());
+
             }
       }
 
-      // ===========================
-      // BOTÕES CRUD
-      // ===========================
+      @FXML
+      private void abrirPerfil(ActionEvent event) {
+            carregarTela("tela-aluno/dashboard-aluno.fxml");
+      }
+
+      @FXML
+      private void abrirMeuTCC(ActionEvent event) {
+            carregarTela("tela-aluno/com-tcc.fxml");
+      }
+
+      @FXML
+      private void abrirCronograma(ActionEvent event) {
+            carregarTela("tela-aluno/cronograma-lista.fxml");
+      }
+
       @FXML
       private void editarTCC(ActionEvent event) {
             carregarTela("tela-aluno/editar-tcc.fxml");
@@ -118,7 +135,7 @@ public class MeuTccController {
                   OrientadorDAO dao = new OrientadorDAO();
                   tccAtual.setIdOrientador(dao.buscarPorNome(nome).getIdUsuario());
                   tccAtual.setNomeOrientador(nome);
-                  new TccDAO().atualizar(tccAtual);
+                  new TccDAO().atualizarOrientador(tccAtual);
                   lblOrientador.setText(nome);
             });
       }
@@ -131,39 +148,69 @@ public class MeuTccController {
             dialog.setHeaderText("Selecione o novo status do TCC:");
             dialog.showAndWait().ifPresent(status -> {
                   tccAtual.setEstado(status);
-                  new TccDAO().atualizar(tccAtual);
+                  new TccDAO().atualizarEstado(tccAtual);
                   lblStatus.setText(status);
             });
       }
 
-      // ===========================
-      // UPLOAD DE VERSÃO
-      // ===========================
+      public void setVersaoAtual(VersaoDocumentoModel versao) {
+            this.versaoAtual = versao;
+
+            if (versao != null) {
+                  labelDataAtual.setText("Enviado em: " + versao.getDataEnvio());
+            }
+      }
+
       @FXML
       private void enviarNovaVersao(ActionEvent event) {
             FileChooser fileChooser = new FileChooser();
             File arquivo = fileChooser.showOpenDialog(null);
+
             if (arquivo != null) {
+
                   VersaoDocumentoModel versao = new VersaoDocumentoModel();
                   versao.setIdTCC(tccAtual.getIdTCC());
                   versao.setDataEnvio(LocalDate.now());
-                  versao.setNomeArquivo(arquivo.getAbsolutePath());
-                  new VersaoDocumentoDAO().inserir(versao);
 
+                  // <-- apenas salvando o caminho
+                  versao.setNomeArquivo(arquivo.getAbsolutePath());
+
+                  new VersaoDocumentoDAO().inserir(versao);
+                  setVersaoAtual(versao);
                   labelDataAtual.setText("Enviado em: " + versao.getDataEnvio());
             }
       }
 
       @FXML
       private void verVersoes(ActionEvent event) {
-            // Aqui você poderia abrir uma nova janela com todas as versões do TCC
-            System.out.println("Abrir tela de versões");
+            VersoesTccController.setTccAtual(tccAtual);
+            carregarTela("tela-aluno/versoes_tcc.fxml");
       }
 
       @FXML
       private void baixarVersaoAtual(ActionEvent event) {
-            // Implementar download do arquivo da versão atual
-            System.out.println("Baixando versão atual...");
+            if (versaoAtual == null) {
+                  System.out.println("versaoAtual está nulo!");
+                  return;
+            }
+
+            if (versaoAtual.getNomeArquivo() == null) {
+                  System.out.println("Nome do arquivo da versão atual está nulo!");
+                  return;
+            }
+            FileChooser salvarDialogo = new FileChooser();
+            salvarDialogo.setInitialFileName(new File(versaoAtual.getNomeArquivo()).getName());
+            File destino = salvarDialogo.showSaveDialog(null);
+
+            if (destino != null) {
+                  try {
+                        File origem = new File(versaoAtual.getNomeArquivo());
+                        Files.copy(origem.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        System.out.println("Arquivo salvo em: " + destino.getAbsolutePath());
+                  } catch (Exception e) {
+                        e.printStackTrace();
+                  }
+            }
       }
 
       @FXML
@@ -181,50 +228,31 @@ public class MeuTccController {
             }
       }
 
-      // ===========================
-      // COMENTÁRIOS
-      // ===========================
-      // @FXML
-      // private void enviarComentario() {
-      // String texto = campoComentario.getText();
-      // if (texto.isEmpty()) return;
+    
+       @FXML
+       private void enviarComentario() {
+       String texto = campoComentario.getText();
+       if (texto.isEmpty()) return;
 
-      // ComentarioModel comentario = new ComentarioModel();
-      // comentario.setIdTcc(tccAtual.getIdTcc());
-      // comentario.setComentario(texto);
-      // comentario.setData(LocalDate.now());
-      // comentario.setAutor(usuario.getNome());
-      // new ComentarioDAO().inserir(comentario);
+       ComentarioModel comentario = new ComentarioModel();
+       comentario.setIdTCC(tccAtual.getIdTCC());
+       comentario.setConteudo(texto);
+       comentario.setUsuario(usuario.getNome());
+       new ComentarioDAO().inserir(comentario);
 
-      // campoComentario.clear();
-      // carregarComentarios();
-      // }
+       campoComentario.clear();
+       carregarComentarios();
+       }
 
-      // private void carregarComentarios() {
-      // listaComentarios.getChildren().clear();
-      // ComentarioDAO dao = new ComentarioDAO();
-      // List<ComentarioModel> comentarios = dao.listarPorTcc(tccAtual.getIdTcc());
+       private void carregarComentarios() {
+       listaComentarios.getChildren().clear();
+       ComentarioDAO dao = new ComentarioDAO();
+       List<ComentarioModel> comentarios = dao.listarPorTcc(tccAtual.getIdTCC());
 
-      // for (ComentarioModel c : comentarios) {
-      // Label lbl = new Label(c.getAutor() + ": " + c.getComentario());
-      // lbl.setStyle("-fx-background-color: #E3F2FD; -fx-padding: 6;
-      // -fx-border-radius: 6; -fx-background-radius: 6;");
-      // listaComentarios.getChildren().add(lbl);
-      // }
-      // }
+       for (ComentarioModel c : comentarios) {
+       Label lbl = new Label(c.getUsuario() + ": " + c.getConteudo());
+       lbl.setStyle("-fx-background-color: #E3F2FD; -fx-padding: 6;-fx-border-radius: 6; -fx-background-radius: 6;");
+       listaComentarios.getChildren().add(lbl);
+       }
+       }
 }
-
-// public void initialize() {
-
-// UsuarioModel usuario = AuthenticationService.getUsuarioLogado();
-// AlunoDAO dao = new AlunoDAO();
-// AlunoModel aluno = dao.buscarPorUsuarioId(usuario.getIdUsuario());
-// TccDAO tccdao = new TccDAO();
-// TccModel tcc = tccdao.buscarTccPorUsuarioId(usuario.getIdUsuario());
-
-// lblTitulo.setText(tcc.getTitulo());
-// lblStatus.setText(tcc.getEstado());
-// lblOrientador.setText(tcc.getNomeOrientador());
-// // lblCurso.setText(aluno.getCurso());
-
-// }

@@ -10,13 +10,14 @@ import conexao.ConexaoMySQL;
 public class ComentarioDAO {
       
       public void inserir(ComentarioModel comentario) {
-            String sql = "INSERT INTO comentario(usuario, conteudo) VALUES (?, ? )";
+            String sql = "INSERT INTO comentario(usuario, conteudo, idTCC) VALUES (?, ?,?)";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                   stmt.setString(1, comentario.getUsuario());
                   stmt.setString(2, comentario.getConteudo());
+                  stmt.setInt(3, comentario.getIdTCC());
                   stmt.executeUpdate();
 
 
@@ -24,6 +25,32 @@ public class ComentarioDAO {
                   e.printStackTrace();
             }
       }
+
+      public List<ComentarioModel> listarPorTcc(int idTCC) {
+    List<ComentarioModel> lista = new ArrayList<>();
+    String sql = "SELECT * FROM comentario WHERE idTCC = ?";
+
+    try (Connection conn = ConexaoMySQL.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, idTCC);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            ComentarioModel c = new ComentarioModel();
+            c.setIdComentario(rs.getInt("idComentario"));
+            c.setConteudo(rs.getString("conteudo"));
+            c.setUsuario(rs.getString("usuario"));
+            c.setIdTCC(rs.getInt("idTCC"));
+            lista.add(c);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return lista;
+}
 
       public List<ComentarioModel> listar() {
             List<ComentarioModel> lista = new ArrayList<>();

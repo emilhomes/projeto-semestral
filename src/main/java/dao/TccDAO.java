@@ -46,9 +46,10 @@ public class TccDAO {
                   var rs = stmt.executeQuery();
                   if (rs.next()) {
                         tcc = new TccModel();
-                        tcc.setIdTcc(rs.getInt("idTcc"));
+                        tcc.setIdTcc(rs.getInt("idTCC"));
                         tcc.setTitulo(rs.getString("titulo"));
                         tcc.setEstado(rs.getString("estado"));
+                        tcc.setResumo(rs.getString("resumo"));
                         tcc.setIdOrientador(rs.getInt("idOrientador"));
                         tcc.setNomeOrientador(rs.getString("nomeOrientador"));
                         tcc.setDataCadastro(rs.getDate("dataCadastro").toLocalDate());
@@ -122,29 +123,53 @@ public class TccDAO {
             return lista;
       }
 
-      public void atualizar(TccModel tcc) {
-            String sql = "UPDATE tcc SET titulo = ?, resumo = ?, estado = ?, dataCadastro = ?, idAluno = ?, idBanca = ?, idVersao = ?, idOrientador  WHERE idTCC = ?";
+      public void atualizarEstado(TccModel tcc) {
+            String sql = "UPDATE tcc SET estado = ? WHERE idTCC = ?";
+
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                  stmt.setString(1, tcc.getEstado());
+                  stmt.setInt(2, tcc.getIdTCC());
+
+                  stmt.executeUpdate();
+            } catch (SQLException e) {
+                  e.printStackTrace();
+            }
+      }
+      public void atualizarOrientador(TccModel tcc) {
+            String sql = "UPDATE tcc SET idOrientador = ? WHERE idTCC = ?";
+
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                  stmt.setInt(1, tcc.getIdOrientador());
+                  stmt.setInt(2, tcc.getIdTCC());
+
+                  stmt.executeUpdate();
+            } catch (SQLException e) {
+                  e.printStackTrace();
+            }
+      }
+
+      public boolean atualizar(TccModel tcc) {
+            String sql = "UPDATE tcc SET titulo=?, resumo=? WHERE idTCC=?";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                   stmt.setString(1, tcc.getTitulo());
                   stmt.setString(2, tcc.getResumo());
-                  stmt.setString(3, tcc.getEstado());
-                  stmt.setDate(4, java.sql.Date.valueOf(tcc.getDataCadastro()));
-                  stmt.setInt(5, tcc.getIdAluno());
-                  stmt.setInt(6, tcc.getIdBanca());
-                  stmt.setInt(7, tcc.getIdOrientador());
-                  stmt.setInt(8, tcc.getIdVersao());
-                  stmt.setInt(9, tcc.getIdTCC());
-                  stmt.executeUpdate();
+                  stmt.setInt(3, tcc.getIdTCC());
 
-                  System.out.println("TCC atualizado!");
+                  return stmt.executeUpdate() > 0;
 
             } catch (Exception e) {
                   e.printStackTrace();
             }
+            return false;
       }
+      
 
       public void deletar(int idTCC) {
             String sql = "DELETE FROM tcc WHERE idTCC = ?";

@@ -83,6 +83,10 @@ public class DashboardAlunoController {
             System.out.println("Erro ao carregar o cronograma.");
         }
     }
+    @FXML
+    private void abrirEditarPerfil(ActionEvent event) {
+        carregarTela("tela-aluno/editar-perfil.fxml");
+    }
 
     @FXML
     private void carregarTela(String fxml) {

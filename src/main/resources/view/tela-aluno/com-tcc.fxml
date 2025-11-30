@@ -54,15 +54,15 @@
                         <Label text="Meu TCC" fx:id= "lblTitulo"
                                style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0F1D45;"/>
 
-                        <Label fx:id="labelTitulo"
+                        <Label fx:id="lblTitulo"
                                text="Título: Desenvolvimento de um Sistema de Gestão de TCC"
                                style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
 
-                        <Label fx:id="labelOrientador"
+                        <Label fx:id="lblOrientador"
                                text="Orientador: Prof. João da Silva"
                                style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
 
-                        <Label fx:id="labelStatus"
+                        <Label fx:id="lblStatus"
                                text="Status: Em andamento"
                                style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #E67E22;"/>
                     </VBox>
@@ -71,24 +71,28 @@
                     <HBox spacing="15">
 
                         <Button fx:id="btnEditarTCC"
+                        onAction="#editarTCC"
                                 text="✏ Editar TCC"
                                 style="-fx-font-size: 14px; -fx-padding: 10 20;
                                        -fx-background-color: #0F1D45;
                                        -fx-text-fill: white; -fx-background-radius: 6;" />
 
                         <Button fx:id="btnExcluirTCC"
+                        onAction="#excluirTCC" 
                                 text="🗑 Excluir TCC"
                                 style="-fx-font-size: 14px; -fx-padding: 10 20;
                                        -fx-background-color: #8B0000;
                                        -fx-text-fill: white; -fx-background-radius: 6;" />
 
                         <Button fx:id="btnAlterarOrientador"
+                        onAction="#alterarOrientador"
                                 text="👤 Alterar Orientador"
                                 style="-fx-font-size: 14px; -fx-padding: 10 20;
                                        -fx-background-color: #1E3A5F;
                                        -fx-text-fill: white; -fx-background-radius: 6;" />
 
                         <Button fx:id="btnAlterarStatus"
+                        onAction="#alterarStatus"
                                 text="📌 Alterar Status"
                                 style="-fx-font-size: 14px; -fx-padding: 10 20;
                                        -fx-background-color: #34495E;
@@ -96,27 +100,16 @@
 
                     </HBox>
 
-                    <!-- Indicador de progresso -->
-                    <VBox spacing="6">
-                        <Label text="Progresso do TCC"
-                               style="-fx-font-size: 15px; -fx-text-fill: #34495E;"/>
-
-                        <ProgressBar fx:id="barraProgresso" progress="0.65"
-                                     style="-fx-accent: #0F1D45; -fx-background-radius: 10;"
-                                     prefWidth="300"/>
-
-                        <Label fx:id="labelProgresso"
-                               text="65%"
-                               style="-fx-font-size: 14px; -fx-text-fill: #2C3E50;"/>
-                    </VBox>
 
                     <!-- BOTÕES DE UPLOAD E VERSÕES -->
                     <HBox spacing="15">
                         <Button fx:id="btnUpload"
+                        onAction="#enviarNovaVersao"
                                 text="Enviar Nova Versão"
                                 style="-fx-font-size: 14px; -fx-padding: 10 25; -fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 6;"/>
 
                         <Button fx:id="btnVersoes"
+                        onAction="#verVersoes"
                                 text="Ver Todas as Versões"
                                 style="-fx-font-size: 14px; -fx-padding: 10 25; -fx-background-color: #1E3A5F; -fx-text-fill: white; -fx-background-radius: 6;"/>
                     </HBox>
@@ -138,6 +131,10 @@
                             <Label fx:id="labelDataAtual"
                                    text="Enviado em: 15/11/2024"
                                    style="-fx-font-size: 13px; -fx-text-fill: #7F8C8D;"/>
+
+                            <Label fx:id="lblResumo"
+                               text="Resumo"
+                               style="-fx-font-size: 16px; -fx-text-fill: #2C3E50;"/>
                         </HBox>
 
                         <!-- Baixar arquivo -->

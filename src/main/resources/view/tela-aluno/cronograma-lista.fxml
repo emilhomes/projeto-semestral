@@ -24,7 +24,6 @@
                 <Font name="Ebrima Bold" size="24.0" />
             </font>
         </Label>
-        
         <HBox HBox.hgrow="ALWAYS" /> 
         
         <Button onAction="#novaAtividade" 

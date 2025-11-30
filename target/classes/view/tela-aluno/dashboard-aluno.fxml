@@ -150,6 +150,7 @@
 
                         <HBox alignment="CENTER_RIGHT">
                             <Button style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20;"
+                                   onAction="#abrirEditarPerfil"   
                                     text="Editar Perfil">
                                 <font><Font name="Ebrima" size="14.0" /></font>
                             </Button>
