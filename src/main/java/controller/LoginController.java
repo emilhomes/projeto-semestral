@@ -33,27 +33,23 @@ public class LoginController {
 
         UsuarioModel usuario = authService.autenticar(email, senha);
 
-        AuthenticationService.setUsuarioLogado(usuario);
-
-
         if (usuario != null) {
-            String tipo = usuario.getTipoUsuario();
+            // AJUSTE DE LÓGICA: Só define o usuário logado se ele realmente existir (não for null)
+            AuthenticationService.setUsuarioLogado(usuario);
 
+            String tipo = usuario.getTipoUsuario();
             String fxmlDestino = "";
 
             switch (tipo) {
                 case "Aluno":
                     fxmlDestino = "/view/tela-aluno/dashboard-aluno.fxml";
                     break;
-
                 case "Orientador":
                     fxmlDestino = "/view/tela-orientador/dashboard-orientador.fxml";
                     break;
-
                 case "Coordenador":
                     fxmlDestino = "/view/tela-coordenador/dashboard-coordenador.fxml";
                     break;
-
                 default:
                     labelErro.setText("Tipo de usuário inválido!");
                     labelErro.setVisible(true);
@@ -62,9 +58,17 @@ public class LoginController {
 
             try {
                 Parent root = FXMLLoader.load(getClass().getResource(fxmlDestino));
+                
+                // Pega a janela atual
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                
+                // Troca a cena
                 stage.setScene(new Scene(root));
+                
+                stage.setMaximized(true); 
+                
                 stage.show();
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -81,10 +85,13 @@ public class LoginController {
             Parent root = FXMLLoader.load(getClass().getResource("/view/cadastro.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
+            
+            // Também maximiza a tela de cadastro se quiser
+            stage.setMaximized(true);
+            
             stage.setTitle("Cadastro");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
