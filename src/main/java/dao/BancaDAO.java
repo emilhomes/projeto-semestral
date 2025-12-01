@@ -104,7 +104,6 @@ public class BancaDAO {
     public List<BancaModel> listarPorOrientador(int idOrientador) {
         List<BancaModel> lista = new ArrayList<>();
         
-        // O SQL que funcionou no seu Workbench:
         String sql = "SELECT b.* FROM banca b " +
                      "INNER JOIN tcc t ON t.idBanca = b.idBanca " +
                      "WHERE t.idOrientador = ?";

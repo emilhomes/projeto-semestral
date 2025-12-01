@@ -13,12 +13,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class BancasOrientadorController implements Initializable {
 
-    // --- VÍNCULOS COM O FXML ---
+    
     @FXML 
     private TableView<BancaModel> tabelaBancas;
     
@@ -31,7 +30,7 @@ public class BancasOrientadorController implements Initializable {
     @FXML 
     private TableColumn<BancaModel, String> colMembros;
 
-    // --- DEPENDÊNCIAS ---
+    
     private BancaDAO bancaDAO = new BancaDAO();
 
     @Override
@@ -41,8 +40,7 @@ public class BancasOrientadorController implements Initializable {
     }
 
     private void configurarColunas() {
-        // Vincula as colunas aos atributos do BancaModel
-        // Atenção: "menbros" deve ser escrito igualzinho está no Model
+
         colIdBanca.setCellValueFactory(new PropertyValueFactory<>("idBanca"));
         colData.setCellValueFactory(new PropertyValueFactory<>("dataDefesa"));
         colMembros.setCellValueFactory(new PropertyValueFactory<>("menbros"));
@@ -53,7 +51,7 @@ public class BancasOrientadorController implements Initializable {
         
         if (usuario != null) {
             try {
-                // Busca as bancas e joga direto na tabela
+                
                 tabelaBancas.setItems(FXCollections.observableArrayList(
                     bancaDAO.listarPorOrientador(usuario.getIdUsuario())
                 ));

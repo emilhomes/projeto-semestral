@@ -111,7 +111,7 @@ public class TccsOrientadosController implements Initializable {
             System.out.println("Orientador Logado: " + orientadorLogado.getNome() + " (ID: " + orientadorLogado.getIdUsuario() + ")");
             
             try {
-                // Chama o DAO
+                
                 List<TccModel> lista = tccDAO.listarPorOrientador(orientadorLogado.getIdUsuario());
                 
                 System.out.println("Quantidade de TCCs encontrados: " + lista.size());

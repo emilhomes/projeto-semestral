@@ -79,12 +79,10 @@ public class PerfilOrientadorController implements Initializable {
     @FXML
     void editarPerfil(ActionEvent event) {
         try {
-            // Carrega o formulário de edição
+            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tela-orientador/editar-perfil-orientador.fxml"));
             Parent root = loader.load();
-            
-            // Como estamos dentro de um ScrollPane (no Home), precisamos pegar a cena principal para trocar
-            // Usamos qualquer elemento da tela atual (ex: lblNome) para pegar a cena
+        
             lblNome.getScene().setRoot(root);
             
         } catch (IOException e) {

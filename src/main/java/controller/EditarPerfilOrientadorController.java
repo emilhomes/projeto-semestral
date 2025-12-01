@@ -36,11 +36,11 @@ public class EditarPerfilOrientadorController implements Initializable {
         usuarioLogado = AuthenticationService.getUsuarioLogado();
 
         if (usuarioLogado != null) {
-            // 1. Preenche dados do Usuário
+           
             campoNome.setText(usuarioLogado.getNome());
             campoEmail.setText(usuarioLogado.getEmailInstitucional());
 
-            // 2. Preenche dados do Orientador
+            
             try {
                 OrientadorModel orientador = orientadorDAO.buscarPorUsuarioId(usuarioLogado.getIdUsuario());
                 if (orientador != null) {
@@ -60,7 +60,7 @@ public class EditarPerfilOrientadorController implements Initializable {
         }
 
         try {
-            // --- ATUALIZAR OBJETO USUARIO ---
+            
             usuarioLogado.setNome(campoNome.getText());
             usuarioLogado.setEmailInstitucional(campoEmail.getText());
             
@@ -68,17 +68,17 @@ public class EditarPerfilOrientadorController implements Initializable {
                 usuarioLogado.setSenha(campoNovaSenha.getText());
             }
             
-            usuarioDAO.atualizar(usuarioLogado); // Salvar no banco (tabela usuario)
+            usuarioDAO.atualizar(usuarioLogado); 
 
-            // --- ATUALIZAR OBJETO ORIENTADOR ---
+            
             OrientadorModel orientador = new OrientadorModel();
             orientador.setIdUsuario(usuarioLogado.getIdUsuario());
             orientador.setAreaPesquisa(campoArea.getText());
             orientador.setEstado("Ativo"); 
 
-            orientadorDAO.atualizar(orientador); // Salvar no banco (tabela orientador)
+            orientadorDAO.atualizar(orientador); 
 
-            // Atualiza a sessão global
+           
             AuthenticationService.setUsuarioLogado(usuarioLogado);
 
             mostrarAlerta("Sucesso", "Perfil atualizado!");

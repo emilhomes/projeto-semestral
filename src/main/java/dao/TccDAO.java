@@ -123,7 +123,7 @@ public class TccDAO {
             String sql = ""
                         + "SELECT t.*, u.nome AS nomeAluno "
                         + "FROM tcc t "
-                        + "INNER JOIN aluno a ON t.idAluno = a.matricula "
+                        + "INNER JOIN aluno a ON t.idAluno = a.idUsuario "
                         + "INNER JOIN usuario u ON a.idUsuario = u.idUsuario "
                         + "WHERE t.idOrientador = ?";
 

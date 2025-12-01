@@ -87,6 +87,7 @@ public class PrazoInstitucionalController implements Initializable {
                 prazo.setIdCordenador(usuario.getIdUsuario());
             } else {
                 prazo.setIdCordenador(1); 
+                mostrarAlerta("Erro", "sem usuario logado!");
             }
 
             if (prazo.getIdPrazo() > 0) {

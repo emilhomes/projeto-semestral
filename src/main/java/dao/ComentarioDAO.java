@@ -9,7 +9,6 @@ import java.util.List;
 public class ComentarioDAO {
 
     public void inserir(ComentarioModel c) {
-        // Agora usando idTcc e dataCriacao que adicionamos
         String sql = "INSERT INTO comentario (usuario, conteudo, idTcc, dataCriacao) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexaoMySQL.getConnection();
@@ -17,7 +16,7 @@ public class ComentarioDAO {
 
             stmt.setString(1, c.getUsuario());
             stmt.setString(2, c.getConteudo());
-            stmt.setInt(3, c.getIdTCC()); // Link direto com o TCC
+            stmt.setInt(3, c.getIdTCC()); 
             
             if (c.getData() != null) {
                 stmt.setTimestamp(4, Timestamp.valueOf(c.getData()));
@@ -35,7 +34,7 @@ public class ComentarioDAO {
     public List<ComentarioModel> listarPorTcc(int idTcc) {
         List<ComentarioModel> lista = new ArrayList<>();
         
-        // Busca comentários ligados diretamente ao TCC
+        
         String sql = "SELECT * FROM comentario WHERE idTcc = ? ORDER BY dataCriacao ASC";
 
         try (Connection conn = ConexaoMySQL.getConnection();

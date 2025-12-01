@@ -76,16 +76,14 @@ public class DashboardAlunoController {
         carregarTela("tela-aluno/editar-perfil.fxml");
     }
 
-    /**
-     * Troca apenas o conteúdo do StackPane, sem abrir novas janelas.
-     */
+   
     @FXML
     private void carregarTela(String fxml) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/" + fxml));
 
-            contentArea.getChildren().clear();  // limpa conteúdo atual
-            contentArea.getChildren().add(root); // adiciona nova tela
+            contentArea.getChildren().clear();  
+            contentArea.getChildren().add(root); 
 
         } catch (IOException e) {
             e.printStackTrace();

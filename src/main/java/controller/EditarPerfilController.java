@@ -112,14 +112,14 @@ public class EditarPerfilController implements Initializable {
 
     private void voltarParaDashboard() {
         try {
-            // Recarrega o Dashboard do Aluno para atualizar os dados na tela (nome no menu, etc)
+            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tela-aluno/dashboard-aluno.fxml"));
             Parent root = loader.load();
             
-            // Pega a janela atual e troca a cena inteira
+            
             Stage stage = (Stage) inputNome.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setMaximized(true); // Garante que continua maximizado
+            stage.setMaximized(true); 
             stage.show();
             
         } catch (IOException e) {

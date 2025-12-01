@@ -31,6 +31,7 @@ public class PrazoInstitucionalDAO {
 
             stmt.executeUpdate();
 
+            System.out.println("salvo no banco");
         } catch (Exception e) {
             e.printStackTrace();
         }

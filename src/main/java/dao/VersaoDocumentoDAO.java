@@ -12,19 +12,15 @@ import conexao.ConexaoMySQL;
 
 public class VersaoDocumentoDAO {
 
-    // CORREÇÃO: Método inserir limpo e unificado
     public void inserir(VersaoDocumentoModel versao) {
-        // Ordem escolhida: idTCC, nomeArquivo, dataEnvio
         String sql = "INSERT INTO versaodocumento (idTCC, nomeArquivo, dataEnvio) VALUES (?, ?, ?)";
 
         try (Connection con = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+                PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setInt(1, versao.getIdTCC());
-            stmt.setString(2, versao.getNomeArquivo()); // Caminho do arquivo
+            stmt.setString(2, versao.getNomeArquivo());
             stmt.setDate(3, Date.valueOf(versao.getDataEnvio()));
-
-            // O idComentario não é inserido agora, pois começa nulo (será atualizado pelo professor depois)
 
             stmt.executeUpdate();
             System.out.println("Versão do documento inserida com sucesso!");
@@ -41,7 +37,7 @@ public class VersaoDocumentoDAO {
         String sql = "SELECT * FROM versaodocumento WHERE idTCC = ? ORDER BY dataEnvio DESC";
 
         try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idTcc);
             ResultSet rs = stmt.executeQuery();
@@ -51,14 +47,9 @@ public class VersaoDocumentoDAO {
                 v.setIdVersao(rs.getInt("idVersao"));
                 v.setIdTCC(rs.getInt("idTCC"));
                 v.setNomeArquivo(rs.getString("nomeArquivo"));
-                
-                // Conversão segura de SQL Date para LocalDate
                 if (rs.getDate("dataEnvio") != null) {
                     v.setDataEnvio(rs.getDate("dataEnvio").toLocalDate());
                 }
-                
-                // Se precisar recuperar o idComentario no futuro:
-                // v.setIdComentario(rs.getInt("idComentario"));
 
                 lista.add(v);
             }
@@ -70,17 +61,16 @@ public class VersaoDocumentoDAO {
         return lista;
     }
 
-    // Método wrapper (atalho) mantido
     public List<VersaoDocumentoModel> listarPorTcc(int idTcc) {
         return listarVersoesPorTcc(idTcc);
     }
 
     public void salvarComentario(VersaoDocumentoModel versao) {
-        // Atualiza a tabela vinculando um comentário (FK) a esta versão
+
         String sql = "UPDATE versaodocumento SET idComentario = ? WHERE idVersao = ?";
 
         try (Connection con = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
+                PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setInt(1, versao.getIdComentario());
             stmt.setInt(2, versao.getIdVersao());
