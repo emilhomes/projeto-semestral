@@ -48,6 +48,11 @@
                             text="Cronograma">
                         <font><Font name="Ebrima" size="12.0" /></font>
                     </Button>
+                    <Button fx:id="sair" onAction="#sair" prefWidth="180"
+                            style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;"
+                            text="SAIR">
+                        <font><Font name="Ebrima" size="12.0" /></font>
+                    </Button>
                 </VBox>
 
             </children>

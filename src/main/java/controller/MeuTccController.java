@@ -26,7 +26,6 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 
-
 public class MeuTccController {
 
       @FXML
@@ -68,6 +67,7 @@ public class MeuTccController {
       private VersaoDocumentoModel versaoAtual;
 
       private TccModel tccAtual;
+      
       private UsuarioModel usuario;
       @FXML
       private StackPane contentArea;
@@ -204,7 +204,8 @@ public class MeuTccController {
             if (destino != null) {
                   try {
                         File origem = new File(versaoAtual.getNomeArquivo());
-                        Files.copy(origem.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        Files.copy(origem.toPath(), destino.toPath(),
+                                    StandardCopyOption.REPLACE_EXISTING);
                         System.out.println("Arquivo salvo em: " + destino.getAbsolutePath());
                   } catch (Exception e) {
                         e.printStackTrace();
@@ -227,31 +228,32 @@ public class MeuTccController {
             }
       }
 
-    
-       @FXML
-       private void enviarComentario() {
-       String texto = campoComentario.getText();
-       if (texto.isEmpty()) return;
+      @FXML
+      private void enviarComentario() {
+            String texto = campoComentario.getText();
+            if (texto.isEmpty())
+                  return;
 
-       ComentarioModel comentario = new ComentarioModel();
-       comentario.setIdTCC(tccAtual.getIdTCC());
-       comentario.setConteudo(texto);
-       comentario.setUsuario(usuario.getNome());
-       new ComentarioDAO().inserir(comentario);
+            ComentarioModel comentario = new ComentarioModel();
+            comentario.setIdTCC(tccAtual.getIdTCC());
+            comentario.setConteudo(texto);
+            comentario.setUsuario(usuario.getNome());
+            new ComentarioDAO().inserir(comentario);
 
-       campoComentario.clear();
-       carregarComentarios();
-       }
+            campoComentario.clear();
+            carregarComentarios();
+      }
 
-       private void carregarComentarios() {
-       listaComentarios.getChildren().clear();
-       ComentarioDAO dao = new ComentarioDAO();
-       List<ComentarioModel> comentarios = dao.listarPorTcc(tccAtual.getIdTCC());
+      private void carregarComentarios() {
+            listaComentarios.getChildren().clear();
+            ComentarioDAO dao = new ComentarioDAO();
+            List<ComentarioModel> comentarios = dao.listarPorTcc(tccAtual.getIdTCC());
 
-       for (ComentarioModel c : comentarios) {
-       Label lbl = new Label(c.getUsuario() + ": " + c.getConteudo());
-       lbl.setStyle("-fx-background-color: #2C3E50;; -fx-padding: 6;-fx-border-radius: 6; -fx-background-radius: 6;");
-       listaComentarios.getChildren().add(lbl);
-       }
-       }
+            for (ComentarioModel c : comentarios) {
+                  Label lbl = new Label(c.getUsuario() + ": " + c.getConteudo());
+                  lbl.setStyle(
+                              "-fx-background-color: #2C3E50;; -fx-padding: 6;-fx-border-radius: 6; -fx-background-radius: 6;");
+                  listaComentarios.getChildren().add(lbl);
+            }
+      }
 }

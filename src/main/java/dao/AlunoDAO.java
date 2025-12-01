@@ -11,14 +11,14 @@ import conexao.ConexaoMySQL;
 public class AlunoDAO {
 
       public void inserir(AlunoModel aluno) {
-            String sql = "INSERT INTO aluno(matricula, curso, idUsuario) VALUES (?, ?, ? )";
+            String sql = "INSERT INTO aluno(matricula, tcc, curso, idUsuario) VALUES (?, ?, ?, ? )";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
-
                   stmt.setInt(1, aluno.getMatricula());
-                  stmt.setString(2, aluno.getCurso());
-                  stmt.setInt(3, aluno.getIdUsuario());
+                  stmt.setString(2, aluno.getTcc());
+                  stmt.setString(3, aluno.getCurso());
+                  stmt.setInt(4, aluno.getIdUsuario());
                   stmt.executeUpdate();
                   System.out.println("Aluno cadastrado no banco!");
 
