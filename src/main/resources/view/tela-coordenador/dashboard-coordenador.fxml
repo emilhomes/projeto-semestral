@@ -23,7 +23,7 @@
                     </image>
                 </ImageView>
 
-                <Button fx:id="btnPerfil" onAction="#abrirEditarPerfil" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="Perfil Coordenador">
+                <Button fx:id="btnPerfil" onAction="#abrirPerfil" prefWidth="180" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="Perfil Coordenador">
                    <font><Font name="Ebrima" size="12.0" /></font>
                 </Button>
 
@@ -109,7 +109,7 @@
                         </VBox>
                         
                         <HBox alignment="CENTER_RIGHT">
-                            <Button style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20;" text="Editar Dados">
+                            <Button onAction="#abrirEditarPerfil" style="-fx-background-color: #0F1D45; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20;" text="Editar Dados">
                                 <font><Font name="Ebrima" size="14.0" /></font>
                             </Button>
                         </HBox>

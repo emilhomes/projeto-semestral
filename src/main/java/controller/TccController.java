@@ -65,11 +65,11 @@ public class TccController {
 
         try {
             // 3. Buscar dados do Aluno (pelo ID do usuário logado)
-            AlunoModel aluno = alunoDAO.buscarPorUsuarioId(usuario.getIdUsuario());
-            if (aluno == null) {
-                mostrarAlerta("Erro", "Cadastro de aluno incompleto.", Alert.AlertType.ERROR);
-                return;
-            }
+             AlunoModel aluno = alunoDAO.buscarPorUsuarioId(usuario.getIdUsuario());
+            // if (aluno == null) {
+            //     mostrarAlerta("Erro", "Cadastro de aluno incompleto.", Alert.AlertType.ERROR);
+            //     return;
+            // }
 
             // 4. Buscar dados do Orientador (pelo Nome selecionado)
             String nomeOrientador = campoOrientador.getValue();

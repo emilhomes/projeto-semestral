@@ -10,43 +10,43 @@ import conexao.ConexaoMySQL;
 public class TccDAO {
 
       public void inserir(TccModel tcc) {
-        String sql = "INSERT INTO tcc (titulo, resumo, estado, dataCadastro, idAluno, idOrientador, idBanca, idVersao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO tcc (titulo, resumo, estado, dataCadastro, idAluno, idOrientador, idBanca, idVersao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (Connection conn = ConexaoMySQL.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, tcc.getTitulo());
-            stmt.setString(2, tcc.getResumo());
-            stmt.setString(3, tcc.getEstado());
-            stmt.setDate(4, java.sql.Date.valueOf(tcc.getDataCadastro()));
-            stmt.setInt(5, tcc.getIdAluno());
-            stmt.setInt(6, tcc.getIdOrientador());
+                  stmt.setString(1, tcc.getTitulo());
+                  stmt.setString(2, tcc.getResumo());
+                  stmt.setString(3, tcc.getEstado());
+                  stmt.setDate(4, java.sql.Date.valueOf(tcc.getDataCadastro()));
+                  stmt.setInt(5, tcc.getIdAluno());
+                  stmt.setInt(6, tcc.getIdOrientador());
 
-            // --- TRATAMENTO PARA NÃO DAR ERRO DE CHAVE ESTRANGEIRA ---
-            
-            // Se idBanca for 0, envia NULL pro banco
-            if (tcc.getIdBanca() > 0) {
-                stmt.setInt(7, tcc.getIdBanca());
-            } else {
-                stmt.setNull(7, java.sql.Types.INTEGER);
+                  // --- TRATAMENTO PARA NÃO DAR ERRO DE CHAVE ESTRANGEIRA ---
+
+                  // Se idBanca for 0, envia NULL pro banco
+                  if (tcc.getIdBanca() > 0) {
+                        stmt.setInt(7, tcc.getIdBanca());
+                  } else {
+                        stmt.setNull(7, java.sql.Types.INTEGER);
+                  }
+
+                  // Se idVersao for 0, envia NULL pro banco
+                  if (tcc.getIdVersao() > 0) {
+                        stmt.setInt(8, tcc.getIdVersao());
+                  } else {
+                        stmt.setNull(8, java.sql.Types.INTEGER);
+                  }
+                  // ---------------------------------------------------------
+
+                  stmt.executeUpdate();
+
+            } catch (Exception e) {
+                  // Isso vai imprimir o erro no console se falhar
+                  e.printStackTrace();
+                  // Importante lançar o erro de volta para o Controller mostrar o Alerta
+                  throw new RuntimeException("Erro no DAO: " + e.getMessage());
             }
-
-            // Se idVersao for 0, envia NULL pro banco
-            if (tcc.getIdVersao() > 0) {
-                stmt.setInt(8, tcc.getIdVersao());
-            } else {
-                stmt.setNull(8, java.sql.Types.INTEGER);
-            }
-            // ---------------------------------------------------------
-
-            stmt.executeUpdate();
-
-        } catch (Exception e) {
-            // Isso vai imprimir o erro no console se falhar
-            e.printStackTrace(); 
-            // Importante lançar o erro de volta para o Controller mostrar o Alerta
-            throw new RuntimeException("Erro no DAO: " + e.getMessage());
-        }
       }
 
       public TccModel buscarTccComOrientador(int idUsuario) {
@@ -139,15 +139,12 @@ public class TccDAO {
       public List<TccModel> listarPorOrientador(int idOrientador) {
             List<TccModel> lista = new ArrayList<>();
 
-            // --- AQUI ESTÁ A CORREÇÃO ---
-            // Antes estava: ... ON t.idAluno = a.matricula (ERRADO)
-            // Agora fica: ... ON t.idAluno = a.idUsuario (CERTO)
-
-            String sql = "SELECT t.*, u.nome AS nomeAluno " +
-                        "FROM tcc t " +
-                        "INNER JOIN aluno a ON t.idAluno = a.idUsuario " +
-                        "INNER JOIN usuario u ON a.idUsuario = u.idUsuario " +
-                        "WHERE t.idOrientador = ?";
+            String sql = ""
+                        + "SELECT t.*, u.nome AS nomeAluno "
+                        + "FROM tcc t "
+                        + "INNER JOIN aluno a ON t.idAluno = a.matricula "
+                        + "INNER JOIN usuario u ON a.idUsuario = u.idUsuario "
+                        + "WHERE t.idOrientador = ?";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -161,8 +158,6 @@ public class TccDAO {
                         tcc.setTitulo(rs.getString("titulo"));
                         tcc.setResumo(rs.getString("resumo"));
                         tcc.setEstado(rs.getString("estado"));
-
-                        // Recupera o nome do aluno para mostrar na tabela
                         tcc.setNomeAluno(rs.getString("nomeAluno"));
 
                         lista.add(tcc);
@@ -207,7 +202,7 @@ public class TccDAO {
       public int contarOrientacoesAtivas() {
             String sql = "SELECT COUNT(*) FROM tcc WHERE estado = 'Ativa'";
             try (Connection conn = ConexaoMySQL.getConnection();
-                  PreparedStatement stmt = conn.prepareStatement(sql);
+                        PreparedStatement stmt = conn.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery()) {
 
                   if (rs.next()) {
@@ -223,7 +218,7 @@ public class TccDAO {
       public int contarPendentesRevisao() {
             String sql = "SELECT COUNT(*) FROM tcc WHERE estado = 'Em andamento'";
             try (Connection conn = ConexaoMySQL.getConnection();
-                  PreparedStatement stmt = conn.prepareStatement(sql);
+                        PreparedStatement stmt = conn.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery()) {
 
                   if (rs.next()) {
@@ -239,7 +234,7 @@ public class TccDAO {
       public int contarTCCsConcluidos() {
             String sql = "SELECT COUNT(*) FROM tcc WHERE estado = 'Concluido'";
             try (Connection conn = ConexaoMySQL.getConnection();
-                  PreparedStatement stmt = conn.prepareStatement(sql);
+                        PreparedStatement stmt = conn.prepareStatement(sql);
                         ResultSet rs = stmt.executeQuery()) {
 
                   if (rs.next()) {
