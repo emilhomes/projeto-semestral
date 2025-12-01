@@ -1,115 +1,137 @@
 package controller;
 
-import java.io.IOException;
-
 import dao.AlunoDAO;
 import dao.UsuarioDAO;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable; // Importante implementar Initializable
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.AlunoModel;
 import model.UsuarioModel;
 import service.AuthenticationService;
 
-public class EditarPerfilController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-      @FXML
-      private TextField inputNome;
-      @FXML
-      private TextField inputMatricula;
-      @FXML
-      private TextField inputEmail;
-      @FXML
-      private TextField inputCurso;
+public class EditarPerfilController implements Initializable {
 
-      private UsuarioDAO usuarioDAO = new UsuarioDAO();
-      private UsuarioModel usuario;
-      private AlunoModel aluno;
-      private AlunoDAO alunoDAO = new AlunoDAO();
+    @FXML private TextField inputNome;
+    @FXML private TextField inputMatricula;
+    @FXML private TextField inputEmail;
+    @FXML private TextField inputCurso;
 
-      @FXML
-      public void initialize() {
-            carregarUsuario();
-      }
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private AlunoDAO alunoDAO = new AlunoDAO();
+    
+    private UsuarioModel usuario;
+    private AlunoModel aluno;
 
-      private void carregarUsuario() {
-            try {
-                  int idUsuario = AuthenticationService.getUsuarioLogado().getIdUsuario();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        carregarUsuario();
+    }
 
-                  usuario = usuarioDAO.buscarPorUsuarioId(idUsuario);
-                  aluno = alunoDAO.buscarPorUsuarioId(idUsuario);
+    private void carregarUsuario() {
+        try {
+            usuario = AuthenticationService.getUsuarioLogado();
+            
+            if (usuario != null) {
+                // Busca dados complementares do aluno
+                aluno = alunoDAO.buscarPorUsuarioId(usuario.getIdUsuario());
 
-                  inputNome.setText(usuario.getNome());
-                  inputEmail.setText(usuario.getEmailInstitucional());
+                // Preenche a tela
+                inputNome.setText(usuario.getNome());
+                inputEmail.setText(usuario.getEmailInstitucional());
 
-                  inputMatricula.setText(String.valueOf(aluno.getMatricula()));
-                  inputCurso.setText(aluno.getCurso());
-
-            } catch (Exception e) {
-                  mostrarErro("Erro ao carregar dados do aluno.", e);
+                if (aluno != null) {
+                    inputMatricula.setText(String.valueOf(aluno.getMatricula()));
+                    inputCurso.setText(aluno.getCurso());
+                }
             }
-      }
+        } catch (Exception e) {
+            mostrarErro("Erro ao carregar dados do aluno.", e);
+        }
+    }
 
-      @FXML
-      private void salvarPerfil() {
-            try {
-                  usuario.setNome(inputNome.getText());
-                  usuario.setEmailInstitucional(inputEmail.getText());
-                  usuarioDAO.atualizar(usuario);
+    @FXML
+    private void salvarPerfil(ActionEvent event) {
+        try {
+            // 1. Atualiza dados do Usuário (Nome/Email)
+            usuario.setNome(inputNome.getText());
+            usuario.setEmailInstitucional(inputEmail.getText());
+            
+            usuarioDAO.atualizar(usuario); 
 
-                  inputMatricula.setText(String.valueOf(aluno.getMatricula()));
-                  aluno.setCurso(inputCurso.getText());
-                  alunoDAO.atualizar(aluno);
-
-                  Alert alert = new Alert(AlertType.INFORMATION);
-                  alert.setTitle("Sucesso");
-                  alert.setHeaderText("Perfil atualizado com sucesso!");
-                  alert.showAndWait();
-
-            } catch (Exception e) {
-                  mostrarErro("Erro ao salvar perfil.", e);
+            // 2. Atualiza dados do Aluno (Matrícula/Curso)
+            if (aluno != null) {
+                
+                // --- CORREÇÃO AQUI ---
+                // Convertemos o texto do campo para número inteiro
+                try {
+                    int novaMatricula = Integer.parseInt(inputMatricula.getText());
+                    aluno.setMatricula(novaMatricula);
+                } catch (NumberFormatException e) {
+                    mostrarErro("A matrícula deve conter apenas números!", null);
+                    return; // Para a execução se não for número
+                }
+                // ---------------------
+                
+                aluno.setCurso(inputCurso.getText());
+                
+                alunoDAO.atualizar(aluno);
             }
-      }
 
-      @FXML
-      private void abrirPerfil() {
-            abrirTela("/view/perfil.fxml");
-      }
+            // 3. Atualiza a sessão
+            AuthenticationService.setUsuarioLogado(usuario);
 
-      @FXML
-      private void abrirMeuTCC() {
-            abrirTela("/view/tcc.fxml");
-      }
-
-      @FXML
-      private void abrirCronograma() {
-            abrirTela("/view/cronograma.fxml");
-      }
-
-      private void abrirTela(String caminhoFXML) {
-            try {
-                  Parent root = FXMLLoader.load(getClass().getResource(caminhoFXML));
-                  Stage stage = (Stage) inputNome.getScene().getWindow();
-                  stage.setScene(new Scene(root));
-            } catch (IOException e) {
-                  mostrarErro("Erro ao abrir tela: " + caminhoFXML, e);
-            }
-      }
-
-      private void mostrarErro(String msg, Exception e) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Erro");
-            alert.setHeaderText(msg);
-
-            if (e != null)
-                  alert.setContentText(e.getMessage());
-
+            // 4. Sucesso
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Sucesso");
+            alert.setHeaderText(null);
+            alert.setContentText("Perfil atualizado com sucesso!");
             alert.showAndWait();
-      }
 
+            voltarParaDashboard();
+
+        } catch (Exception e) {
+            mostrarErro("Erro ao salvar perfil.", e);
+        }
+    }
+
+    @FXML
+    private void cancelarEdicao(ActionEvent event) {
+        voltarParaDashboard();
+    }
+
+    private void voltarParaDashboard() {
+        try {
+            // Recarrega o Dashboard do Aluno para atualizar os dados na tela (nome no menu, etc)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tela-aluno/dashboard-aluno.fxml"));
+            Parent root = loader.load();
+            
+            // Pega a janela atual e troca a cena inteira
+            Stage stage = (Stage) inputNome.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setMaximized(true); // Garante que continua maximizado
+            stage.show();
+            
+        } catch (IOException e) {
+            mostrarErro("Erro ao voltar para o dashboard: ", e);
+        }
+    }
+
+    private void mostrarErro(String msg, Exception e) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erro");
+        alert.setHeaderText(msg);
+        if (e != null) alert.setContentText(e.getMessage());
+        alert.showAndWait();
+    }
 }
