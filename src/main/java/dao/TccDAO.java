@@ -10,7 +10,7 @@ import conexao.ConexaoMySQL;
 public class TccDAO {
 
       public void inserir(TccModel tcc) {
-            String sql = "INSERT INTO tcc (titulo, resumo, estado, dataCadastro, idAluno, idOrientador, idBanca, idVersao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO tcc (titulo, resumo, estado, dataCadastro, idAluno, idOrientador) VALUES ( ?, ?, ?, ?, ?, ?)";
 
             try (Connection conn = ConexaoMySQL.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -22,29 +22,10 @@ public class TccDAO {
                   stmt.setInt(5, tcc.getIdAluno());
                   stmt.setInt(6, tcc.getIdOrientador());
 
-                  // --- TRATAMENTO PARA NÃO DAR ERRO DE CHAVE ESTRANGEIRA ---
-
-                  // Se idBanca for 0, envia NULL pro banco
-                  if (tcc.getIdBanca() > 0) {
-                        stmt.setInt(7, tcc.getIdBanca());
-                  } else {
-                        stmt.setNull(7, java.sql.Types.INTEGER);
-                  }
-
-                  // Se idVersao for 0, envia NULL pro banco
-                  if (tcc.getIdVersao() > 0) {
-                        stmt.setInt(8, tcc.getIdVersao());
-                  } else {
-                        stmt.setNull(8, java.sql.Types.INTEGER);
-                  }
-                  // ---------------------------------------------------------
-
                   stmt.executeUpdate();
 
             } catch (Exception e) {
-                  // Isso vai imprimir o erro no console se falhar
                   e.printStackTrace();
-                  // Importante lançar o erro de volta para o Controller mostrar o Alerta
                   throw new RuntimeException("Erro no DAO: " + e.getMessage());
             }
       }

@@ -42,8 +42,8 @@ public class DashboardAlunoController {
 
         lblNome.setText(usuario.getNome());
         lblEmail.setText(usuario.getEmailInstitucional());
-        // lblMatricula.setText(String.valueOf(aluno.getMatricula()));
-        // lblCurso.setText(aluno.getCurso());
+        lblMatricula.setText(String.valueOf(aluno.getMatricula()));
+        lblCurso.setText(aluno.getCurso());
     }
 
     @FXML

@@ -66,10 +66,10 @@ public class TccController {
         try {
             // 3. Buscar dados do Aluno (pelo ID do usuário logado)
              AlunoModel aluno = alunoDAO.buscarPorUsuarioId(usuario.getIdUsuario());
-            // if (aluno == null) {
-            //     mostrarAlerta("Erro", "Cadastro de aluno incompleto.", Alert.AlertType.ERROR);
-            //     return;
-            // }
+            if (aluno == null) {
+                 mostrarAlerta("Erro", "Cadastro de aluno incompleto.", Alert.AlertType.ERROR);
+                 return;
+             }
 
             // 4. Buscar dados do Orientador (pelo Nome selecionado)
             String nomeOrientador = campoOrientador.getValue();
@@ -79,22 +79,15 @@ public class TccController {
                 return;
             }
 
-            // 5. Criar o Modelo TCC
+        
             TccModel tcc = new TccModel();
             tcc.setTitulo(campoTitulo.getText());
             tcc.setResumo(campoResumo.getText());
             tcc.setEstado(campoEstado.getValue());
             tcc.setDataCadastro(LocalDate.now());
-            
-            // IDs de relacionamento
-            tcc.setIdAluno(aluno.getIdUsuario()); // Conforme sua regra de banco
+            tcc.setIdAluno(aluno.getIdUsuario()); 
             tcc.setIdOrientador(orientador.getIdUsuario());
             
-            // Valores padrão para novos TCCs
-            tcc.setIdBanca(0); // ou tratar null no DAO
-            tcc.setIdVersao(0); // ou tratar null no DAO
-
-            // 6. Salvar no Banco
             tccDAO.inserir(tcc);
             
             mostrarAlerta("Sucesso", "TCC cadastrado com sucesso!", Alert.AlertType.INFORMATION);
