@@ -7,9 +7,12 @@ import model.UsuarioModel;
 import service.AuthenticationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -59,7 +62,9 @@ public class PerfilOrientadorController implements Initializable {
         }
         carregarEstatisticas();
     }
-private TccDAO tccDAO;
+
+    private TccDAO tccDAO;
+
     private void carregarEstatisticas() {
         tccDAO = new TccDAO();
         int qtdAtivas = tccDAO.contarOrientacoesAtivas();
@@ -73,6 +78,18 @@ private TccDAO tccDAO;
 
     @FXML
     void editarPerfil(ActionEvent event) {
-        System.out.println("Botão editar clicado");
+        try {
+            // Carrega o formulário de edição
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tela-orientador/editar-perfil-orientador.fxml"));
+            Parent root = loader.load();
+            
+            // Como estamos dentro de um ScrollPane (no Home), precisamos pegar a cena principal para trocar
+            // Usamos qualquer elemento da tela atual (ex: lblNome) para pegar a cena
+            lblNome.getScene().setRoot(root);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao abrir a tela de edição.");
+        }
     }
 }
